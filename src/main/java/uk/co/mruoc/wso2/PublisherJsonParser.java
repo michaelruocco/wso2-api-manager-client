@@ -84,9 +84,7 @@ public class PublisherJsonParser {
 
     private static boolean toBoolean(JsonObject json, String name) {
         JsonElement value = json.get(name);
-        if (value.isJsonNull())
-            return false;
-        return value.getAsBoolean();
+        return !value.isJsonNull() && value.getAsBoolean();
     }
 
 }

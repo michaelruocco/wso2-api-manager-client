@@ -1,5 +1,6 @@
 package uk.co.mruoc.wso2;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +26,55 @@ public class PublisherJsonParserTest {
         PublisherJsonParser parser = new PublisherJsonParser("{ \"description\": \"A test api\"}");
 
         assertThat(parser.getDescription()).isEqualTo("A test api");
+    }
+
+    @Test
+    public void shouldParseProvider() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"provider\": \"admin\"}");
+
+        assertThat(parser.getProvider()).isEqualTo("admin");
+    }
+
+    @Test
+    public void shouldParseStatus() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"status\": \"PUBLISHED\"}");
+
+        assertThat(parser.getStatus()).isEqualTo("PUBLISHED");
+    }
+
+    @Test
+    public void shouldParseThumbnailImagePath() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"thumb\": \"path/thumb.png\"}");
+
+        assertThat(parser.getThumbnailImagePath()).isEqualTo("path/thumb.png");
+    }
+
+    @Test
+    public void shouldParseContext() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"context\": \"product/v1\"}");
+
+        assertThat(parser.getContext()).isEqualTo("product/v1");
+    }
+
+    @Test
+    public void shouldParseLastUpdated() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"lastUpdated\": \"1486464366000\"}");
+
+        assertThat(parser.getLastUpdated()).isEqualTo(new DateTime(1486464366000l));
+    }
+
+    @Test
+    public void shouldParseSubscriberCount() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"subs\": 3}");
+
+        assertThat(parser.getSubscriberCount()).isEqualTo(3);
+    }
+
+    @Test
+    public void shouldParseError() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"error\": true}");
+
+        assertThat(parser.getError()).isTrue();
     }
 
     @Test
