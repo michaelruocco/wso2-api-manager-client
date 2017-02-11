@@ -2,6 +2,7 @@ package uk.co.mruoc.wso2;
 
 import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
+import uk.co.mruoc.wso2.DefaultGetApiParams.DefaultGetApiParamsBuilder;
 
 import java.util.List;
 
@@ -16,7 +17,11 @@ public class ApiPublisherClientTest {
     private final FakeHttpClient httpClient = new FakeHttpClient();
     private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(HOST_URL, httpClient);
     private final Credentials credentials = new Credentials("admin", "admin");
-    private final GetApiParams getApiParams = new DefaultGetApiParams("rest-product", "v1", "admin");
+    private final GetApiParams getApiParams = new DefaultGetApiParamsBuilder()
+            .setName("rest-product")
+            .setVersion("v1")
+            .setProvider("admin")
+            .build();
 
     @Test
     public void loginShouldCallCorrectUrl() {

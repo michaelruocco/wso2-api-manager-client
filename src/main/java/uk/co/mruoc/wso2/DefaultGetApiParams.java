@@ -6,10 +6,10 @@ public class DefaultGetApiParams implements GetApiParams {
     private final String version;
     private final String provider;
 
-    public DefaultGetApiParams(String name, String version, String provider) {
-        this.name = name;
-        this.version = version;
-        this.provider = provider;
+    private DefaultGetApiParams(DefaultGetApiParamsBuilder builder) {
+        this.name = builder.name;
+        this.version = builder.version;
+        this.provider = builder.provider;
     }
 
     @Override
@@ -25,6 +25,33 @@ public class DefaultGetApiParams implements GetApiParams {
     @Override
     public String getProvider() {
         return provider;
+    }
+
+    public static class DefaultGetApiParamsBuilder {
+
+        private String name;
+        private String version;
+        private String provider;
+
+        public DefaultGetApiParamsBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public DefaultGetApiParamsBuilder setVersion(String version) {
+            this.version = version;
+            return this;
+        }
+
+        public DefaultGetApiParamsBuilder setProvider(String provider) {
+            this.provider = provider;
+            return this;
+        }
+
+        public GetApiParams build() {
+            return new DefaultGetApiParams(this);
+        }
+
     }
 
 }

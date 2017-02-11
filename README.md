@@ -69,7 +69,11 @@ so it is possible to use those to get the full API details, this is also shown b
 Using DefaultGetApiParams:
 
 ```
-GetApiParams params = new DefaultGetApiParams("api-name", "v1", "api-provider");
+GetApiParams params = new DefaultGetApiParamsBuilder()
+    .setName("api-name");
+    .setVersion("v1");
+    .setProvider("api-provider")
+    .build();
 Api api = client.getApi(params);
 ```
 
