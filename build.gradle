@@ -1,0 +1,68 @@
+plugins {
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.7.1'
+    id 'com.github.ben-manes.versions' version '0.13.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.github.michaelruocco', name: 'http-client', version: '2.0.0'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
+    testCompile group: 'org.testcontainers', name: 'testcontainers', version: '1.1.6'
+    testCompile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.22'
+    testCompile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.22'
+}
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
+
+tasks.withType(Test) {
+    systemProperty "javax.net.ssl.trustStore", "$projectDir/truststore/cacerts"
+    reports.html.destination = file("${reporting.baseDir}/${name}")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
