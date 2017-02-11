@@ -5,20 +5,20 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ApiSummaryDeserializerTest {
+public class ApiDeserializerTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
 
     private final JsonLoader jsonLoader = new JsonLoader();
-    private final ApiSummaryDeserializer deserializer = new ApiSummaryDeserializer();
+    private final ApiDeserializer deserializer = new ApiDeserializer();
 
     @Test
     public void shouldDeserializeJson() {
-        JsonElement element = loadJson("colleague-api-summary.json");
+        JsonElement element = loadJson("rest-product-api.json");
 
-        ApiSummary summary = deserializer.deserialize(element, null, null);
+        Api api = deserializer.deserialize(element, null, null);
 
-        assertThat(summary).isEqualToComparingFieldByField(new ColleagueApiSummary());
+        assertThat(api).isEqualToComparingFieldByField(new RestProductApi());
     }
 
     private JsonElement loadJson(String filename) {
