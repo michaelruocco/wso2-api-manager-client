@@ -7,6 +7,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PublisherJsonParserTest {
 
     @Test
+    public void shouldParseName() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"name\": \"api-name\"}");
+
+        assertThat(parser.getName()).isEqualTo("api-name");
+    }
+
+    @Test
+    public void shouldParseVersion() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"version\": \"v1\"}");
+
+        assertThat(parser.getVersion()).isEqualTo("v1");
+    }
+
+    @Test
+    public void shouldParseDescription() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"description\": \"A test api\"}");
+
+        assertThat(parser.getDescription()).isEqualTo("A test api");
+    }
+
+    @Test
     public void shouldDefaultNullStringValueToEmptyString() {
         PublisherJsonParser parser = new PublisherJsonParser("{ \"name\": null}");
 
