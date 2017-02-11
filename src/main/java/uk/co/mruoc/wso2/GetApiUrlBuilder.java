@@ -2,12 +2,13 @@ package uk.co.mruoc.wso2;
 
 public class GetApiUrlBuilder {
 
-    private static final String QUERY_STRING = "?action=getAPI&name=%s&version=%s&provider=%s";
+    private static final String RESOURCE_URL = "/publisher/site/blocks/listing/ajax/item-list.jag";
 
     private final String url;
+    private final GetApiQueryStringBuilder queryStringBuilder = new GetApiQueryStringBuilder();
 
     public GetApiUrlBuilder(String hostUrl) {
-        url = hostUrl + "/publisher/site/blocks/listing/ajax/item-list.jag";
+        url = hostUrl + RESOURCE_URL;
     }
 
     public String build(GetApiParams params) {
@@ -16,7 +17,11 @@ public class GetApiUrlBuilder {
     }
 
     private String buildQueryString(GetApiParams params) {
-        return String.format(QUERY_STRING, params.getName(), params.getVersion(), params.getProvider());
+        return queryStringBuilder
+                .setName(params.getName())
+                .setProvider(params.getProvider())
+                .setVersion(params.getVersion())
+                .build();
     }
 
 }
