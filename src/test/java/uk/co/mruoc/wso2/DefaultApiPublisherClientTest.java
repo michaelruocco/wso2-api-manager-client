@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ApiPublisherClientTest {
+public class DefaultApiPublisherClientTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
     private static final String HOST_URL = "https://localhost:9443";

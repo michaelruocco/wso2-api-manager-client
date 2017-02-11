@@ -35,5 +35,5 @@ public class DefaultGetApiParamsTest {
 
         assertThat(params.getProvider()).isEqualTo(provider);
     }
-    
+
 }
