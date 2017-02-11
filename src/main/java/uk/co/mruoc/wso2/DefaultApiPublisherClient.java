@@ -96,7 +96,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     private void checkForError(Response response) {
         if (hasError(response))
-            throw new ApiPublisherException(response);
+            throw new ApiPublisherException(buildErrorMessage(response));
     }
 
     private boolean hasError(Response response) {
@@ -104,6 +104,10 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
             return true;
         PublisherJsonParser parser = new PublisherJsonParser(response.getBody());
         return parser.getError();
+    }
+
+    private static String buildErrorMessage(Response response) {
+        return "status code: " + response.getStatusCode() + " body: " + response.getBody();
     }
 
 }
