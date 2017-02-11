@@ -20,5 +20,5 @@ public class CredentialsTest {
     public void shouldReturnPassword() {
         assertThat(credentials.getPassword()).isEqualTo(PASSWORD);
     }
-    
+
 }
