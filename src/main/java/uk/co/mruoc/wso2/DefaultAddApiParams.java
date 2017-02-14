@@ -19,12 +19,13 @@ public class DefaultAddApiParams implements AddApiParams {
     private final boolean httpsChecked;
     private final String endpointConfig;
     private final String swagger;
-    private final EndpointSecurityTheme endpointSecurityTheme;
+    private final ApiEndpointType apiEndpointType;
     private final Credentials endpointCredentials;
     private final String inSequence;
     private final String outSequence;
     private final boolean defaultVersion;
     private final boolean responseCacheEnabled;
+    private final int responseCacheTimeout;
     private final ApiSubscriptions subscriptions;
     private final List<String> tenants;
 
@@ -42,12 +43,13 @@ public class DefaultAddApiParams implements AddApiParams {
         this.httpsChecked = builder.httpsChecked;
         this.endpointConfig = builder.endpointConfig;
         this.swagger = builder.swagger;
-        this.endpointSecurityTheme = builder.endpointSecurityTheme;
+        this.apiEndpointType = builder.apiEndpointType;
         this.endpointCredentials = builder.endpointCredentials;
         this.inSequence = builder.inSequence;
         this.outSequence = builder.outSequence;
         this.defaultVersion = builder.defaultVersion;
         this.responseCacheEnabled = builder.responseCacheEnabled;
+        this.responseCacheTimeout = builder.responseCacheTimeout;
         this.subscriptions = builder.subscriptions;
         this.tenants = builder.tenants;
     }
@@ -117,9 +119,8 @@ public class DefaultAddApiParams implements AddApiParams {
         return swagger;
     }
 
-    @Override
-    public EndpointSecurityTheme getEndpointSecurityTheme() {
-        return endpointSecurityTheme;
+    public ApiEndpointType getApiEndpointType() {
+        return apiEndpointType;
     }
 
     @Override
@@ -157,6 +158,11 @@ public class DefaultAddApiParams implements AddApiParams {
     }
 
     @Override
+    public int getResponseCacheTimeout() {
+        return responseCacheTimeout;
+    }
+
+    @Override
     public ApiSubscriptions getSubscriptions() {
         return subscriptions;
     }
@@ -185,13 +191,14 @@ public class DefaultAddApiParams implements AddApiParams {
         private boolean httpsChecked = true;
         private String endpointConfig;
         private String swagger;
-        private EndpointSecurityTheme endpointSecurityTheme = EndpointSecurityTheme.UNSECURED;
+        private ApiEndpointType apiEndpointType = ApiEndpointType.UNSECURED;
         private Credentials endpointCredentials;
         private String inSequence;
         private String outSequence;
         private boolean defaultVersion;
         private boolean responseCacheEnabled;
-        private ApiSubscriptions subscriptions = ApiSubscriptions.ALL_TENANTS;
+        private int responseCacheTimeout;
+        private ApiSubscriptions subscriptions = ApiSubscriptions.CURRENT_TENANT;
         private List<String> tenants;
 
         public DefaultAddApiParamsBuilder setName(String name) {
@@ -259,12 +266,12 @@ public class DefaultAddApiParams implements AddApiParams {
             return this;
         }
 
-        public DefaultAddApiParamsBuilder setEndpointSecurityTheme(EndpointSecurityTheme endpointSecurityTheme) {
-            this.endpointSecurityTheme = endpointSecurityTheme;
+        public DefaultAddApiParamsBuilder setApiEndpointType(ApiEndpointType apiEndpointType) {
+            this.apiEndpointType = apiEndpointType;
             return this;
         }
 
-        public DefaultAddApiParamsBuilder setEndpointCredentials(Credentials credentials) {
+        public DefaultAddApiParamsBuilder setEndpointCredentials(Credentials endpointCredentials) {
             this.endpointCredentials = endpointCredentials;
             return this;
         }
@@ -289,6 +296,11 @@ public class DefaultAddApiParams implements AddApiParams {
             return this;
         }
 
+        public DefaultAddApiParamsBuilder setResponseCacheTimeout(int responseCacheTimeout) {
+            this.responseCacheTimeout = responseCacheTimeout;
+            return this;
+        }
+
         public DefaultAddApiParamsBuilder setSubscriptions(ApiSubscriptions subscriptions) {
             this.subscriptions = subscriptions;
             return this;
@@ -302,6 +314,7 @@ public class DefaultAddApiParams implements AddApiParams {
         public AddApiParams build() {
             return new DefaultAddApiParams(this);
         }
+
     }
 
 }

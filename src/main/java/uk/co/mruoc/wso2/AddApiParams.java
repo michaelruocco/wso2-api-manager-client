@@ -30,7 +30,7 @@ public interface AddApiParams {
 
     String getSwagger();
 
-    EndpointSecurityTheme getEndpointSecurityTheme();
+    ApiEndpointType getApiEndpointType();
 
     String getEndpointUsername();
 
@@ -43,6 +43,8 @@ public interface AddApiParams {
     boolean isDefaultVersion();
 
     boolean isResponseCacheEnabled();
+
+    int getResponseCacheTimeout();
 
     ApiSubscriptions getSubscriptions();
 

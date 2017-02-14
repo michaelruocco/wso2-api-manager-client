@@ -2,49 +2,41 @@ package uk.co.mruoc.wso2;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
+import static uk.co.mruoc.wso2.ListToCommaSeparatedStringConverter.toCommaSeparatedString;
 
 public class AddApiParamsToQueryStringConverter {
+
+    private final TransportsArgumentBuilder transportsArgumentBuilder = new TransportsArgumentBuilder();
+    private final SequencesArgumentBuilder sequencesArgumentBuilder = new SequencesArgumentBuilder();
+    private final ResponseCacheArgumentBuilder responseCacheBuilder = new ResponseCacheArgumentBuilder();
+    private final DefaultVersionArgumentBuilder defaultVersionArgumentBuilder = new DefaultVersionArgumentBuilder();
+    private final SubscriptionsArgumentBuilder subscriptionsArgumentBuilder = new SubscriptionsArgumentBuilder();
+    private final EndpointSecurityArgumentBuilder endpointSecurityArgumentBuilder = new EndpointSecurityArgumentBuilder();
+    private final VisibilityArgumentBuilder visibilityArgumentBuilder = new VisibilityArgumentBuilder();
 
     public String toQueryString(AddApiParams params) {
         return "?action=addAPI" +
                 "&name=" + format(params.getName()) +
                 "&context=" + format(params.getDescription()) +
                 "&version=" + format(params.getVersion()) +
-                "&visibility=" + buildVisibility(params) +
-                "&description=" + format(params.getDescription());
+                "&description=" + format(params.getDescription()) +
+                "&swagger=" + format(params.getSwagger()) +
+                "&endpoint_config=" + format(params.getEndpointConfig()) +
+                "&tags=" + toCommaSeparatedString(params.getTags()) +
+                "&tiersCollection=" + toCommaSeparatedString(params.getTiers()) +
+                visibilityArgumentBuilder.build(params) +
+                endpointSecurityArgumentBuilder.build(params) +
+                responseCacheBuilder.build(params) +
+                transportsArgumentBuilder.build(params) +
+                sequencesArgumentBuilder.build(params) +
+                defaultVersionArgumentBuilder.build(params) +
+                subscriptionsArgumentBuilder.build(params);
     }
 
-    private String format(String value) {
+    private static String format(String value) {
         if (StringUtils.isNotEmpty(value))
             return value;
         return "";
-    }
-
-    private String buildVisibility(AddApiParams params) {
-        String result = formatVisibility(params);
-        if (isRestrictedVisibility(params))
-            result += buildRoles(params);
-        return result;
-    }
-
-    private String formatVisibility(AddApiParams params) {
-        ApiVisibility visibility = params.getVisibility();
-        String result = visibility.toString();
-        return result == null ? "" : result.toLowerCase();
-    }
-
-    private boolean isRestrictedVisibility(AddApiParams params) {
-        ApiVisibility visibility = params.getVisibility();
-        return ApiVisibility.RESTRICTED.equals(visibility);
-    }
-
-    private String buildRoles(AddApiParams params) {
-        return "&roles=" +  toCommaSeparatedString(params.getRoles());
-    }
-
-    private String toCommaSeparatedString(List<String> values) {
-        return StringUtils.join(values, ",");
     }
 
 }
