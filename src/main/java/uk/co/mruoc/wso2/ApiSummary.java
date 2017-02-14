@@ -6,7 +6,7 @@ public class ApiSummary implements GetApiParams {
     private final String version;
     private final String provider;
     private final String status;
-    private final String thumbnailImagePath;
+    private final String thumbnailImageUrl;
     private final int subscriberCount;
 
     public ApiSummary(ApiSummaryBuilder builder) {
@@ -14,7 +14,7 @@ public class ApiSummary implements GetApiParams {
         this.version = builder.version;
         this.provider = builder.provider;
         this.status = builder.status;
-        this.thumbnailImagePath = builder.thumbnailImagePath;
+        this.thumbnailImageUrl = builder.thumbnailImageUrl;
         this.subscriberCount = builder.subscriberCount;
     }
 
@@ -37,8 +37,8 @@ public class ApiSummary implements GetApiParams {
         return status;
     }
 
-    public String getThumbnailImagePath() {
-        return thumbnailImagePath;
+    public String getThumbnailImageUrl() {
+        return thumbnailImageUrl;
     }
 
     public int getSubscriberCount() {
@@ -51,7 +51,7 @@ public class ApiSummary implements GetApiParams {
         private String version;
         private String provider;
         private String status;
-        private String thumbnailImagePath;
+        private String thumbnailImageUrl;
         private int subscriberCount;
 
         public ApiSummaryBuilder setName(String name) {
@@ -74,8 +74,8 @@ public class ApiSummary implements GetApiParams {
             return this;
         }
 
-        public ApiSummaryBuilder setThumbnailImagePath(String thumbnailImagePath) {
-            this.thumbnailImagePath = thumbnailImagePath;
+        public ApiSummaryBuilder setThumbnailImageUrl(String thumbnailImageUrl) {
+            this.thumbnailImageUrl = thumbnailImageUrl;
             return this;
         }
 

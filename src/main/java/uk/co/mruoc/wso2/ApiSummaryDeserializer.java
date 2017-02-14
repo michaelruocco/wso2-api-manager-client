@@ -15,7 +15,7 @@ public class ApiSummaryDeserializer implements JsonDeserializer<ApiSummary> {
                 .setVersion(parser.getVersion())
                 .setProvider(parser.getProvider())
                 .setStatus(parser.getStatus())
-                .setThumbnailImagePath(parser.getThumbnailImagePath())
+                .setThumbnailImageUrl(parser.getThumbnailImagePath())
                 .setSubscriberCount(parser.getSubscriberCount())
                 .build();
     }

@@ -49,9 +49,9 @@ public class ApiSummaryTest {
     public void shouldReturnThumbnailImagePath() {
         String thumbnailImagePath = "/path/image.png";
 
-        ApiSummary summary = builder.setThumbnailImagePath(thumbnailImagePath).build();
+        ApiSummary summary = builder.setThumbnailImageUrl(thumbnailImagePath).build();
 
-        assertThat(summary.getThumbnailImagePath()).isEqualTo(thumbnailImagePath);
+        assertThat(summary.getThumbnailImageUrl()).isEqualTo(thumbnailImagePath);
     }
 
     @Test

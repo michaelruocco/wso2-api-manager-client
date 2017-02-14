@@ -4,6 +4,7 @@ public class AuthenticationUrlBuilder {
 
     private static final String LOGOUT_QUERY_STRING = "?action=logout";
 
+    private final CredentialsToQueryStringConverter converter = new CredentialsToQueryStringConverter();
     private final String baseUrl;
 
     public AuthenticationUrlBuilder(String hostUrl) {
@@ -20,10 +21,7 @@ public class AuthenticationUrlBuilder {
     }
 
     private String buildLoginQueryString(Credentials credentials) {
-        return new LoginQueryStringBuilder()
-                .setUsername(credentials.getUsername())
-                .setPassword(credentials.getPassword())
-                .build();
+        return converter.toQueryString(credentials);
     }
 
 }

@@ -4,6 +4,7 @@ public class GetApiUrlBuilder {
 
     private static final String RESOURCE_URL = "/publisher/site/blocks/listing/ajax/item-list.jag";
 
+    private final GetApiParamsToQueryStringConverter converter = new GetApiParamsToQueryStringConverter();
     private final String url;
 
     public GetApiUrlBuilder(String hostUrl) {
@@ -16,11 +17,7 @@ public class GetApiUrlBuilder {
     }
 
     private String buildQueryString(GetApiParams params) {
-        return new GetApiQueryStringBuilder()
-                .setName(params.getName())
-                .setProvider(params.getProvider())
-                .setVersion(params.getVersion())
-                .build();
+        return converter.toQueryString(params);
     }
 
 }
