@@ -13,7 +13,7 @@ public class EndpointSecurityArgumentBuilder {
 
     private String formatEndpointType(AddApiParams params) {
         String result = "&endpointSecurity=";
-        result += params.getApiEndpointType().name().toLowerCase();
+        result += UrlEncoder.encode(params.getApiEndpointType().name().toLowerCase());
         return result;
     }
 
@@ -22,7 +22,8 @@ public class EndpointSecurityArgumentBuilder {
     }
 
     private String buildCredentials(AddApiParams params) {
-        return "&epUsername=" + params.getEndpointUsername() + "&epPassword=" + params.getEndpointPassword();
+        return "&epUsername=" + UrlEncoder.encode(params.getEndpointUsername()) +
+                "&epPassword=" + UrlEncoder.encode(params.getEndpointPassword());
     }
 
 }

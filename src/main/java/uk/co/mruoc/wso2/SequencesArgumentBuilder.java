@@ -14,14 +14,14 @@ public class SequencesArgumentBuilder {
         String inSequence = params.getInSequence();
         if (StringUtils.isEmpty(inSequence))
             return "";
-        return "&inSequence=" + inSequence;
+        return "&inSequence=" + UrlEncoder.encode(inSequence);
     }
 
     private String buildOutSequence(AddApiParams params) {
         String outSequence = params.getOutSequence();
         if (StringUtils.isEmpty(outSequence))
             return "";
-        return "&outSequence=" + outSequence;
+        return "&outSequence=" + UrlEncoder.encode(outSequence);
     }
 
 }

@@ -2,8 +2,6 @@ package uk.co.mruoc.wso2;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.http.client.SimpleHttpClient;
@@ -13,12 +11,11 @@ import java.util.List;
 
 public class DefaultApiPublisherClient implements ApiPublisherClient {
 
-    private static final Logger LOG = LogManager.getLogger(DefaultApiPublisherClient.class);
-
     private final HttpClient client;
     private final AuthenticationUrlBuilder authenticationUrlBuilder;
     private final ListAllUrlBuilder listAllUrlBuilder;
     private final GetApiUrlBuilder getApiUrlBuilder;
+    private final AddApiUrlBuilder addApiUrlBuilder;
     private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
@@ -29,6 +26,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.authenticationUrlBuilder = new AuthenticationUrlBuilder(hostUrl);
         this.listAllUrlBuilder = new ListAllUrlBuilder(hostUrl);
         this.getApiUrlBuilder = new GetApiUrlBuilder(hostUrl);
+        this.addApiUrlBuilder = new AddApiUrlBuilder(hostUrl);
         this.client = client;
         this.gson = buildGson();
     }
@@ -37,7 +35,6 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean login(Credentials credentials) {
         String url = authenticationUrlBuilder.buildLoginUrl(credentials);
         Response response = client.post(url, "");
-        log(response);
         checkForError(response);
         return true;
     }
@@ -46,7 +43,6 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public List<ApiSummary> listAll() {
         String url = listAllUrlBuilder.build();
         Response response = client.get(url);
-        log(response);
         checkForError(response);
         return toApiSummaries(response);
     }
@@ -55,7 +51,6 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean logout() {
         String url = authenticationUrlBuilder.buildLogoutUrl();
         Response response = client.get(url);
-        log(response);
         checkForError(response);
         return true;
     }
@@ -64,9 +59,16 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public Api getApi(GetApiParams params) {
         String url = getApiUrlBuilder.build(params);
         Response response = client.get(url);
-        log(response);
         checkForError(response);
         return toApi(response);
+    }
+
+    @Override
+    public boolean addApi(AddApiParams params) {
+        String url = addApiUrlBuilder.build(params);
+        Response response = client.post(url, "");
+        checkForError(response);
+        return true;
     }
 
     private Gson buildGson() {
@@ -87,11 +89,6 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         JsonElement element = new JsonParser().parse(response.getBody());
         JsonObject json = element.getAsJsonObject();
         return gson.fromJson(json.get("api"), Api.class);
-    }
-
-    private void log(Response response) {
-        LOG.info("status code " + response.getStatusCode());
-        LOG.info("body " + response.getBody());
     }
 
     private void checkForError(Response response) {

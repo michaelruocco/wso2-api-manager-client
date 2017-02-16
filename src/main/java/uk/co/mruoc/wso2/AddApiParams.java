@@ -20,7 +20,7 @@ public interface AddApiParams {
 
     String getEndpointType();
 
-    List<String> getTiers();
+    List<ApiTierAvailability> getTiers();
 
     boolean httpChecked();
 

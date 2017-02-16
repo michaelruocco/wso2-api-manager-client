@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2;
 
 import static uk.co.mruoc.wso2.ApiVisibility.RESTRICTED;
-import static uk.co.mruoc.wso2.ListToCommaSeparatedStringConverter.toCommaSeparatedString;
 
 public class VisibilityArgumentBuilder {
 
@@ -14,7 +13,7 @@ public class VisibilityArgumentBuilder {
 
     private String formatVisibility(AddApiParams params) {
         String result = "&visibility=";
-        result += params.getVisibility().name().toLowerCase();
+        result += UrlEncoder.encode(params.getVisibility().name().toLowerCase());
         return result;
     }
 
@@ -24,7 +23,7 @@ public class VisibilityArgumentBuilder {
     }
 
     private String buildRoles(AddApiParams params) {
-        return "&roles=" +  toCommaSeparatedString(params.getRoles());
+        return UrlEncoder.encodeToCommaSeparatedList(params.getRoles());
     }
 
 }

@@ -12,4 +12,6 @@ public interface ApiPublisherClient {
 
     Api getApi(GetApiParams params);
 
+    boolean addApi(AddApiParams params);
+    
 }

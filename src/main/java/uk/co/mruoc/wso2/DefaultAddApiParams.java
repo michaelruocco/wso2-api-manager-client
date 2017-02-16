@@ -2,6 +2,7 @@ package uk.co.mruoc.wso2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DefaultAddApiParams implements AddApiParams {
@@ -14,7 +15,7 @@ public class DefaultAddApiParams implements AddApiParams {
     private final String description;
     private final List<String> tags;
     private final String endpointType;
-    private final List<String> tiers;
+    private final List<ApiTierAvailability> tiers;
     private final boolean httpChecked;
     private final boolean httpsChecked;
     private final String endpointConfig;
@@ -95,7 +96,7 @@ public class DefaultAddApiParams implements AddApiParams {
     }
 
     @Override
-    public List<String> getTiers() {
+    public List<ApiTierAvailability> getTiers() {
         return tiers;
     }
 
@@ -186,7 +187,7 @@ public class DefaultAddApiParams implements AddApiParams {
         private String description;
         private List<String> tags = new ArrayList<>();
         private String endpointType;
-        private List<String> tiers = new ArrayList<>();
+        private List<ApiTierAvailability> tiers = Collections.singletonList(ApiTierAvailability.UNLIMITED);
         private boolean httpChecked = true;
         private boolean httpsChecked = true;
         private String endpointConfig;
@@ -241,7 +242,7 @@ public class DefaultAddApiParams implements AddApiParams {
             return this;
         }
 
-        public DefaultAddApiParamsBuilder setTiers(String... tiers) {
+        public DefaultAddApiParamsBuilder setTiers(ApiTierAvailability... tiers) {
             this.tiers = Arrays.asList(tiers);
             return this;
         }
