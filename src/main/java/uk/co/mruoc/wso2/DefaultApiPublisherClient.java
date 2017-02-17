@@ -20,10 +20,20 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
-        this(new SimpleHttpClient(), new DefaultLoginUrlBuilder(hostUrl), new DefaultLogoutUrlBuilder(hostUrl), new DefaultListAllUrlBuilder(hostUrl), new DefaultGetApiUrlBuilder(hostUrl), new DefaultAddApiUrlBuilder(hostUrl));
+        this(new SimpleHttpClient(),
+                new DefaultLoginUrlBuilder(hostUrl),
+                new DefaultLogoutUrlBuilder(hostUrl),
+                new DefaultListAllUrlBuilder(hostUrl),
+                new DefaultGetApiUrlBuilder(hostUrl),
+                new DefaultAddApiUrlBuilder(hostUrl));
     }
 
-    public DefaultApiPublisherClient(HttpClient client, LoginUrlBuilder loginUrlBuilder, LogoutUrlBuilder logoutUrlBuilder, ListAllUrlBuilder listAllUrlBuilder, GetApiUrlBuilder getApiUrlBuilder, AddApiUrlBuilder addApiUrlBuilder) {
+    public DefaultApiPublisherClient(HttpClient client,
+                                     LoginUrlBuilder loginUrlBuilder,
+                                     LogoutUrlBuilder logoutUrlBuilder,
+                                     ListAllUrlBuilder listAllUrlBuilder,
+                                     GetApiUrlBuilder getApiUrlBuilder,
+                                     AddApiUrlBuilder addApiUrlBuilder) {
         this.client = client;
         this.loginUrlBuilder = loginUrlBuilder;
         this.logoutUrlBuilder = logoutUrlBuilder;
