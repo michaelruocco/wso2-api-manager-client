@@ -8,10 +8,6 @@ public class UrlEncoder {
 
     private static final String DEFAULT_ENCODING = "utf-8";
 
-    public static String encode(int value) {
-        return encode(Integer.toString(value));
-    }
-
     public static String encode(String value) {
         try {
             return URLEncoder.encode(value, DEFAULT_ENCODING);
