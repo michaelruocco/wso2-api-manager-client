@@ -1,8 +1,6 @@
 package uk.co.mruoc.wso2;
 
-import java.util.List;
-
-public interface AddApiParams extends UpdateApiParams {
+public interface AddApiParams extends UpdateApiParams, SubscriptionsParams {
 
     String getName();
 
@@ -19,9 +17,5 @@ public interface AddApiParams extends UpdateApiParams {
     boolean isResponseCacheEnabled();
 
     int getResponseCacheTimeout();
-
-    ApiSubscriptions getSubscriptions();
-
-    List<String> getTenants();
 
 }
