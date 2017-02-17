@@ -2,7 +2,7 @@ package uk.co.mruoc.wso2;
 
 import java.util.List;
 
-public interface AddApiParams extends UpdateApiParams {
+public interface AddApiParams extends ApiVisibilityParams, UpdateApiParams {
 
     String getName();
 

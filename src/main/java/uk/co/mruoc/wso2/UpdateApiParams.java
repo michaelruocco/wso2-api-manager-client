@@ -2,11 +2,7 @@ package uk.co.mruoc.wso2;
 
 import java.util.List;
 
-public interface UpdateApiParams {
-
-    ApiVisibility getVisibility();
-
-    List<String> getRoles();
+public interface UpdateApiParams extends ApiVisibilityParams {
 
     String getDescription();
 

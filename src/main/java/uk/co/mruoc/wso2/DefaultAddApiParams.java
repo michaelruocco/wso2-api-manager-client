@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddApiParams {
+public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddApiParams, ApiVisibilityParams {
 
     private final String name;
     private final String context;
