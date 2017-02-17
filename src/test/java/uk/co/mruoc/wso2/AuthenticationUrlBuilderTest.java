@@ -15,7 +15,7 @@ public class AuthenticationUrlBuilderTest {
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "pass";
 
-    private final AuthenticationUrlBuilder builder = new AuthenticationUrlBuilder(HOST);
+    private final AuthenticationUrlBuilder builder = new DefaultAuthenticationUrlBuilder(HOST);
 
     @Test
     public void shouldBuildLoginUrl() {

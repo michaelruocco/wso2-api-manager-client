@@ -19,15 +19,15 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
-        this(hostUrl, new SimpleHttpClient());
+        this(new SimpleHttpClient(), new DefaultAuthenticationUrlBuilder(hostUrl), new DefaultListAllUrlBuilder(hostUrl), new DefaultGetApiUrlBuilder(hostUrl), new DefaultAddApiUrlBuilder(hostUrl));
     }
 
-    public DefaultApiPublisherClient(String hostUrl, HttpClient client) {
-        this.authenticationUrlBuilder = new AuthenticationUrlBuilder(hostUrl);
-        this.listAllUrlBuilder = new ListAllUrlBuilder(hostUrl);
-        this.getApiUrlBuilder = new GetApiUrlBuilder(hostUrl);
-        this.addApiUrlBuilder = new AddApiUrlBuilder(hostUrl);
+    public DefaultApiPublisherClient(HttpClient client, AuthenticationUrlBuilder authenticationUrlBuilder, ListAllUrlBuilder listAllUrlBuilder, GetApiUrlBuilder getApiUrlBuilder, AddApiUrlBuilder addApiUrlBuilder) {
         this.client = client;
+        this.authenticationUrlBuilder = authenticationUrlBuilder;
+        this.listAllUrlBuilder = listAllUrlBuilder;
+        this.getApiUrlBuilder = getApiUrlBuilder;
+        this.addApiUrlBuilder = addApiUrlBuilder;
         this.gson = buildGson();
     }
 
@@ -81,7 +81,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private List<ApiSummary> toApiSummaries(Response response) {
         JsonElement element = new JsonParser().parse(response.getBody());
         JsonObject json = element.getAsJsonObject();
-        Type listType = new TypeToken<List<ApiSummary>>(){}.getType();
+        Type listType = new TypeToken<List<ApiSummary>>() {
+        }.getType();
         return gson.fromJson(json.get("apis"), listType);
     }
 

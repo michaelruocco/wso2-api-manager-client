@@ -2,7 +2,6 @@ package uk.co.mruoc.wso2;
 
 import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
-import uk.co.mruoc.wso2.DefaultGetApiParams.DefaultGetApiParamsBuilder;
 
 import java.util.List;
 
@@ -11,26 +10,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DefaultApiPublisherClientTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String HOST_URL = "https://localhost:9443";
+    private static final String LOGIN_URL = "login-url";
+    private static final String LOGOUT_URL = "logout-url";
+    private static final String LIST_ALL_URL = "list-all-url";
+    private static final String GET_API_URL = "get-api-url";
+    private static final String ADD_API_URL = "add-api-url";
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(HOST_URL, httpClient);
-    private final Credentials credentials = new Credentials("admin", "admin");
-    private final GetApiParams getApiParams = new DefaultGetApiParamsBuilder()
-            .setName("rest-product")
-            .setVersion("v1")
-            .setProvider("admin")
-            .build();
+    private final AuthenticationUrlBuilder authenticationUrlBuilder = new StubAuthenticationUrlBuilder(LOGIN_URL, LOGOUT_URL);
+    private final ListAllUrlBuilder listAllUrlBuilder = new StubListAllUrlBuilder(LIST_ALL_URL);
+    private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
+    private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, authenticationUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder);
+
+    private final Credentials credentials = StubCredentialsBuilder.build();
+    private final GetApiParams getApiParams = StubGetApiParamsBuilder.build();
+    private final AddApiParams addApiParams = StubAddApiParamsBuilder.build();
 
     @Test
     public void loginShouldCallCorrectUrl() {
-        String expectedUrl = buildExpectedLoginUrl(credentials);
         givenWillReturnLoginSuccess();
 
         client.login(credentials);
 
-        assertThat(httpClient.lastRequestUri()).isEqualTo(expectedUrl);
+        assertThat(httpClient.lastRequestUri()).isEqualTo(LOGIN_URL);
     }
 
     @Test(expected = ApiPublisherException.class)
@@ -56,12 +60,11 @@ public class DefaultApiPublisherClientTest {
 
     @Test
     public void logoutShouldCallCorrectUrl() {
-        String expectedUrl = HOST_URL + "/publisher/site/blocks/user/login/ajax/login.jag?action=logout";
         givenWillReturnLogoutSuccess();
 
         client.logout();
 
-        assertThat(httpClient.lastRequestUri()).isEqualTo(expectedUrl);
+        assertThat(httpClient.lastRequestUri()).isEqualTo(LOGOUT_URL);
     }
 
     @Test(expected = ApiPublisherException.class)
@@ -87,12 +90,11 @@ public class DefaultApiPublisherClientTest {
 
     @Test
     public void listAllShouldCallCorrectUrl() {
-        String expectedUrl = HOST_URL + "/publisher/site/blocks/listing/ajax/item-list.jag?action=getAllAPIs";
         givenWillReturnListApiEmptySuccess();
 
         client.listAll();
 
-        assertThat(httpClient.lastRequestUri()).isEqualTo(expectedUrl);
+        assertThat(httpClient.lastRequestUri()).isEqualTo(LIST_ALL_URL);
     }
 
     @Test(expected = ApiPublisherException.class)
@@ -124,12 +126,11 @@ public class DefaultApiPublisherClientTest {
 
     @Test
     public void getApiShouldCallCorrectUrl() {
-        String expectedUrl = buildExpectedGetApiUrl(getApiParams);
         givenWillReturnListApiEmptySuccess();
 
         client.getApi(getApiParams);
 
-        assertThat(httpClient.lastRequestUri()).isEqualTo(expectedUrl);
+        assertThat(httpClient.lastRequestUri()).isEqualTo(GET_API_URL);
     }
 
     @Test(expected = ApiPublisherException.class)
@@ -155,14 +156,34 @@ public class DefaultApiPublisherClientTest {
         assertThat(api).isEqualToComparingFieldByField(new RestProductApi());
     }
 
-    private String buildExpectedLoginUrl(Credentials credentials) {
-        String url = HOST_URL + "/publisher/site/blocks/user/login/ajax/login.jag?action=login&username=%s&password=%s";
-        return String.format(url, credentials.getUsername(), credentials.getPassword());
+    @Test
+    public void addApiShouldCallCorrectUrl() {
+        givenWillReturnAddApiSuccess();
+
+        client.addApi(addApiParams);
+
+        assertThat(httpClient.lastRequestUri()).isEqualTo(ADD_API_URL);
     }
 
-    private String buildExpectedGetApiUrl(GetApiParams params) {
-        String url = HOST_URL + "/publisher/site/blocks/listing/ajax/item-list.jag?action=getAPI&name=%s&version=%s&provider=%s";
-        return String.format(url, params.getName(), params.getVersion(), params.getProvider());
+    @Test(expected = ApiPublisherException.class)
+    public void addApiShouldThrowExceptionIfNon200Response() {
+        givenWillReturnNon200();
+
+        client.addApi(addApiParams);
+    }
+
+    @Test(expected = ApiPublisherException.class)
+    public void addApiShouldThrowExceptionOnAddApiFailure() {
+        givenWillReturnAddApiFailure();
+
+        client.addApi(addApiParams);
+    }
+
+    @Test
+    public void addApiShouldReturnTrueOnAddApiSuccess() {
+        givenWillReturnAddApiSuccess();
+
+        assertThat(client.addApi(addApiParams)).isTrue();
     }
 
     private void givenWillReturnNon200() {
@@ -206,6 +227,16 @@ public class DefaultApiPublisherClientTest {
 
     private void givenWillReturnGetApiSuccess() {
         String body = load("get-api-success.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+    private void givenWillReturnAddApiFailure() {
+        String body = load("add-api-failure.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+    private void givenWillReturnAddApiSuccess() {
+        String body = load("add-api-success.json");
         httpClient.cannedResponse(200, body);
     }
 

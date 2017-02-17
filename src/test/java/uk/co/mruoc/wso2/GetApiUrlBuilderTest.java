@@ -15,7 +15,7 @@ public class GetApiUrlBuilderTest {
     private static final String VERSION = "v1";
     private static final String PROVIDER = "admin";
 
-    private final GetApiUrlBuilder builder = new GetApiUrlBuilder(HOST);
+    private final GetApiUrlBuilder builder = new DefaultGetApiUrlBuilder(HOST);
 
     @Test
     public void shouldBuildUrl() {
