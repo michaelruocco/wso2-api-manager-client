@@ -28,13 +28,13 @@ public class AddApiParamsToQueryStringConverter {
                 "&endpoint_config=" + format(params.getEndpointConfig()) +
                 "&tags=" + toCommaSeparatedString(params.getTags()) +
                 "&tiersCollection=" + toCommaSeparatedString(toNames(params.getTiers())) +
-                visibilityArgumentBuilder.build(params) +
+                "&" + visibilityArgumentBuilder.build(params) +
                 endpointSecurityArgumentBuilder.build(params) +
                 responseCacheBuilder.build(params) +
-                transportsArgumentBuilder.build(params) +
+                "&" + transportsArgumentBuilder.build(params) +
                 sequencesArgumentBuilder.build(params) +
                 defaultVersionArgumentBuilder.build(params) +
-                subscriptionsArgumentBuilder.build(params);
+                "&" + subscriptionsArgumentBuilder.build(params);
     }
 
     private static List<String> toNames(List<ApiTierAvailability> values) {
