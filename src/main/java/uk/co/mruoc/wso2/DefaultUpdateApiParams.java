@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static uk.co.mruoc.wso2.ApiEndpointType.*;
+import static uk.co.mruoc.wso2.ApiTierAvailability.*;
+import static uk.co.mruoc.wso2.ApiVisibility.*;
+
 public class DefaultUpdateApiParams implements UpdateApiParams {
 
     private final ApiVisibility visibility;
@@ -97,14 +101,14 @@ public class DefaultUpdateApiParams implements UpdateApiParams {
 
     public static class DefaultUpdateApiParamsBuilder<T extends DefaultUpdateApiParamsBuilder> {
 
-        private ApiVisibility visibility = ApiVisibility.PUBLIC;
+        private ApiVisibility visibility = PUBLIC;
         private List<String> roles = new ArrayList<>();
         private String description;
         private List<String> tags = new ArrayList<>();
-        private ApiEndpointType endpointType = ApiEndpointType.UNSECURED;
+        private ApiEndpointType endpointType = UNSECURED;
         private String endpointUsername;
         private String endpointPassword;
-        private List<ApiTierAvailability> tiers = Collections.singletonList(ApiTierAvailability.UNLIMITED);
+        private List<ApiTierAvailability> tiers = Collections.singletonList(UNLIMITED);
         private boolean httpChecked = true;
         private boolean httpsChecked = true;
         private String endpointConfig;
@@ -150,12 +154,12 @@ public class DefaultUpdateApiParams implements UpdateApiParams {
             return (T)this;
         }
 
-        public T setHttpChecked(boolean httpChecked) {
+        public T setIsHttpChecked(boolean httpChecked) {
             this.httpChecked = httpChecked;
             return (T)this;
         }
 
-        public T setHttpsChecked(boolean httpsChecked) {
+        public T setIsHttpsChecked(boolean httpsChecked) {
             this.httpsChecked = httpsChecked;
             return (T)this;
         }

@@ -4,6 +4,7 @@ import org.junit.Test;
 import uk.co.mruoc.wso2.DefaultUpdateApiParams.DefaultUpdateApiParamsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.co.mruoc.wso2.ApiEndpointType.*;
 import static uk.co.mruoc.wso2.ApiTierAvailability.*;
 import static uk.co.mruoc.wso2.ApiVisibility.*;
 
@@ -12,12 +13,26 @@ public class DefaultUpdateApiParamsTest {
     private final DefaultUpdateApiParamsBuilder builder = new DefaultUpdateApiParamsBuilder();
 
     @Test
+    public void visibilityShouldDefaultToPublic() {
+        UpdateApiParams params = builder.build();
+
+        assertThat(params.getVisibility()).isEqualTo(PUBLIC);
+    }
+
+    @Test
     public void shouldSetVisibility() {
         ApiVisibility visibility = PRIVATE;
 
         UpdateApiParams params = builder.setVisibility(visibility).build();
 
         assertThat(params.getVisibility()).isEqualTo(visibility);
+    }
+
+    @Test
+    public void rolesShouldDefaultToEmptyList() {
+        UpdateApiParams params = builder.build();
+
+        assertThat(params.getRoles()).isEmpty();
     }
 
     @Test
@@ -37,6 +52,13 @@ public class DefaultUpdateApiParamsTest {
     }
 
     @Test
+    public void tagsShouldDefaultToEmptyList() {
+        UpdateApiParams params = builder.build();
+
+        assertThat(params.getTags()).isEmpty();
+    }
+
+    @Test
     public void shouldSetTags() {
         UpdateApiParams params = builder.setTags("tag1", "tag2").build();
 
@@ -44,8 +66,15 @@ public class DefaultUpdateApiParamsTest {
     }
 
     @Test
+    public void endpointTypeShouldDefaultToUnsecured() {
+        UpdateApiParams params = builder.build();
+
+        assertThat(params.getEndpointType()).isEqualTo(UNSECURED);
+    }
+
+    @Test
     public void shouldSetEndpointType() {
-        ApiEndpointType endpointType = ApiEndpointType.SECURED;
+        ApiEndpointType endpointType = SECURED;
 
         UpdateApiParams params = builder.setEndpointType(endpointType).build();
 
@@ -71,6 +100,13 @@ public class DefaultUpdateApiParamsTest {
     }
 
     @Test
+    public void tiersShouldDefaultToUnlimited() {
+        UpdateApiParams params = builder.build();
+
+        assertThat(params.getTiers()).containsExactly(UNLIMITED);
+    }
+
+    @Test
     public void shouldSetTiers() {
         UpdateApiParams params = builder.setTiers(GOLD, BRONZE).build();
 
@@ -78,17 +114,31 @@ public class DefaultUpdateApiParamsTest {
     }
 
     @Test
-    public void shouldSetHttpChecked() {
-        UpdateApiParams params = builder.setHttpChecked(true).build();
+    public void isHttpCheckedShouldDefaultToTrue() {
+        UpdateApiParams params = builder.build();
 
         assertThat(params.isHttpChecked()).isTrue();
     }
 
     @Test
-    public void shouldSetHttpsChecked() {
-        UpdateApiParams params = builder.setHttpsChecked(true).build();
+    public void shouldSetIsHttpChecked() {
+        UpdateApiParams params = builder.setIsHttpChecked(false).build();
+
+        assertThat(params.isHttpChecked()).isFalse();
+    }
+
+    @Test
+    public void isHttpsCheckedShouldDefaultToTrue() {
+        UpdateApiParams params = builder.build();
 
         assertThat(params.isHttpsChecked()).isTrue();
+    }
+
+    @Test
+    public void shouldSetIsHttpsChecked() {
+        UpdateApiParams params = builder.setIsHttpsChecked(false).build();
+
+        assertThat(params.isHttpsChecked()).isFalse();
     }
 
     @Test

@@ -1,5 +1,7 @@
 package uk.co.mruoc.wso2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddApiParams {
@@ -90,7 +92,7 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
         private boolean responseCacheEnabled;
         private int responseCacheTimeout;
         private ApiSubscriptions subscriptions = ApiSubscriptions.CURRENT_TENANT;
-        private List<String> tenants;
+        private List<String> tenants = new ArrayList<>();
 
         public DefaultAddApiParamsBuilder setName(String name) {
             this.name = name;
@@ -117,7 +119,7 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
             return this;
         }
 
-        public DefaultAddApiParamsBuilder setDefaultVersion(boolean defaultVersion) {
+        public DefaultAddApiParamsBuilder setIsDefaultVersion(boolean defaultVersion) {
             this.defaultVersion = defaultVersion;
             return this;
         }
@@ -137,8 +139,8 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
             return this;
         }
 
-        public DefaultAddApiParamsBuilder setTenants(List<String> tenants) {
-            this.tenants = tenants;
+        public DefaultAddApiParamsBuilder setTenants(String... tenants) {
+            this.tenants = Arrays.asList(tenants);
             return this;
         }
 
