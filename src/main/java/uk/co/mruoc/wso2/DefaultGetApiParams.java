@@ -1,5 +1,9 @@
 package uk.co.mruoc.wso2;
 
+import org.apache.commons.lang3.StringUtils;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 public class DefaultGetApiParams implements GetApiParams {
 
     private final String name;
@@ -29,9 +33,9 @@ public class DefaultGetApiParams implements GetApiParams {
 
     public static class DefaultGetApiParamsBuilder {
 
-        private String name;
-        private String version;
-        private String provider;
+        private String name = EMPTY;
+        private String version = EMPTY;
+        private String provider = EMPTY;
 
         public DefaultGetApiParamsBuilder setName(String name) {
             this.name = name;

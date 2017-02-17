@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static uk.co.mruoc.wso2.ApiEndpointType.*;
 import static uk.co.mruoc.wso2.ApiTierAvailability.*;
 import static uk.co.mruoc.wso2.ApiVisibility.*;
@@ -103,16 +104,16 @@ public class DefaultUpdateApiParams implements UpdateApiParams {
 
         private ApiVisibility visibility = PUBLIC;
         private List<String> roles = new ArrayList<>();
-        private String description;
+        private String description = EMPTY;
         private List<String> tags = new ArrayList<>();
         private ApiEndpointType endpointType = UNSECURED;
-        private String endpointUsername;
-        private String endpointPassword;
+        private String endpointUsername = EMPTY;
+        private String endpointPassword = EMPTY;
         private List<ApiTierAvailability> tiers = Collections.singletonList(UNLIMITED);
         private boolean httpChecked = true;
         private boolean httpsChecked = true;
-        private String endpointConfig;
-        private String swagger;
+        private String endpointConfig = EMPTY;
+        private String swagger = EMPTY;
 
         public T setVisibility(ApiVisibility visibility) {
             this.visibility = visibility;

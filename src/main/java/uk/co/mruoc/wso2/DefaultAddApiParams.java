@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddApiParams, ApiVisibilityParams {
 
     private final String name;
@@ -83,14 +85,16 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
 
     public static class DefaultAddApiParamsBuilder extends DefaultUpdateApiParamsBuilder<DefaultAddApiParamsBuilder> {
 
-        private String name;
-        private String context;
-        private String version;
-        private String inSequence;
-        private String outSequence;
+        private static final int DEFAULT_CACHE_TIMEOUT_IN_SECONDS = 300;
+
+        private String name = EMPTY;
+        private String context = EMPTY;
+        private String version = EMPTY;
+        private String inSequence = EMPTY;
+        private String outSequence = EMPTY;
         private boolean defaultVersion;
         private boolean responseCacheEnabled;
-        private int responseCacheTimeout;
+        private int responseCacheTimeout = DEFAULT_CACHE_TIMEOUT_IN_SECONDS;
         private ApiSubscriptions subscriptions = ApiSubscriptions.CURRENT_TENANT;
         private List<String> tenants = new ArrayList<>();
 
