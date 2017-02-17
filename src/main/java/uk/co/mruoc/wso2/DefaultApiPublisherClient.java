@@ -12,19 +12,21 @@ import java.util.List;
 public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     private final HttpClient client;
-    private final AuthenticationUrlBuilder authenticationUrlBuilder;
+    private final LoginUrlBuilder loginUrlBuilder;
+    private final LogoutUrlBuilder logoutUrlBuilder;
     private final ListAllUrlBuilder listAllUrlBuilder;
     private final GetApiUrlBuilder getApiUrlBuilder;
     private final AddApiUrlBuilder addApiUrlBuilder;
     private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
-        this(new SimpleHttpClient(), new DefaultAuthenticationUrlBuilder(hostUrl), new DefaultListAllUrlBuilder(hostUrl), new DefaultGetApiUrlBuilder(hostUrl), new DefaultAddApiUrlBuilder(hostUrl));
+        this(new SimpleHttpClient(), new DefaultLoginUrlBuilder(hostUrl), new DefaultLogoutUrlBuilder(hostUrl), new DefaultListAllUrlBuilder(hostUrl), new DefaultGetApiUrlBuilder(hostUrl), new DefaultAddApiUrlBuilder(hostUrl));
     }
 
-    public DefaultApiPublisherClient(HttpClient client, AuthenticationUrlBuilder authenticationUrlBuilder, ListAllUrlBuilder listAllUrlBuilder, GetApiUrlBuilder getApiUrlBuilder, AddApiUrlBuilder addApiUrlBuilder) {
+    public DefaultApiPublisherClient(HttpClient client, LoginUrlBuilder loginUrlBuilder, LogoutUrlBuilder logoutUrlBuilder, ListAllUrlBuilder listAllUrlBuilder, GetApiUrlBuilder getApiUrlBuilder, AddApiUrlBuilder addApiUrlBuilder) {
         this.client = client;
-        this.authenticationUrlBuilder = authenticationUrlBuilder;
+        this.loginUrlBuilder = loginUrlBuilder;
+        this.logoutUrlBuilder = logoutUrlBuilder;
         this.listAllUrlBuilder = listAllUrlBuilder;
         this.getApiUrlBuilder = getApiUrlBuilder;
         this.addApiUrlBuilder = addApiUrlBuilder;
@@ -33,7 +35,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean login(Credentials credentials) {
-        String url = authenticationUrlBuilder.buildLoginUrl(credentials);
+        String url = loginUrlBuilder.build(credentials);
         Response response = client.post(url, "");
         checkForError(response);
         return true;
@@ -49,7 +51,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean logout() {
-        String url = authenticationUrlBuilder.buildLogoutUrl();
+        String url = logoutUrlBuilder.build();
         Response response = client.get(url);
         checkForError(response);
         return true;

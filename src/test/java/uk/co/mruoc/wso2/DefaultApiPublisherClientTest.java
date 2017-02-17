@@ -18,11 +18,12 @@ public class DefaultApiPublisherClientTest {
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final AuthenticationUrlBuilder authenticationUrlBuilder = new StubAuthenticationUrlBuilder(LOGIN_URL, LOGOUT_URL);
+    private final LoginUrlBuilder loginUrlBuilder = new StubLoginUrlBuilder(LOGIN_URL);
+    private final LogoutUrlBuilder logoutUrlBuilder = new StubLogoutUrlBuilder(LOGOUT_URL);
     private final ListAllUrlBuilder listAllUrlBuilder = new StubListAllUrlBuilder(LIST_ALL_URL);
     private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, authenticationUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder);
 
     private final Credentials credentials = StubCredentialsBuilder.build();
     private final GetApiParams getApiParams = StubGetApiParamsBuilder.build();
