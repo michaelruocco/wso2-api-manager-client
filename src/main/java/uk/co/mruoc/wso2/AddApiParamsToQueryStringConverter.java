@@ -30,7 +30,7 @@ public class AddApiParamsToQueryStringConverter {
                 "&tiersCollection=" + toCommaSeparatedString(toNames(params.getTiers())) +
                 "&" + visibilityArgumentBuilder.build(params) +
                 endpointSecurityArgumentBuilder.build(params) +
-                responseCacheBuilder.build(params) +
+                "&" + responseCacheBuilder.build(params) +
                 "&" + transportsArgumentBuilder.build(params) +
                 "&" + sequencesArgumentBuilder.build(params) +
                 defaultVersionArgumentBuilder.build(params) +

@@ -2,10 +2,12 @@ package uk.co.mruoc.wso2;
 
 public class ResponseCacheArgumentBuilder {
 
-    public String build(AddApiParams params) {
+    private static final String PREFIX = "responseCache=";
+
+    public String build(ResponseCacheParams params) {
         if (params.isResponseCacheEnabled())
-            return "&responseCache=enabled&cacheTimeout=" + params.getResponseCacheTimeout();
-        return "&responseCache=disabled";
+            return PREFIX + "enabled&cacheTimeout=" + params.getResponseCacheTimeout();
+        return PREFIX + "disabled";
     }
 
 }

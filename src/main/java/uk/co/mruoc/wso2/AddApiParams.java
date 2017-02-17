@@ -1,6 +1,6 @@
 package uk.co.mruoc.wso2;
 
-public interface AddApiParams extends UpdateApiParams, SequenceParams, SubscriptionsParams {
+public interface AddApiParams extends UpdateApiParams, SequenceParams, SubscriptionsParams, ResponseCacheParams {
 
     String getName();
 
@@ -9,9 +9,5 @@ public interface AddApiParams extends UpdateApiParams, SequenceParams, Subscript
     String getVersion();
 
     boolean isDefaultVersion();
-
-    boolean isResponseCacheEnabled();
-
-    int getResponseCacheTimeout();
 
 }
