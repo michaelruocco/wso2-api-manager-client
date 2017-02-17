@@ -4,11 +4,16 @@ public class DefaultAddApiUrlBuilder implements AddApiUrlBuilder {
 
     private static final String RESOURCE_URL = "/publisher/site/blocks/item-add/ajax/add.jag";
 
-    private final AddApiParamsToQueryStringConverter converter = new AddApiParamsToQueryStringConverter();
+    private final AddApiParamsToQueryStringConverter queryStringConverter;
     private final String url;
 
     public DefaultAddApiUrlBuilder(String hostUrl) {
-        url = hostUrl + RESOURCE_URL;
+        this(hostUrl, new DefaultAddApiParamsToQueryStringConverter());
+    }
+
+    public DefaultAddApiUrlBuilder(String hostUrl, AddApiParamsToQueryStringConverter queryStringConverter) {
+        this.url = hostUrl + RESOURCE_URL;
+        this.queryStringConverter = queryStringConverter;
     }
 
     @Override
@@ -18,7 +23,7 @@ public class DefaultAddApiUrlBuilder implements AddApiUrlBuilder {
     }
 
     private String buildQueryString(AddApiParams params) {
-        return converter.toQueryString(params);
+        return queryStringConverter.convert(params);
     }
 
 }
