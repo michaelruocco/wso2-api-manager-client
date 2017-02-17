@@ -13,12 +13,12 @@ public class EndpointSecurityArgumentBuilder {
 
     private String formatEndpointType(AddApiParams params) {
         String result = "&endpointSecurity=";
-        result += UrlEncoder.encode(params.getApiEndpointType().name().toLowerCase());
+        result += UrlEncoder.encode(params.getEndpointType().name().toLowerCase());
         return result;
     }
 
     private boolean isSecured(AddApiParams params) {
-        return SECURED.equals(params.getApiEndpointType());
+        return SECURED.equals(params.getEndpointType());
     }
 
     private String buildCredentials(AddApiParams params) {

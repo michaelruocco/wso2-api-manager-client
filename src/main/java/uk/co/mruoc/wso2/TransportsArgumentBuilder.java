@@ -10,14 +10,14 @@ public class TransportsArgumentBuilder {
 
     private String buildHttpChecked(AddApiParams params) {
         String result = "&http_checked=";
-        if (params.httpChecked())
+        if (params.isHttpChecked())
             result += "http";
         return result;
     }
 
     private String buildHttpsChecked(AddApiParams params) {
         String result = "&https_checked=";
-        if (params.httpsChecked())
+        if (params.isHttpsChecked())
             result += "https";
         return result;
     }
