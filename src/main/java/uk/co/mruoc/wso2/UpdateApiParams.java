@@ -2,7 +2,7 @@ package uk.co.mruoc.wso2;
 
 import java.util.List;
 
-public interface UpdateApiParams extends ApiVisibilityParams {
+public interface UpdateApiParams extends ApiVisibilityParams, TransportParams {
 
     String getDescription();
 
@@ -15,10 +15,6 @@ public interface UpdateApiParams extends ApiVisibilityParams {
     String getEndpointPassword();
 
     List<ApiTierAvailability> getTiers();
-
-    boolean isHttpChecked();
-
-    boolean isHttpsChecked();
 
     String getEndpointConfig();
 
