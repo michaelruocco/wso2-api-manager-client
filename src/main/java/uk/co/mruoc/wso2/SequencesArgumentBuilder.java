@@ -1,26 +1,20 @@
 package uk.co.mruoc.wso2;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class SequencesArgumentBuilder {
 
-    public String build(AddApiParams params) {
+    public String build(SequenceParams params) {
         String result = buildInSequence(params);
         result += buildOutSequence(params);
         return result;
     }
 
-    private String buildInSequence(AddApiParams params) {
+    private String buildInSequence(SequenceParams params) {
         String inSequence = params.getInSequence();
-        if (StringUtils.isEmpty(inSequence))
-            return "";
-        return "&inSequence=" + UrlEncoder.encode(inSequence);
+        return "inSequence=" + UrlEncoder.encode(inSequence);
     }
 
-    private String buildOutSequence(AddApiParams params) {
+    private String buildOutSequence(SequenceParams params) {
         String outSequence = params.getOutSequence();
-        if (StringUtils.isEmpty(outSequence))
-            return "";
         return "&outSequence=" + UrlEncoder.encode(outSequence);
     }
 

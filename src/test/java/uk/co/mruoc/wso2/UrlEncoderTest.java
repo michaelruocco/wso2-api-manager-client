@@ -25,4 +25,9 @@ public class UrlEncoderTest {
         assertThat(UrlEncoder.encodeToCommaSeparatedList(values)).isEqualTo(encodedValue);
     }
 
+    @Test
+    public void shouldHandleNullString() {
+        assertThat(UrlEncoder.encode(null)).isEqualTo("");
+    }
+
 }

@@ -32,7 +32,7 @@ public class AddApiParamsToQueryStringConverter {
                 endpointSecurityArgumentBuilder.build(params) +
                 responseCacheBuilder.build(params) +
                 "&" + transportsArgumentBuilder.build(params) +
-                sequencesArgumentBuilder.build(params) +
+                "&" + sequencesArgumentBuilder.build(params) +
                 defaultVersionArgumentBuilder.build(params) +
                 "&" + subscriptionsArgumentBuilder.build(params);
     }

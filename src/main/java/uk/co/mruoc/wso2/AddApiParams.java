@@ -1,16 +1,12 @@
 package uk.co.mruoc.wso2;
 
-public interface AddApiParams extends UpdateApiParams, SubscriptionsParams {
+public interface AddApiParams extends UpdateApiParams, SequenceParams, SubscriptionsParams {
 
     String getName();
 
     String getContext();
 
     String getVersion();
-
-    String getInSequence();
-
-    String getOutSequence();
 
     boolean isDefaultVersion();
 

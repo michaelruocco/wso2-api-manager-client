@@ -1,5 +1,7 @@
 package uk.co.mruoc.wso2;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -10,6 +12,8 @@ public class UrlEncoder {
 
     public static String encode(String value) {
         try {
+            if (StringUtils.isEmpty(value))
+                return "";
             return URLEncoder.encode(value, DEFAULT_ENCODING);
         } catch (UnsupportedEncodingException e) {
             throw new ApiPublisherException("error url encoding value " + value, e);
