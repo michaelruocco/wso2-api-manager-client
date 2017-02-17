@@ -33,7 +33,7 @@ public class AddApiParamsToQueryStringConverter {
                 "&" + responseCacheBuilder.build(params) +
                 "&" + transportsArgumentBuilder.build(params) +
                 "&" + sequencesArgumentBuilder.build(params) +
-                defaultVersionArgumentBuilder.build(params) +
+                "&" + defaultVersionArgumentBuilder.build(params) +
                 "&" + subscriptionsArgumentBuilder.build(params);
     }
 
