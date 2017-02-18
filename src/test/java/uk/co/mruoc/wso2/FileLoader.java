@@ -3,7 +3,6 @@ package uk.co.mruoc.wso2;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
-import java.util.List;
 
 public class FileLoader {
 
