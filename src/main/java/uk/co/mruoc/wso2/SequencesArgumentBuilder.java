@@ -2,6 +2,9 @@ package uk.co.mruoc.wso2;
 
 public class SequencesArgumentBuilder {
 
+    private StringArgumentBuilder inSequenceArgumentBuilder = new StringArgumentBuilder("inSequence");
+    private StringArgumentBuilder outSequenceArgumentBuilder = new StringArgumentBuilder("outSequence");
+
     public String build(SequenceParams params) {
         String result = buildInSequence(params);
         result += buildOutSequence(params);
@@ -9,13 +12,11 @@ public class SequencesArgumentBuilder {
     }
 
     private String buildInSequence(SequenceParams params) {
-        String inSequence = params.getInSequence();
-        return "inSequence=" + UrlEncoder.encode(inSequence);
+        return inSequenceArgumentBuilder.build(params.getInSequence());
     }
 
     private String buildOutSequence(SequenceParams params) {
-        String outSequence = params.getOutSequence();
-        return "&outSequence=" + UrlEncoder.encode(outSequence);
+        return outSequenceArgumentBuilder.build(params.getOutSequence());
     }
 
 }

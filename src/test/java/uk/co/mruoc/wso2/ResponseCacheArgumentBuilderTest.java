@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 
 public class ResponseCacheArgumentBuilderTest {
 
-    private static final String PREFIX = "responseCache=";
+    private static final String PREFIX = "&responseCache=";
 
     private final ResponseCacheArgumentBuilder builder = new ResponseCacheArgumentBuilder();
 
@@ -18,7 +18,7 @@ public class ResponseCacheArgumentBuilderTest {
     public void shouldBuildResponseCacheDisabled() {
         given(params.isResponseCacheEnabled()).willReturn(false);
 
-        assertThat(builder.build(params)).isEqualTo(PREFIX + "disabled");
+        assertThat(builder.build(params)).isEmpty();
     }
 
     @Test

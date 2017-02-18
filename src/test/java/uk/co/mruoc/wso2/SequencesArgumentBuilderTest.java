@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 
 public class SequencesArgumentBuilderTest {
 
-    private static final String IN_PREFIX = "inSequence=";
+    private static final String IN_PREFIX = "&inSequence=";
     private static final String OUT_PREFIX = "&outSequence=";
 
     private final SequencesArgumentBuilder builder = new SequencesArgumentBuilder();
@@ -17,7 +17,7 @@ public class SequencesArgumentBuilderTest {
 
     @Test
     public void shouldBuildNoSequences() {
-        assertThat(builder.build(params)).isEqualTo(IN_PREFIX + OUT_PREFIX);
+        assertThat(builder.build(params)).isEmpty();
     }
 
     @Test

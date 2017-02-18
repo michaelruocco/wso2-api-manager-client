@@ -6,6 +6,7 @@ import uk.co.mruoc.http.client.FakeHttpClient;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class DefaultApiPublisherClientTest {
 
@@ -25,9 +26,9 @@ public class DefaultApiPublisherClientTest {
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
     private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder);
 
-    private final Credentials credentials = StubCredentialsBuilder.build();
-    private final GetApiParams getApiParams = StubGetApiParamsBuilder.build();
-    private final AddApiParams addApiParams = StubAddApiParamsBuilder.build();
+    private final Credentials credentials = mock(Credentials.class);
+    private final GetApiParams getApiParams = mock(GetApiParams.class);
+    private final AddApiParams addApiParams = mock(AddApiParams.class);
 
     @Test
     public void loginShouldCallCorrectUrl() {

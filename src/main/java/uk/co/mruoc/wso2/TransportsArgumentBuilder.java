@@ -2,6 +2,9 @@ package uk.co.mruoc.wso2;
 
 public class TransportsArgumentBuilder {
 
+    private final StringArgumentBuilder httpArgumentBuilder = new StringArgumentBuilder("http_checked");
+    private final StringArgumentBuilder httpsArgumentBuilder = new StringArgumentBuilder("https_checked");
+
     public String build(TransportParams params) {
         String result = buildHttpChecked(params);
         result += buildHttpsChecked(params);
@@ -9,17 +12,15 @@ public class TransportsArgumentBuilder {
     }
 
     private String buildHttpChecked(TransportParams params) {
-        String result = "http_checked=";
         if (params.isHttpChecked())
-            result += "http";
-        return result;
+            return httpArgumentBuilder.build("http");
+        return "";
     }
 
     private String buildHttpsChecked(TransportParams params) {
-        String result = "&https_checked=";
         if (params.isHttpsChecked())
-            result += "https";
-        return result;
+            return httpsArgumentBuilder.build("https");
+        return "";
     }
 
 }

@@ -1,14 +1,20 @@
 package uk.co.mruoc.wso2;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.co.mruoc.wso2.ListToCommaSeparatedStringConverter.toCommaSeparatedString;
-
 public class DefaultAddApiParamsToQueryStringConverter implements AddApiParamsToQueryStringConverter {
+
+    private final StringArgumentBuilder nameArgumentBuilder = new StringArgumentBuilder("name");
+    private final StringArgumentBuilder contextArgumentBuilder = new StringArgumentBuilder("context");
+    private final StringArgumentBuilder versionArgumentBuilder = new StringArgumentBuilder("version");
+    private final StringArgumentBuilder descriptionArgumentBuilder = new StringArgumentBuilder("description");
+    private final StringArgumentBuilder swaggerArgumentBuilder = new StringArgumentBuilder("swagger");
+    private final StringArgumentBuilder endpointConfigArgumentBuilder = new StringArgumentBuilder("endpoint_config");
+    private final StringArgumentBuilder tagsArgumentBuilder = new StringArgumentBuilder("tags");
+    private final StringArgumentBuilder tiersCollectionArgumentBuilder = new StringArgumentBuilder("tiersCollection");
 
     private final TransportsArgumentBuilder transportsArgumentBuilder = new TransportsArgumentBuilder();
     private final SequencesArgumentBuilder sequencesArgumentBuilder = new SequencesArgumentBuilder();
@@ -21,33 +27,27 @@ public class DefaultAddApiParamsToQueryStringConverter implements AddApiParamsTo
     @Override
     public String convert(AddApiParams params) {
         return "?action=addAPI" +
-                "&name=" + format(params.getName()) +
-                "&context=" + format(params.getContext()) +
-                "&version=" + format(params.getVersion()) +
-                "&description=" + format(params.getDescription()) +
-                "&swagger=" + format(params.getSwagger()) +
-                "&endpoint_config=" + format(params.getEndpointConfig()) +
-                "&tags=" + toCommaSeparatedString(params.getTags()) +
-                "&tiersCollection=" + toCommaSeparatedString(toNames(params.getTiers())) +
-                "&" + visibilityArgumentBuilder.build(params) +
-                "&" + endpointSecurityArgumentBuilder.build(params) +
-                "&" + responseCacheBuilder.build(params) +
-                "&" + transportsArgumentBuilder.build(params) +
-                "&" + sequencesArgumentBuilder.build(params) +
-                "&" + defaultVersionArgumentBuilder.build(params) +
-                "&" + subscriptionsArgumentBuilder.build(params);
+                nameArgumentBuilder.build(params.getName()) +
+                contextArgumentBuilder.build(params.getContext()) +
+                versionArgumentBuilder.build(params.getVersion()) +
+                descriptionArgumentBuilder.build(params.getDescription()) +
+                swaggerArgumentBuilder.build(params.getSwagger()) +
+                endpointConfigArgumentBuilder.build(params.getEndpointConfig()) +
+                tagsArgumentBuilder.build(params.getTags()) +
+                tiersCollectionArgumentBuilder.build(toNames(params.getTiers())) +
+                visibilityArgumentBuilder.build(params) +
+                endpointSecurityArgumentBuilder.build(params) +
+                responseCacheBuilder.build(params) +
+                transportsArgumentBuilder.build(params) +
+                sequencesArgumentBuilder.build(params) +
+                defaultVersionArgumentBuilder.build(params) +
+                subscriptionsArgumentBuilder.build(params);
     }
 
     private static List<String> toNames(List<ApiTierAvailability> values) {
         List<String> names = new ArrayList<>();
         values.forEach(v -> names.add(UrlEncoder.encode(WordUtils.capitalize(v.name().toLowerCase()))));
         return names;
-    }
-
-    private static String format(String value) {
-        if (StringUtils.isNotEmpty(value))
-            return UrlEncoder.encode(value);
-        return "";
     }
 
 }

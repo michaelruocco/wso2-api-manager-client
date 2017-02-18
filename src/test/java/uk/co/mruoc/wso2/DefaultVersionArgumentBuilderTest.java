@@ -23,7 +23,7 @@ public class DefaultVersionArgumentBuilderTest {
     public void shouldHandleDefaultVersion() {
         given(params.isDefaultVersion()).willReturn(true);
 
-        assertThat(builder.build(params)).isEqualTo("default_version_checked=default_version");
+        assertThat(builder.build(params)).isEqualTo("&default_version_checked=default_version");
     }
 
 }

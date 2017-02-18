@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -13,11 +14,18 @@ import static uk.co.mruoc.wso2.ApiVisibility.RESTRICTED;
 
 public class VisibilityArgumentBuilderTest {
 
-    private static final String PREFIX = "visibility=";
+    private static final String PREFIX = "&visibility=";
 
     private final VisibilityArgumentBuilder builder = new VisibilityArgumentBuilder();
 
     private final ApiVisibilityParams params = mock(ApiVisibilityParams.class);
+
+    @Test
+    public void shouldReturnEmptyStringIfNullPassed() {
+        given(params.getVisibility()).willReturn(null);
+
+        assertThat(builder.build(params)).isEqualTo(EMPTY);
+    }
 
     @Test
     public void shouldBuildPublic() {
@@ -34,10 +42,10 @@ public class VisibilityArgumentBuilderTest {
     }
 
     @Test
-    public void shouldBuildRestrictedWithNoRoles() {
+    public void shouldBuildRestricted() {
         given(params.getVisibility()).willReturn(RESTRICTED);
 
-        assertThat(builder.build(params)).isEqualTo(PREFIX + "restricted&roles=");
+        assertThat(builder.build(params)).isEqualTo(PREFIX + "restricted");
     }
 
     @Test

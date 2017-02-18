@@ -10,7 +10,7 @@ import static uk.co.mruoc.wso2.ApiEndpointType.UNSECURED;
 
 public class EndpointSecurityArgumentBuilderTest {
 
-    private static final String PREFIX = "endpointSecurity=";
+    private static final String PREFIX = "&endpointSecurity=";
 
     private final EndpointSecurityArgumentBuilder builder = new EndpointSecurityArgumentBuilder();
 
@@ -27,7 +27,7 @@ public class EndpointSecurityArgumentBuilderTest {
     public void shouldBuildSecuredWithNoCredentials() {
         given(params.getEndpointType()).willReturn(SECURED);
 
-        assertThat(builder.build(params)).isEqualTo(PREFIX + "secured&epUsername=&epPassword=");
+        assertThat(builder.build(params)).isEqualTo(PREFIX + "secured");
     }
 
     @Test

@@ -1,18 +1,31 @@
 package uk.co.mruoc.wso2;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static uk.co.mruoc.wso2.ApiSubscriptions.SPECIFIC_TENANTS;
 
 public class SubscriptionsArgumentBuilder {
 
+    private StringArgumentBuilder argumentBuilder = new StringArgumentBuilder("subscriptions");
+    private StringArgumentBuilder tenantsArgumentBuilder = new StringArgumentBuilder("tenants");
+
     public String build(SubscriptionsParams params) {
         ApiSubscriptions subscriptions = params.getSubscriptions();
-        String result = "subscriptions=" + UrlEncoder.encode(subscriptions.name().toLowerCase());
+        String result = argumentBuilder.build(formatSubscriptionName(subscriptions));
 
-        if (SPECIFIC_TENANTS.equals(subscriptions))
-            result += "&tenants=" + UrlEncoder.encodeToCommaSeparatedList(params.getTenants());
+        if (isSpecificTenants(subscriptions))
+            result += tenantsArgumentBuilder.build(params.getTenants());
 
         return result;
     }
 
+    private String formatSubscriptionName(ApiSubscriptions subscriptions) {
+        if (subscriptions == null)
+            return EMPTY;
+        return subscriptions.name().toLowerCase();
+    }
+
+    private boolean isSpecificTenants(ApiSubscriptions subscriptions) {
+        return SPECIFIC_TENANTS.equals(subscriptions);
+    }
 
 }

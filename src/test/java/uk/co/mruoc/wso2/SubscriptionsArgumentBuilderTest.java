@@ -13,7 +13,7 @@ import static uk.co.mruoc.wso2.ApiSubscriptions.SPECIFIC_TENANTS;
 
 public class SubscriptionsArgumentBuilderTest {
 
-    private static final String PREFIX = "subscriptions=";
+    private static final String PREFIX = "&subscriptions=";
 
     private final SubscriptionsArgumentBuilder builder = new SubscriptionsArgumentBuilder();
 
@@ -37,7 +37,7 @@ public class SubscriptionsArgumentBuilderTest {
     public void shouldBuildSpecificTenantsWithNonSpecified() {
         given(params.getSubscriptions()).willReturn(SPECIFIC_TENANTS);
 
-        assertThat(builder.build(params)).isEqualTo(PREFIX + "specific_tenants&tenants=");
+        assertThat(builder.build(params)).isEqualTo(PREFIX + "specific_tenants");
     }
 
     @Test
