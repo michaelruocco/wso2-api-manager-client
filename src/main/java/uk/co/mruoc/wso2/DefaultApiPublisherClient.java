@@ -17,6 +17,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final ListAllUrlBuilder listAllUrlBuilder;
     private final GetApiUrlBuilder getApiUrlBuilder;
     private final AddApiUrlBuilder addApiUrlBuilder;
+    private final ApiExistsUrlBuilder apiExistsUrlBuilder;
     private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
@@ -25,7 +26,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                 new DefaultLogoutUrlBuilder(hostUrl),
                 new DefaultListAllUrlBuilder(hostUrl),
                 new DefaultGetApiUrlBuilder(hostUrl),
-                new DefaultAddApiUrlBuilder(hostUrl));
+                new DefaultAddApiUrlBuilder(hostUrl),
+                new DefaultApiExistsUrlBuilder(hostUrl));
     }
 
     public DefaultApiPublisherClient(HttpClient client,
@@ -33,13 +35,15 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      LogoutUrlBuilder logoutUrlBuilder,
                                      ListAllUrlBuilder listAllUrlBuilder,
                                      GetApiUrlBuilder getApiUrlBuilder,
-                                     AddApiUrlBuilder addApiUrlBuilder) {
+                                     AddApiUrlBuilder addApiUrlBuilder,
+                                     ApiExistsUrlBuilder apiExistsUrlBuilder) {
         this.client = client;
         this.loginUrlBuilder = loginUrlBuilder;
         this.logoutUrlBuilder = logoutUrlBuilder;
         this.listAllUrlBuilder = listAllUrlBuilder;
         this.getApiUrlBuilder = getApiUrlBuilder;
         this.addApiUrlBuilder = addApiUrlBuilder;
+        this.apiExistsUrlBuilder = apiExistsUrlBuilder;
         this.gson = buildGson();
     }
 
@@ -83,6 +87,14 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         return true;
     }
 
+    @Override
+    public boolean exists(String name) {
+        String url = apiExistsUrlBuilder.build(name);
+        Response response = client.get(url);
+        checkForError(response);
+        return exists(response);
+    }
+
     private Gson buildGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ApiSummary.class, new ApiSummaryDeserializer());
@@ -93,8 +105,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private List<ApiSummary> toApiSummaries(Response response) {
         JsonElement element = new JsonParser().parse(response.getBody());
         JsonObject json = element.getAsJsonObject();
-        Type listType = new TypeToken<List<ApiSummary>>() {
-        }.getType();
+        Type listType = new TypeToken<List<ApiSummary>>() {}.getType();
         return gson.fromJson(json.get("apis"), listType);
     }
 
@@ -114,6 +125,11 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
             return true;
         PublisherJsonParser parser = new PublisherJsonParser(response.getBody());
         return parser.getError();
+    }
+
+    private boolean exists(Response response) {
+        PublisherJsonParser parser = new PublisherJsonParser(response.getBody());
+        return parser.getExists();
     }
 
     private static String buildErrorMessage(Response response) {

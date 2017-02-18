@@ -61,6 +61,10 @@ public class PublisherJsonParser {
         return toBoolean(json, "error");
     }
 
+    public boolean getExists() {
+        return toBoolean(json, "exist");
+    }
+
     private static String toString(JsonObject json, String name) {
         JsonElement value = json.get(name);
         if (value.isJsonNull())

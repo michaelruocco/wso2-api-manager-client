@@ -2,7 +2,6 @@ package uk.co.mruoc.wso2;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;

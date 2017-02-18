@@ -45,6 +45,15 @@ public class ApiPublisherClientIntegrationTest {
         assertThat(client.addApi(params)).isTrue();
     }
 
+    @Test
+    public void shouldReturnWhetherApiExists() {
+        AddApiParams params = StubAddApiParamsBuilder.build();
+
+        client.addApi(params);
+
+        assertThat(client.exists(params.getName())).isTrue();
+    }
+
     @After
     public void tearDown() {
         client.logout();

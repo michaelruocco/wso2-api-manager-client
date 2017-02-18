@@ -16,6 +16,7 @@ public class DefaultApiPublisherClientTest {
     private static final String LIST_ALL_URL = "list-all-url";
     private static final String GET_API_URL = "get-api-url";
     private static final String ADD_API_URL = "add-api-url";
+    private static final String API_EXISTS_URL = "api-exists-url";
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
@@ -24,7 +25,8 @@ public class DefaultApiPublisherClientTest {
     private final ListAllUrlBuilder listAllUrlBuilder = new StubListAllUrlBuilder(LIST_ALL_URL);
     private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder);
+    private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
     private final GetApiParams getApiParams = mock(GetApiParams.class);
@@ -188,6 +190,36 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.addApi(addApiParams)).isTrue();
     }
 
+    @Test
+    public void existsShouldCallCorrectUrl() {
+        givenWillReturnApiExistsSuccess();
+
+        client.exists("name");
+
+        assertThat(httpClient.lastRequestUri()).isEqualTo(API_EXISTS_URL);
+    }
+
+    @Test(expected = ApiPublisherException.class)
+    public void existsShouldThrowExceptionIfNon200Response() {
+        givenWillReturnNon200();
+
+        client.exists("name");
+    }
+
+    @Test
+    public void existsShouldReturnFalseFailure() {
+        givenWillReturnApiExistsFailure();
+
+        assertThat(client.exists("name")).isFalse();
+    }
+
+    @Test
+    public void existsShouldReturnTrueOnSuccess() {
+        givenWillReturnApiExistsSuccess();
+
+        assertThat(client.exists("name")).isTrue();
+    }
+
     private void givenWillReturnNon200() {
         httpClient.cannedResponse(500, "");
     }
@@ -239,6 +271,16 @@ public class DefaultApiPublisherClientTest {
 
     private void givenWillReturnAddApiSuccess() {
         String body = load("add-api-success.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+    private void givenWillReturnApiExistsFailure() {
+        String body = load("api-exists-failure.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+    private void givenWillReturnApiExistsSuccess() {
+        String body = load("api-exists-success.json");
         httpClient.cannedResponse(200, body);
     }
 

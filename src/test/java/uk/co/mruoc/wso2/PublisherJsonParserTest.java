@@ -78,6 +78,13 @@ public class PublisherJsonParserTest {
     }
 
     @Test
+    public void shouldParseExists() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"exist\": true}");
+
+        assertThat(parser.getExists()).isTrue();
+    }
+
+    @Test
     public void shouldDefaultNullStringValueToEmptyString() {
         PublisherJsonParser parser = new PublisherJsonParser("{ \"name\": null}");
 
@@ -99,7 +106,7 @@ public class PublisherJsonParserTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void shouldThrowExceptionForNullTimeVaue() {
+    public void shouldThrowExceptionForNullTimeValue() {
         PublisherJsonParser parser = new PublisherJsonParser("{ \"lastUpdated\": null}");
 
         parser.getLastUpdated();
