@@ -18,6 +18,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final GetApiUrlBuilder getApiUrlBuilder;
     private final AddApiUrlBuilder addApiUrlBuilder;
     private final ApiExistsUrlBuilder apiExistsUrlBuilder;
+    private final UpdateApiUrlBuilder updateApiUrlBuilder;
     private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
@@ -27,7 +28,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                 new DefaultListAllUrlBuilder(hostUrl),
                 new DefaultGetApiUrlBuilder(hostUrl),
                 new DefaultAddApiUrlBuilder(hostUrl),
-                new DefaultApiExistsUrlBuilder(hostUrl));
+                new DefaultApiExistsUrlBuilder(hostUrl),
+                new DefaultUpdateApiUrlBuilder(hostUrl));
     }
 
     public DefaultApiPublisherClient(HttpClient client,
@@ -36,7 +38,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      ListAllUrlBuilder listAllUrlBuilder,
                                      GetApiUrlBuilder getApiUrlBuilder,
                                      AddApiUrlBuilder addApiUrlBuilder,
-                                     ApiExistsUrlBuilder apiExistsUrlBuilder) {
+                                     ApiExistsUrlBuilder apiExistsUrlBuilder,
+                                     UpdateApiUrlBuilder updateApiUrlBuilder) {
         this.client = client;
         this.loginUrlBuilder = loginUrlBuilder;
         this.logoutUrlBuilder = logoutUrlBuilder;
@@ -44,6 +47,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.getApiUrlBuilder = getApiUrlBuilder;
         this.addApiUrlBuilder = addApiUrlBuilder;
         this.apiExistsUrlBuilder = apiExistsUrlBuilder;
+        this.updateApiUrlBuilder = updateApiUrlBuilder;
         this.gson = buildGson();
     }
 
@@ -93,6 +97,14 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         Response response = client.get(url);
         checkForError(response);
         return exists(response);
+    }
+
+    @Override
+    public boolean updateApi(UpdateApiParams params) {
+        String url = updateApiUrlBuilder.build(params);
+        Response response = client.get(url);
+        checkForError(response);
+        return true;
     }
 
     private Gson buildGson() {

@@ -17,6 +17,7 @@ public class DefaultApiPublisherClientTest {
     private static final String GET_API_URL = "get-api-url";
     private static final String ADD_API_URL = "add-api-url";
     private static final String API_EXISTS_URL = "api-exists-url";
+    private static final String UPDATE_API_URL = "update-api-url";
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
@@ -26,11 +27,13 @@ public class DefaultApiPublisherClientTest {
     private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
     private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder);
+    private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
     private final GetApiParams getApiParams = mock(GetApiParams.class);
     private final AddApiParams addApiParams = mock(AddApiParams.class);
+    private final UpdateApiParams updateApiParams = mock(UpdateApiParams.class);
 
     @Test
     public void loginShouldCallCorrectUrl() {
@@ -220,6 +223,36 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.exists("name")).isTrue();
     }
 
+    @Test
+    public void updateApiShouldCallCorrectUrl() {
+        givenWillReturnUpdateApiSuccess();
+
+        client.updateApi(updateApiParams);
+
+        assertThat(httpClient.lastRequestUri()).isEqualTo(UPDATE_API_URL);
+    }
+
+    @Test(expected = ApiPublisherException.class)
+    public void updateApiShouldThrowExceptionIfNon200Response() {
+        givenWillReturnNon200();
+
+        client.updateApi(updateApiParams);
+    }
+
+    @Test(expected = ApiPublisherException.class)
+    public void updateApiShouldThrowExceptionOnUpdateApiFailure() {
+        givenWillReturnUpdateApiFailure();
+
+        client.updateApi(updateApiParams);
+    }
+
+    @Test
+    public void updateApiShouldReturnTrueOnUpdateApiSuccess() {
+        givenWillReturnUpdateApiSuccess();
+
+        assertThat(client.updateApi(updateApiParams)).isTrue();
+    }
+
     private void givenWillReturnNon200() {
         httpClient.cannedResponse(500, "");
     }
@@ -281,6 +314,16 @@ public class DefaultApiPublisherClientTest {
 
     private void givenWillReturnApiExistsSuccess() {
         String body = load("api-exists-success.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+    private void givenWillReturnUpdateApiFailure() {
+        String body = load("update-api-failure.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+    private void givenWillReturnUpdateApiSuccess() {
+        String body = load("update-api-success.json");
         httpClient.cannedResponse(200, body);
     }
 

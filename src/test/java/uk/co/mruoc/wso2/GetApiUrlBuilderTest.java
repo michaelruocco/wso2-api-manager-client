@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2;
 
 import org.junit.Test;
-import uk.co.mruoc.wso2.DefaultGetApiParams.DefaultGetApiParamsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,15 +19,19 @@ public class GetApiUrlBuilderTest {
     @Test
     public void shouldBuildUrl() {
         String expectedUrl = HOST + RESOURCE + String.format(QUERY_STRING, NAME, VERSION, PROVIDER);
-        GetApiParams params = new DefaultGetApiParamsBuilder()
-                .setName(NAME)
-                .setVersion(VERSION)
-                .setProvider(PROVIDER)
-                .build();
+        GetApiParams params = buildParams();
 
         String result = builder.build(params);
 
         assertThat(result).isEqualTo(expectedUrl);
+    }
+
+    private GetApiParams buildParams() {
+        DefaultGetApiParams params = new DefaultGetApiParams();
+        params.setName(NAME);
+        params.setVersion(VERSION);
+        params.setProvider(PROVIDER);
+        return params;
     }
 
 }

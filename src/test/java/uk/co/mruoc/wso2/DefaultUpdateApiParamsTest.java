@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2;
 
 import org.junit.Test;
-import uk.co.mruoc.wso2.DefaultUpdateApiParams.DefaultUpdateApiParamsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.co.mruoc.wso2.ApiEndpointType.*;
@@ -10,12 +9,15 @@ import static uk.co.mruoc.wso2.ApiVisibility.*;
 
 public class DefaultUpdateApiParamsTest {
 
-    private final DefaultUpdateApiParamsBuilder builder = new DefaultUpdateApiParamsBuilder();
+    private final DefaultUpdateApiParams params = new DefaultUpdateApiParams();
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void setProviderShouldNotBeSupported() {
+        params.setProvider("provider");
+    }
 
     @Test
     public void visibilityShouldDefaultToPublic() {
-        UpdateApiParams params = builder.build();
-
         assertThat(params.getVisibility()).isEqualTo(PUBLIC);
     }
 
@@ -23,52 +25,51 @@ public class DefaultUpdateApiParamsTest {
     public void shouldSetVisibility() {
         ApiVisibility visibility = PRIVATE;
 
-        UpdateApiParams params = builder.setVisibility(visibility).build();
+        params.setVisibility(visibility);
 
         assertThat(params.getVisibility()).isEqualTo(visibility);
     }
 
     @Test
     public void rolesShouldDefaultToEmptyList() {
-        UpdateApiParams params = builder.build();
-
         assertThat(params.getRoles()).isEmpty();
     }
 
     @Test
     public void shouldSetRoles() {
-        UpdateApiParams params = builder.setRoles("role1", "role2").build();
+        params.setRoles("role1", "role2");
 
         assertThat(params.getRoles()).containsExactly("role1", "role2");
+    }
+
+    @Test
+    public void descriptionShouldDefaultToEmpty() {
+        assertThat(params.getDescription()).isEmpty();
     }
 
     @Test
     public void shouldSetDescription() {
         String description = "API description";
 
-        UpdateApiParams params = builder.setDescription(description).build();
+        params.setDescription(description);
 
         assertThat(params.getDescription()).isEqualTo(description);
     }
 
     @Test
     public void tagsShouldDefaultToEmptyList() {
-        UpdateApiParams params = builder.build();
-
         assertThat(params.getTags()).isEmpty();
     }
 
     @Test
     public void shouldSetTags() {
-        UpdateApiParams params = builder.setTags("tag1", "tag2").build();
+        params.setTags("tag1", "tag2");
 
         assertThat(params.getTags()).containsExactly("tag1", "tag2");
     }
 
     @Test
     public void endpointTypeShouldDefaultToUnsecured() {
-        UpdateApiParams params = builder.build();
-
         assertThat(params.getEndpointType()).isEqualTo(UNSECURED);
     }
 
@@ -76,85 +77,99 @@ public class DefaultUpdateApiParamsTest {
     public void shouldSetEndpointType() {
         ApiEndpointType endpointType = SECURED;
 
-        UpdateApiParams params = builder.setEndpointType(endpointType).build();
+        params.setEndpointType(endpointType);
 
         assertThat(params.getEndpointType()).isEqualTo(endpointType);
+    }
+
+    @Test
+    public void endpointUsernameShouldDefaultToEmpty() {
+        assertThat(params.getEndpointUsername()).isEmpty();
     }
 
     @Test
     public void shouldSetEndpointUsername() {
         String username = "admin";
 
-        UpdateApiParams params = builder.setEndpointUsername(username).build();
+        params.setEndpointUsername(username);
 
         assertThat(params.getEndpointUsername()).isEqualTo(username);
+    }
+
+    @Test
+    public void endpointPasswordShouldDefaultToEmpty() {
+        assertThat(params.getEndpointPassword()).isEmpty();
     }
 
     @Test
     public void shouldSetEndpointPassword() {
         String password = "admin";
 
-        UpdateApiParams params = builder.setEndpointPassword(password).build();
+        params.setEndpointPassword(password);
 
         assertThat(params.getEndpointPassword()).isEqualTo(password);
     }
 
     @Test
     public void tiersShouldDefaultToUnlimited() {
-        UpdateApiParams params = builder.build();
-
         assertThat(params.getTiers()).containsExactly(UNLIMITED);
     }
 
     @Test
     public void shouldSetTiers() {
-        UpdateApiParams params = builder.setTiers(GOLD, BRONZE).build();
+        params.setTiers(GOLD, BRONZE);
 
         assertThat(params.getTiers()).containsExactly(GOLD, BRONZE);
     }
 
     @Test
     public void isHttpCheckedShouldDefaultToTrue() {
-        UpdateApiParams params = builder.build();
-
         assertThat(params.isHttpChecked()).isTrue();
     }
 
     @Test
     public void shouldSetIsHttpChecked() {
-        UpdateApiParams params = builder.setIsHttpChecked(false).build();
+        params.setHttpChecked(false);
 
         assertThat(params.isHttpChecked()).isFalse();
     }
 
     @Test
     public void isHttpsCheckedShouldDefaultToTrue() {
-        UpdateApiParams params = builder.build();
-
         assertThat(params.isHttpsChecked()).isTrue();
     }
 
     @Test
     public void shouldSetIsHttpsChecked() {
-        UpdateApiParams params = builder.setIsHttpsChecked(false).build();
+        params.setHttpsChecked(false);
 
         assertThat(params.isHttpsChecked()).isFalse();
+    }
+
+    @Test
+    public void endpointConfigShouldDefaultToEmpty() {
+        assertThat(params.getEndpointConfig()).isEmpty();
     }
 
     @Test
     public void shouldSetEndpointConfig() {
         String config = "config";
 
-        UpdateApiParams params = builder.setEndpointConfig(config).build();
+        params.setEndpointConfig(config);
 
         assertThat(params.getEndpointConfig()).isEqualTo(config);
+    }
+
+    @Test
+    public void swaggerShouldDefaultToEmpty() {
+        assertThat(params.getSwagger()).isEmpty();
     }
 
     @Test
     public void shouldSetSwagger() {
         String swagger = "swagger";
 
-        UpdateApiParams params = builder.setSwagger(swagger).build();
+        params.setSwagger(swagger);
 
         assertThat(params.getSwagger()).isEqualTo(swagger);
     }

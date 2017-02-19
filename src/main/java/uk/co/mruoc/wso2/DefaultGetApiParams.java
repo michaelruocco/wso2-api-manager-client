@@ -4,19 +4,17 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class DefaultGetApiParams implements GetApiParams {
 
-    private final String name;
-    private final String version;
-    private final String provider;
-
-    private DefaultGetApiParams(DefaultGetApiParamsBuilder builder) {
-        this.name = builder.name;
-        this.version = builder.version;
-        this.provider = builder.provider;
-    }
+    private String name = EMPTY;
+    private String version = EMPTY;
+    private String provider = EMPTY;
 
     @Override
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -24,36 +22,17 @@ public class DefaultGetApiParams implements GetApiParams {
         return version;
     }
 
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     @Override
     public String getProvider() {
         return provider;
     }
 
-    public static class DefaultGetApiParamsBuilder {
-
-        private String name = EMPTY;
-        private String version = EMPTY;
-        private String provider = EMPTY;
-
-        public DefaultGetApiParamsBuilder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public DefaultGetApiParamsBuilder setVersion(String version) {
-            this.version = version;
-            return this;
-        }
-
-        public DefaultGetApiParamsBuilder setProvider(String provider) {
-            this.provider = provider;
-            return this;
-        }
-
-        public GetApiParams build() {
-            return new DefaultGetApiParams(this);
-        }
-
+    public void setProvider(String provider) {
+        this.provider = provider;
     }
 
 }

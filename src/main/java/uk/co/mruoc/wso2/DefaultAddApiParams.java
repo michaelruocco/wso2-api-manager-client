@@ -8,44 +8,24 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddApiParams, ApiVisibilityParams {
 
-    private final String name;
-    private final String context;
-    private final String version;
-    private final String inSequence;
-    private final String outSequence;
-    private final boolean defaultVersion;
-    private final boolean responseCacheEnabled;
-    private final int responseCacheTimeout;
-    private final ApiSubscriptions subscriptions;
-    private final List<String> tenants;
+    private static final int DEFAULT_CACHE_TIMEOUT_IN_SECONDS = 300;
 
-    private DefaultAddApiParams(DefaultAddApiParamsBuilder builder) {
-        super(builder);
-        this.name = builder.name;
-        this.context = builder.context;
-        this.version = builder.version;
-        this.inSequence = builder.inSequence;
-        this.outSequence = builder.outSequence;
-        this.defaultVersion = builder.defaultVersion;
-        this.responseCacheEnabled = builder.responseCacheEnabled;
-        this.responseCacheTimeout = builder.responseCacheTimeout;
-        this.subscriptions = builder.subscriptions;
-        this.tenants = builder.tenants;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
+    private String context = EMPTY;
+    private String inSequence = EMPTY;
+    private String outSequence = EMPTY;
+    private boolean defaultVersion;
+    private boolean responseCacheEnabled;
+    private int responseCacheTimeout = DEFAULT_CACHE_TIMEOUT_IN_SECONDS;
+    private ApiSubscriptions subscriptions = ApiSubscriptions.CURRENT_TENANT;
+    private List<String> tenants = new ArrayList<>();
 
     @Override
     public String getContext() {
         return context;
     }
 
-    @Override
-    public String getVersion() {
-        return version;
+    public void setContext(String context) {
+        this.context = context;
     }
 
     @Override
@@ -53,9 +33,17 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
         return inSequence;
     }
 
+    public void setInSequence(String inSequence) {
+        this.inSequence = inSequence;
+    }
+
     @Override
     public String getOutSequence() {
         return outSequence;
+    }
+
+    public void setOutSequence(String outSequence) {
+        this.outSequence = outSequence;
     }
 
     @Override
@@ -63,9 +51,17 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
         return defaultVersion;
     }
 
+    public void setDefaultVersion(boolean defaultVersion) {
+        this.defaultVersion = defaultVersion;
+    }
+
     @Override
     public boolean isResponseCacheEnabled() {
         return responseCacheEnabled;
+    }
+
+    public void setResponseCacheEnabled(boolean responseCacheEnabled) {
+        this.responseCacheEnabled = responseCacheEnabled;
     }
 
     @Override
@@ -73,9 +69,17 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
         return responseCacheTimeout;
     }
 
+    public void setResponseCacheTimeout(int responseCacheTimeout) {
+        this.responseCacheTimeout = responseCacheTimeout;
+    }
+
     @Override
     public ApiSubscriptions getSubscriptions() {
         return subscriptions;
+    }
+
+    public void setSubscriptions(ApiSubscriptions subscriptions) {
+        this.subscriptions = subscriptions;
     }
 
     @Override
@@ -83,75 +87,8 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
         return tenants;
     }
 
-    public static class DefaultAddApiParamsBuilder extends DefaultUpdateApiParamsBuilder<DefaultAddApiParamsBuilder> {
-
-        private static final int DEFAULT_CACHE_TIMEOUT_IN_SECONDS = 300;
-
-        private String name = EMPTY;
-        private String context = EMPTY;
-        private String version = EMPTY;
-        private String inSequence = EMPTY;
-        private String outSequence = EMPTY;
-        private boolean defaultVersion;
-        private boolean responseCacheEnabled;
-        private int responseCacheTimeout = DEFAULT_CACHE_TIMEOUT_IN_SECONDS;
-        private ApiSubscriptions subscriptions = ApiSubscriptions.CURRENT_TENANT;
-        private List<String> tenants = new ArrayList<>();
-
-        public DefaultAddApiParamsBuilder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setContext(String context) {
-            this.context = context;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setVersion(String version) {
-            this.version = version;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setInSequence(String inSequence) {
-            this.inSequence = inSequence;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setOutSequence(String outSequence) {
-            this.outSequence = outSequence;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setIsDefaultVersion(boolean defaultVersion) {
-            this.defaultVersion = defaultVersion;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setResponseCacheEnabled(boolean responseCacheEnabled) {
-            this.responseCacheEnabled = responseCacheEnabled;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setResponseCacheTimeout(int responseCacheTimeout) {
-            this.responseCacheTimeout = responseCacheTimeout;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setSubscriptions(ApiSubscriptions subscriptions) {
-            this.subscriptions = subscriptions;
-            return this;
-        }
-
-        public DefaultAddApiParamsBuilder setTenants(String... tenants) {
-            this.tenants = Arrays.asList(tenants);
-            return this;
-        }
-
-        public AddApiParams build() {
-            return new DefaultAddApiParams(this);
-        }
-
+    public void setTenants(String... tenants) {
+        this.tenants = Arrays.asList(tenants);
     }
 
 }

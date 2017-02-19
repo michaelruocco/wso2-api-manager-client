@@ -1,19 +1,33 @@
 package uk.co.mruoc.wso2;
 
 import org.junit.Test;
-import uk.co.mruoc.wso2.DefaultGetApiParams.DefaultGetApiParamsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DefaultGetApiParamsTest {
 
-    private final DefaultGetApiParamsBuilder builder = new DefaultGetApiParamsBuilder();
+    private final DefaultGetApiParams params = new DefaultGetApiParams();
+
+    @Test
+    public void nameShouldDefaultToEmptyString() {
+        assertThat(params.getName()).isEmpty();
+    }
+
+    @Test
+    public void versionShouldDefaultToEmptyString() {
+        assertThat(params.getVersion()).isEmpty();
+    }
+
+    @Test
+    public void providerShouldDefaultToEmptyString() {
+        assertThat(params.getProvider()).isEmpty();
+    }
 
     @Test
     public void shouldSetName() {
         String name = "api-name";
 
-        GetApiParams params = builder.setName(name).build();
+        params.setName(name);
 
         assertThat(params.getName()).isEqualTo(name);
     }
@@ -22,7 +36,7 @@ public class DefaultGetApiParamsTest {
     public void shouldSetVersion() {
         String version = "v1";
 
-        GetApiParams params = builder.setVersion(version).build();
+        params.setVersion(version);
 
         assertThat(params.getVersion()).isEqualTo(version);
     }
@@ -31,7 +45,7 @@ public class DefaultGetApiParamsTest {
     public void shouldSetProvider() {
         String provider = "admin";
 
-        GetApiParams params = builder.setProvider(provider).build();
+        params.setProvider(provider);
 
         assertThat(params.getProvider()).isEqualTo(provider);
     }

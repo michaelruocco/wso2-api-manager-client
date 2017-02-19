@@ -54,6 +54,31 @@ public class ApiPublisherClientIntegrationTest {
         assertThat(client.exists(params.getName())).isTrue();
     }
 
+    @Test
+    public void shouldUpdateApi() {
+        String updatedDescription = "updatedDescription";
+
+        AddApiParams addParams = StubAddApiParamsBuilder.build();
+
+        client.addApi(addParams);
+
+        DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams();
+        updateParams.setDescription(updatedDescription);
+        updateParams.setName(addParams.getName());
+        updateParams.setDescription(updatedDescription);
+
+        client.updateApi(updateParams);
+
+        DefaultGetApiParams getParams = new DefaultGetApiParams();
+        getParams.setName(addParams.getName());
+        getParams.setProvider("admin");
+        getParams.setVersion(addParams.getVersion());
+
+        Api api = client.getApi(getParams);
+
+        assertThat(api.getDescription()).isEqualTo(updatedDescription);
+    }
+
     @After
     public void tearDown() {
         client.logout();
