@@ -1,9 +1,6 @@
 package uk.co.mruoc.wso2;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.testcontainers.containers.GenericContainer;
 
 import java.util.List;
@@ -55,6 +52,7 @@ public class ApiPublisherClientIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void shouldUpdateApi() {
         String updatedDescription = "updatedDescription";
 
