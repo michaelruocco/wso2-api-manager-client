@@ -8,7 +8,7 @@ public class NameToExistsQueryStringConverterTest {
 
     private static final String NAME = "api-name";
 
-    private final NameToExistsQueryStringConverter converter = new DefaultNameToExistsQueryStringConverter();
+    private final NameToExistsQueryStringConverter converter = new DefaultNameToApiExistsQueryStringConverter();
 
     @Test
     public void shouldBuildQueryString() {

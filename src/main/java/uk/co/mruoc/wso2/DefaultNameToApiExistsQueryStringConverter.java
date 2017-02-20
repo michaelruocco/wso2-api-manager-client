@@ -1,6 +1,6 @@
 package uk.co.mruoc.wso2;
 
-public class DefaultNameToExistsQueryStringConverter implements NameToExistsQueryStringConverter {
+public class DefaultNameToApiExistsQueryStringConverter implements NameToExistsQueryStringConverter {
 
     private static final String QUERY_STRING = "?action=isAPINameExist&apiName=%s";
 

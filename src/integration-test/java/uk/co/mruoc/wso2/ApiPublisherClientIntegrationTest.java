@@ -30,7 +30,7 @@ public class ApiPublisherClientIntegrationTest {
 
     @Test
     public void listAllShouldReturnNoSummariesIfNoApisDeployed() {
-        List<ApiSummary> summaries = client.listAll();
+        List<ApiSummary> summaries = client.listAllApis();
 
         assertThat(summaries).isEmpty();
     }
@@ -48,7 +48,7 @@ public class ApiPublisherClientIntegrationTest {
 
         client.addApi(params);
 
-        assertThat(client.exists(params.getName())).isTrue();
+        assertThat(client.apiExists(params.getName())).isTrue();
     }
 
     @Test

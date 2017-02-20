@@ -60,7 +60,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     }
 
     @Override
-    public List<ApiSummary> listAll() {
+    public List<ApiSummary> listAllApis() {
         String url = listAllUrlBuilder.build();
         Response response = client.get(url);
         checkForError(response);
@@ -92,7 +92,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     }
 
     @Override
-    public boolean exists(String name) {
+    public boolean apiExists(String name) {
         String url = apiExistsUrlBuilder.build(name);
         Response response = client.get(url);
         checkForError(response);

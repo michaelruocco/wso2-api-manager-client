@@ -8,7 +8,7 @@ public class DefaultApiExistsUrlBuilder implements ApiExistsUrlBuilder {
     private final String url;
 
     public DefaultApiExistsUrlBuilder(String hostUrl) {
-        this(hostUrl, new DefaultNameToExistsQueryStringConverter());
+        this(hostUrl, new DefaultNameToApiExistsQueryStringConverter());
     }
 
     public DefaultApiExistsUrlBuilder(String hostUrl, NameToExistsQueryStringConverter queryStringConverter) {

@@ -8,13 +8,13 @@ public interface ApiPublisherClient {
 
     boolean logout();
 
-    List<ApiSummary> listAll();
+    List<ApiSummary> listAllApis();
 
     Api getApi(SelectApiParams params);
 
     boolean addApi(AddApiParams params);
 
-    boolean exists(String name);
+    boolean apiExists(String name);
 
     boolean updateApi(UpdateApiParams params);
     

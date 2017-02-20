@@ -16,7 +16,7 @@ public class DefaultApiPublisherClientTest {
     private static final String LIST_ALL_URL = "list-all-url";
     private static final String GET_API_URL = "get-api-url";
     private static final String ADD_API_URL = "add-api-url";
-    private static final String API_EXISTS_URL = "api-exists-url";
+    private static final String API_EXISTS_URL = "api-apiExists-url";
     private static final String UPDATE_API_URL = "update-api-url";
 
     private final FileLoader fileLoader = new FileLoader();
@@ -99,7 +99,7 @@ public class DefaultApiPublisherClientTest {
     public void listAllShouldCallCorrectUrl() {
         givenWillReturnListApiEmptySuccess();
 
-        client.listAll();
+        client.listAllApis();
 
         assertThat(httpClient.lastRequestUri()).isEqualTo(LIST_ALL_URL);
     }
@@ -108,14 +108,14 @@ public class DefaultApiPublisherClientTest {
     public void listAllShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        client.listAll();
+        client.listAllApis();
     }
 
     @Test
     public void listAllShouldReturnEmptyListIfNoApisDeployed() {
         givenWillReturnListApiEmptySuccess();
 
-        List<ApiSummary> apiSummaries = client.listAll();
+        List<ApiSummary> apiSummaries = client.listAllApis();
 
         assertThat(apiSummaries.size()).isEqualTo(0);
     }
@@ -124,7 +124,7 @@ public class DefaultApiPublisherClientTest {
     public void listAllShouldReturnApiSummariesIfMultipleApisDeployed() {
         givenWillReturnListApiMultipleSuccess();
 
-        List<ApiSummary> apiSummaries = client.listAll();
+        List<ApiSummary> apiSummaries = client.listAllApis();
 
         assertThat(apiSummaries.size()).isEqualTo(2);
         assertThat(apiSummaries.get(0)).isEqualToComparingFieldByField(new AdminServicesApiSummary());
@@ -197,7 +197,7 @@ public class DefaultApiPublisherClientTest {
     public void existsShouldCallCorrectUrl() {
         givenWillReturnApiExistsSuccess();
 
-        client.exists("name");
+        client.apiExists("name");
 
         assertThat(httpClient.lastRequestUri()).isEqualTo(API_EXISTS_URL);
     }
@@ -206,21 +206,21 @@ public class DefaultApiPublisherClientTest {
     public void existsShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        client.exists("name");
+        client.apiExists("name");
     }
 
     @Test
     public void existsShouldReturnFalseFailure() {
         givenWillReturnApiExistsFailure();
 
-        assertThat(client.exists("name")).isFalse();
+        assertThat(client.apiExists("name")).isFalse();
     }
 
     @Test
     public void existsShouldReturnTrueOnSuccess() {
         givenWillReturnApiExistsSuccess();
 
-        assertThat(client.exists("name")).isTrue();
+        assertThat(client.apiExists("name")).isTrue();
     }
 
     @Test
@@ -308,12 +308,12 @@ public class DefaultApiPublisherClientTest {
     }
 
     private void givenWillReturnApiExistsFailure() {
-        String body = load("api-exists-failure.json");
+        String body = load("api-apiExists-failure.json");
         httpClient.cannedResponse(200, body);
     }
 
     private void givenWillReturnApiExistsSuccess() {
-        String body = load("api-exists-success.json");
+        String body = load("api-apiExists-success.json");
         httpClient.cannedResponse(200, body);
     }
 
