@@ -19,15 +19,15 @@ public class GetApiUrlBuilderTest {
     @Test
     public void shouldBuildUrl() {
         String expectedUrl = HOST + RESOURCE + String.format(QUERY_STRING, NAME, VERSION, PROVIDER);
-        GetApiParams params = buildParams();
+        SelectApiParams params = buildParams();
 
         String result = builder.build(params);
 
         assertThat(result).isEqualTo(expectedUrl);
     }
 
-    private GetApiParams buildParams() {
-        DefaultGetApiParams params = new DefaultGetApiParams();
+    private SelectApiParams buildParams() {
+        DefaultSelectApiParams params = new DefaultSelectApiParams();
         params.setName(NAME);
         params.setVersion(VERSION);
         params.setProvider(PROVIDER);

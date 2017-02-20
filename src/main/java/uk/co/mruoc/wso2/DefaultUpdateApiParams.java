@@ -10,7 +10,7 @@ import static uk.co.mruoc.wso2.ApiEndpointType.*;
 import static uk.co.mruoc.wso2.ApiTierAvailability.*;
 import static uk.co.mruoc.wso2.ApiVisibility.*;
 
-public class DefaultUpdateApiParams extends DefaultGetApiParams implements UpdateApiParams {
+public class DefaultUpdateApiParams extends DefaultSelectApiParams implements UpdateApiParams {
 
     private ApiVisibility visibility = PUBLIC;
     private List<String> roles = new ArrayList<>();

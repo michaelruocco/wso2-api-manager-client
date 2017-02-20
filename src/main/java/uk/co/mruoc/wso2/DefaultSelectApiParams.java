@@ -2,7 +2,7 @@ package uk.co.mruoc.wso2;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
-public class DefaultGetApiParams implements GetApiParams {
+public class DefaultSelectApiParams implements SelectApiParams {
 
     private String name = EMPTY;
     private String version = EMPTY;

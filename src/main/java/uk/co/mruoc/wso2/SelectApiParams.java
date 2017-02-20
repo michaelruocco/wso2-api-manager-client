@@ -1,6 +1,6 @@
 package uk.co.mruoc.wso2;
 
-public interface GetApiParams {
+public interface SelectApiParams {
 
     String getName();
 

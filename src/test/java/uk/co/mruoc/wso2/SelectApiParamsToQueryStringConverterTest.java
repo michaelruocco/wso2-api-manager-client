@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class GetApiParamsToQueryStringConverterTest {
+public class SelectApiParamsToQueryStringConverterTest {
 
     private static final String NAME = "api-name";
     private static final String VERSION = "v1";
@@ -16,7 +16,7 @@ public class GetApiParamsToQueryStringConverterTest {
 
     @Test
     public void shouldBuildQueryString() {
-        GetApiParams params = mock(GetApiParams.class);
+        SelectApiParams params = mock(SelectApiParams.class);
         given(params.getName()).willReturn(NAME);
         given(params.getVersion()).willReturn(VERSION);
         given(params.getProvider()).willReturn(PROVIDER);

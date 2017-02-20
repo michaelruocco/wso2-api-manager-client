@@ -1,6 +1,6 @@
 package uk.co.mruoc.wso2;
 
-public class ApiSummary implements GetApiParams {
+public class ApiSummary implements SelectApiParams {
 
     private final String name;
     private final String version;

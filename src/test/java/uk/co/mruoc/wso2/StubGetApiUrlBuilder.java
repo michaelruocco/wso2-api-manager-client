@@ -9,7 +9,7 @@ public class StubGetApiUrlBuilder implements GetApiUrlBuilder {
     }
 
     @Override
-    public String build(GetApiParams params) {
+    public String build(SelectApiParams params) {
         return urlToReturn;
     }
 

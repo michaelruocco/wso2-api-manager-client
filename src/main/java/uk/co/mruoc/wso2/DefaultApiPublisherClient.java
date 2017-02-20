@@ -76,7 +76,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     }
 
     @Override
-    public Api getApi(GetApiParams params) {
+    public Api getApi(SelectApiParams params) {
         String url = getApiUrlBuilder.build(params);
         Response response = client.get(url);
         checkForError(response);

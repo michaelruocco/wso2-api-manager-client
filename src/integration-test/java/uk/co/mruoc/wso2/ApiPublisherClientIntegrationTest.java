@@ -67,7 +67,7 @@ public class ApiPublisherClientIntegrationTest {
 
         client.updateApi(updateParams);
 
-        DefaultGetApiParams getParams = new DefaultGetApiParams();
+        DefaultSelectApiParams getParams = new DefaultSelectApiParams();
         getParams.setName(addParams.getName());
         getParams.setProvider("admin");
         getParams.setVersion(addParams.getVersion());

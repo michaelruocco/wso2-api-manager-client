@@ -31,7 +31,7 @@ public class DefaultApiPublisherClientTest {
     private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
-    private final GetApiParams getApiParams = mock(GetApiParams.class);
+    private final SelectApiParams selectApiParams = mock(SelectApiParams.class);
     private final AddApiParams addApiParams = mock(AddApiParams.class);
     private final UpdateApiParams updateApiParams = mock(UpdateApiParams.class);
 
@@ -135,7 +135,7 @@ public class DefaultApiPublisherClientTest {
     public void getApiShouldCallCorrectUrl() {
         givenWillReturnListApiEmptySuccess();
 
-        client.getApi(getApiParams);
+        client.getApi(selectApiParams);
 
         assertThat(httpClient.lastRequestUri()).isEqualTo(GET_API_URL);
     }
@@ -144,21 +144,21 @@ public class DefaultApiPublisherClientTest {
     public void getApiShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        client.getApi(getApiParams);
+        client.getApi(selectApiParams);
     }
 
     @Test(expected = ApiPublisherException.class)
     public void getApiShouldThrowExceptionIfApiNotFound() {
         givenWillReturnGetApiFailure();
 
-        client.getApi(getApiParams);
+        client.getApi(selectApiParams);
     }
 
     @Test
     public void getApiShouldReturnApiIfExists() {
         givenWillReturnGetApiSuccess();
 
-        Api api = client.getApi(getApiParams);
+        Api api = client.getApi(selectApiParams);
 
         assertThat(api).isEqualToComparingFieldByField(new RestProductApi());
     }

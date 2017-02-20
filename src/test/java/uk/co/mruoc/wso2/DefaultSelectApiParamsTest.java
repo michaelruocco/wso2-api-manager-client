@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DefaultGetApiParamsTest {
+public class DefaultSelectApiParamsTest {
 
-    private final DefaultGetApiParams params = new DefaultGetApiParams();
+    private final DefaultSelectApiParams params = new DefaultSelectApiParams();
 
     @Test
     public void nameShouldDefaultToEmptyString() {

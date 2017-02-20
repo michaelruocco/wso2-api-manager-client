@@ -12,12 +12,12 @@ public class DefaultGetApiUrlBuilder implements GetApiUrlBuilder {
     }
 
     @Override
-    public String build(GetApiParams params) {
+    public String build(SelectApiParams params) {
         String queryString = buildQueryString(params);
         return url + queryString;
     }
 
-    private String buildQueryString(GetApiParams params) {
+    private String buildQueryString(SelectApiParams params) {
         return converter.toQueryString(params);
     }
 

@@ -10,7 +10,7 @@ public interface ApiPublisherClient {
 
     List<ApiSummary> listAll();
 
-    Api getApi(GetApiParams params);
+    Api getApi(SelectApiParams params);
 
     boolean addApi(AddApiParams params);
 
