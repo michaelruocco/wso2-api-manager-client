@@ -308,12 +308,12 @@ public class DefaultApiPublisherClientTest {
     }
 
     private void givenWillReturnApiExistsFailure() {
-        String body = load("api-apiExists-failure.json");
+        String body = load("api-exists-failure.json");
         httpClient.cannedResponse(200, body);
     }
 
     private void givenWillReturnApiExistsSuccess() {
-        String body = load("api-apiExists-success.json");
+        String body = load("api-exists-success.json");
         httpClient.cannedResponse(200, body);
     }
 
