@@ -107,4 +107,18 @@ public class DefaultApiTest {
         assertThat(api.getProvider()).isEqualTo(provider);
     }
 
+    @Test
+    public void visibilityShouldDefaultToPublic() {
+        assertThat(api.getVisibility()).isEqualTo(ApiVisibility.PUBLIC);
+    }
+
+    @Test
+    public void shouldReturnVisibility() {
+        ApiVisibility visibility = ApiVisibility.PRIVATE;
+
+        api.setVisibility(visibility);
+
+        assertThat(api.getVisibility()).isEqualTo(visibility);
+    }
+
 }

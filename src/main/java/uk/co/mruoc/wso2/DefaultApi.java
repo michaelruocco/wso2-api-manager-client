@@ -16,7 +16,7 @@ public class DefaultApi implements Api {
     private DateTime lastUpdated = new DateTime(Long.MIN_VALUE);
     private int subscriberCount;
     private String provider = EMPTY;
-    private ApiVisibility visibility;
+    private ApiVisibility visibility = ApiVisibility.PUBLIC;
     private String status;
     private String thumb;
     private List<String> tags;
