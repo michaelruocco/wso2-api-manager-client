@@ -5,7 +5,7 @@ public class ApiSummary implements SelectApiParams {
     private final String name;
     private final String version;
     private final String provider;
-    private final String status;
+    private final ApiStatus status;
     private final String thumbnailImageUrl;
     private final int subscriberCount;
 
@@ -33,7 +33,7 @@ public class ApiSummary implements SelectApiParams {
         return provider;
     }
 
-    public String getStatus() {
+    public ApiStatus getStatus() {
         return status;
     }
 
@@ -50,7 +50,7 @@ public class ApiSummary implements SelectApiParams {
         private String name;
         private String version;
         private String provider;
-        private String status;
+        private ApiStatus status;
         private String thumbnailImageUrl;
         private int subscriberCount;
 
@@ -69,7 +69,7 @@ public class ApiSummary implements SelectApiParams {
             return this;
         }
 
-        public ApiSummaryBuilder setStatus(String status) {
+        public ApiSummaryBuilder setStatus(ApiStatus status) {
             this.status = status;
             return this;
         }

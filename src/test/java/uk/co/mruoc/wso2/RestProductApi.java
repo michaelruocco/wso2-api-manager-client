@@ -13,7 +13,7 @@ public class RestProductApi extends DefaultApi {
         setSubscriberCount(1);
         setProvider("admin");
         setVisibility(ApiVisibility.PUBLIC);
-        setStatus("PUBLISHED");
+        setStatus(ApiStatus.PUBLISHED);
         setThumb("");
         setTags("product", "products");
         setEndpointType(ApiEndpointType.UNSECURED);

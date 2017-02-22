@@ -39,7 +39,7 @@ public class PublisherJsonParserTest {
     public void shouldParseStatus() {
         PublisherJsonParser parser = new PublisherJsonParser("{ \"status\": \"PUBLISHED\"}");
 
-        assertThat(parser.getStatus()).isEqualTo("PUBLISHED");
+        assertThat(parser.getStatus()).isEqualTo(ApiStatus.PUBLISHED);
     }
 
     @Test

@@ -121,4 +121,18 @@ public class DefaultApiTest {
         assertThat(api.getVisibility()).isEqualTo(visibility);
     }
 
+    @Test
+    public void statusShouldDefaultToCreated() {
+        assertThat(api.getStatus()).isEqualTo(ApiStatus.CREATED);
+    }
+
+    @Test
+    public void shouldReturnStatus() {
+        ApiStatus status = ApiStatus.PUBLISHED;
+
+        api.setStatus(status);
+
+        assertThat(api.getStatus()).isEqualTo(status);
+    }
+
 }

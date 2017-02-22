@@ -17,7 +17,7 @@ public class DefaultApi implements Api {
     private int subscriberCount;
     private String provider = EMPTY;
     private ApiVisibility visibility = ApiVisibility.PUBLIC;
-    private String status;
+    private ApiStatus status = ApiStatus.CREATED;
     private String thumb;
     private List<String> tags;
     private ApiEndpointType endpointType;
@@ -70,7 +70,7 @@ public class DefaultApi implements Api {
     }
 
     @Override
-    public String getStatus() {
+    public ApiStatus getStatus() {
         return status;
     }
 
@@ -156,7 +156,7 @@ public class DefaultApi implements Api {
         this.visibility = visibility;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ApiStatus status) {
         this.status = status;
     }
 

@@ -7,7 +7,7 @@ public class ColleagueApiSummary extends ApiSummary {
                 .setName("Colleague-ApiSummary")
                 .setVersion("v2")
                 .setProvider("mruoc")
-                .setStatus("CREATED")
+                .setStatus(ApiStatus.CREATED)
                 .setThumbnailImageUrl("value")
                 .setSubscriberCount(3));
     }

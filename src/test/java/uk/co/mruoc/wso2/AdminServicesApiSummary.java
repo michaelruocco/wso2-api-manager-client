@@ -7,7 +7,7 @@ public class AdminServicesApiSummary extends ApiSummary {
                 .setName("admin-services")
                 .setVersion("v1")
                 .setProvider("admin")
-                .setStatus("PUBLISHED")
+                .setStatus(ApiStatus.PUBLISHED)
                 .setThumbnailImageUrl("")
                 .setSubscriberCount(0));
     }

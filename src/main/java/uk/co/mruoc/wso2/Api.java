@@ -22,7 +22,7 @@ public interface Api {
 
     ApiVisibility getVisibility();
 
-    String getStatus();
+    ApiStatus getStatus();
 
     String getThumb();
 

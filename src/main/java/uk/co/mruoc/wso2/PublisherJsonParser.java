@@ -42,8 +42,8 @@ public class PublisherJsonParser {
         return toString(json, "provider");
     }
 
-    public String getStatus() {
-        return toString(json, "status");
+    public ApiStatus getStatus() {
+        return toStatus(json, "status");
     }
 
     public String getThumbnailImagePath() {
@@ -160,6 +160,13 @@ public class PublisherJsonParser {
         List<ApiTierAvailability> tiers = new ArrayList<>();
         values.forEach(v -> tiers.add(ApiTierAvailability.valueOf(v.toUpperCase())));
         return tiers;
+    }
+
+    private static ApiStatus toStatus(JsonObject json, String name) {
+        JsonElement value = json.get(name);
+        if (value.isJsonNull())
+            throw new ApiPublisherException(name + " cannot be null");
+        return ApiStatus.valueOf(value.getAsString().toUpperCase());
     }
 
 }

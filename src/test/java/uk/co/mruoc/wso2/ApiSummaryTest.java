@@ -38,7 +38,7 @@ public class ApiSummaryTest {
 
     @Test
     public void shouldReturnStatus() {
-        String status = "CREATED";
+        ApiStatus status = ApiStatus.CREATED;
 
         ApiSummary summary = builder.setStatus(status).build();
 
