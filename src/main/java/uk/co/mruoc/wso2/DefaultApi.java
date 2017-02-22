@@ -5,13 +5,15 @@ import org.joda.time.DateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 public class DefaultApi implements Api {
 
-    private String name;
-    private String version;
-    private String description;
-    private String context;
-    private DateTime lastUpdated;
+    private String name = EMPTY;
+    private String version = EMPTY;
+    private String description = EMPTY;
+    private String context = EMPTY;
+    private DateTime lastUpdated = new DateTime(Long.MIN_VALUE);
     private int subscriberCount;
     private String provider;
     private ApiVisibility visibility;

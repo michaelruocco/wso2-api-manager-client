@@ -10,12 +10,22 @@ public class DefaultApiTest {
     private final DefaultApi api = new DefaultApi();
 
     @Test
+    public void nameShouldDefaultToEmpty() {
+        assertThat(api.getName()).isEmpty();
+    }
+
+    @Test
     public void shouldReturnName() {
         String name = "api-name";
 
         api.setName(name);
 
         assertThat(api.getName()).isEqualTo(name);
+    }
+
+    @Test
+    public void versionShouldDefaultToEmpty() {
+        assertThat(api.getVersion()).isEmpty();
     }
 
     @Test
@@ -28,12 +38,22 @@ public class DefaultApiTest {
     }
 
     @Test
+    public void descriptionShouldDefaultToEmpty() {
+        assertThat(api.getDescription()).isEmpty();
+    }
+
+    @Test
     public void shouldReturnDescription() {
         String description = "A test API";
 
         api.setDescription(description);
 
         assertThat(api.getDescription()).isEqualTo(description);
+    }
+
+    @Test
+    public void contextShouldDefaultToEmpty() {
+        assertThat(api.getContext()).isEmpty();
     }
 
     @Test
@@ -46,12 +66,22 @@ public class DefaultApiTest {
     }
 
     @Test
+    public void lastUpdatedShouldDefaultToMinLongDate() {
+        assertThat(api.getLastUpdated()).isEqualTo(new DateTime(Long.MIN_VALUE));
+    }
+
+    @Test
     public void shouldReturnLastUpdated() {
         DateTime lastUpdated = new DateTime();
 
         api.setLastUpdated(lastUpdated);
 
         assertThat(api.getLastUpdated()).isEqualTo(lastUpdated);
+    }
+
+    @Test
+    public void subscriberCountShouldDefaultToZero() {
+        assertThat(api.getSubscriberCount()).isEqualTo(0);
     }
 
     @Test
