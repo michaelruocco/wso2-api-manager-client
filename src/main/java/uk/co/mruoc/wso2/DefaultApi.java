@@ -3,6 +3,7 @@ package uk.co.mruoc.wso2;
 import org.joda.time.DateTime;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -19,7 +20,7 @@ public class DefaultApi implements Api {
     private ApiVisibility visibility = ApiVisibility.PUBLIC;
     private ApiStatus status = ApiStatus.CREATED;
     private String thumbnailImageUrl = EMPTY;
-    private List<String> tags;
+    private List<String> tags = Collections.emptyList();
     private ApiEndpointType endpointType;
     private String endpointUsername;
     private String endpointPassword;

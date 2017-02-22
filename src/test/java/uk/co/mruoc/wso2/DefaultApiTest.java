@@ -149,4 +149,16 @@ public class DefaultApiTest {
         assertThat(api.getThumbnailImageUrl()).isEqualTo(thumbnailImageUrl);
     }
 
+    @Test
+    public void tagsShouldDefaultToEmptyList() {
+        assertThat(api.getTags()).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnTags() {
+        api.setTags("tag1", "tag2");
+
+        assertThat(api.getTags()).containsExactly("tag1", "tag2");
+    }
+
 }
