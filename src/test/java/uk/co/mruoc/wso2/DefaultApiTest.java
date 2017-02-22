@@ -93,4 +93,18 @@ public class DefaultApiTest {
         assertThat(api.getSubscriberCount()).isEqualTo(subscriberCount);
     }
 
+    @Test
+    public void providerShouldDefaultToEmpty() {
+        assertThat(api.getProvider()).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnProvider() {
+        String provider = "admin";
+
+        api.setProvider(provider);
+
+        assertThat(api.getProvider()).isEqualTo(provider);
+    }
+
 }
