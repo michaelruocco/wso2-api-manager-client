@@ -2,19 +2,18 @@ package uk.co.mruoc.wso2;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import uk.co.mruoc.wso2.Api.ApiBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiTest {
 
-    private final ApiBuilder builder = new ApiBuilder();
+    private final DefaultApi api = new DefaultApi();
 
     @Test
     public void shouldReturnName() {
         String name = "api-name";
 
-        Api api = builder.setName(name).build();
+        api.setName(name);
 
         assertThat(api.getName()).isEqualTo(name);
     }
@@ -23,7 +22,7 @@ public class ApiTest {
     public void shouldReturnVersion() {
         String version = "v1";
 
-        Api api = builder.setVersion(version).build();
+        api.setVersion(version);
 
         assertThat(api.getVersion()).isEqualTo(version);
     }
@@ -32,7 +31,7 @@ public class ApiTest {
     public void shouldReturnDescription() {
         String description = "A test API";
 
-        Api api = builder.setDescription(description).build();
+        api.setDescription(description);
 
         assertThat(api.getDescription()).isEqualTo(description);
     }
@@ -41,7 +40,7 @@ public class ApiTest {
     public void shouldReturnContext() {
         String context = "/product/v1";
 
-        Api api = builder.setContext(context).build();
+        api.setContext(context);
 
         assertThat(api.getContext()).isEqualTo(context);
     }
@@ -50,7 +49,7 @@ public class ApiTest {
     public void shouldReturnLastUpdated() {
         DateTime lastUpdated = new DateTime();
 
-        Api api = builder.setLastUpdated(lastUpdated).build();
+        api.setLastUpdated(lastUpdated);
 
         assertThat(api.getLastUpdated()).isEqualTo(lastUpdated);
     }
@@ -59,7 +58,7 @@ public class ApiTest {
     public void shouldReturnSubscriberCount() {
         int subscriberCount = 2;
 
-        Api api = builder.setSubscriberCount(subscriberCount).build();
+        api.setSubscriberCount(subscriberCount);
 
         assertThat(api.getSubscriberCount()).isEqualTo(subscriberCount);
     }

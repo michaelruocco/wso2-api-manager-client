@@ -124,7 +124,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private Gson buildGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ApiSummary.class, new ApiSummaryDeserializer());
-        gsonBuilder.registerTypeAdapter(Api.class, new ApiDeserializer());
+        gsonBuilder.registerTypeAdapter(DefaultApi.class, new ApiDeserializer());
         return gsonBuilder.create();
     }
 
@@ -138,7 +138,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private Api toApi(Response response) {
         JsonElement element = new JsonParser().parse(response.getBody());
         JsonObject json = element.getAsJsonObject();
-        return gson.fromJson(json.get("api"), Api.class);
+        return gson.fromJson(json.get("api"), DefaultApi.class);
     }
 
     private void checkForError(Response response) {
