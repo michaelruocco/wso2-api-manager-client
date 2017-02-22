@@ -25,7 +25,7 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     private String endpointConfig = EMPTY;
     private String swagger = EMPTY;
     private String context = EMPTY;
-    private String thumb = EMPTY;
+    private String thumbnailImagePath = EMPTY;
 
     @Override
     public ApiVisibility getVisibility() {
@@ -157,12 +157,12 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     }
 
     @Override
-    public String getThumb() {
-        return thumb;
+    public String getThumbnailImagePath() {
+        return thumbnailImagePath;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
+    public void setThumbnailImagePath(String thumbnailImagePath) {
+        this.thumbnailImagePath = thumbnailImagePath;
     }
 
 }

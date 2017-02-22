@@ -112,7 +112,7 @@ public class ApiPublisherClientIntegrationTest {
         updateParams.setEndpointPassword(api.getEndpointPassword());
         updateParams.setVisibility(api.getVisibility());
         updateParams.setEndpointConfig(api.getEndpointConfig());
-        updateParams.setThumb(api.getThumbnailImageUrl());
+        updateParams.setThumbnailImagePath(api.getThumbnailImageUrl());
         return updateParams;
     }
 

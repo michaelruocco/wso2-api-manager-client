@@ -30,7 +30,7 @@ public class DefaultUpdateApiParamsToQueryStringConverter implements UpdateApiPa
                 versionArgumentBuilder.build(params.getVersion()) +
                 providerArgumentBuilder.build(params.getProvider()) +
                 visibilityArgumentBuilder.build(params) +
-                thumbArgumentBuilder.build(params.getThumb()) +
+                thumbArgumentBuilder.build(params.getThumbnailImagePath()) +
                 descriptionArgumentBuilder.build(params.getDescription()) +
                 tagsArgumentBuilder.build(params.getTags()) +
                 endpointSecurityArgumentBuilder.build(params) +
