@@ -19,7 +19,7 @@ public class ApiDeserializer implements JsonDeserializer<Api> {
         api.setProvider(parser.getProvider());
         api.setVisibility(parser.getVisibility());
         api.setStatus(parser.getStatus());
-        api.setThumb(parser.getThumbnailImagePath());
+        api.setThumbnailImageUrl(parser.getThumbnailImagePath());
         api.setTags(parser.getTags());
         api.setEndpointType(parser.getEndpointType());
         api.setEndpointUsername(parser.getEndpointUsername());

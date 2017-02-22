@@ -135,4 +135,18 @@ public class DefaultApiTest {
         assertThat(api.getStatus()).isEqualTo(status);
     }
 
+    @Test
+    public void thumbnailImageUrlShouldDefaultToEmpty() {
+        assertThat(api.getThumbnailImageUrl()).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnThumbnailImageUrl() {
+        String thumbnailImageUrl = "http://image/url.png";
+
+        api.setThumbnailImageUrl(thumbnailImageUrl);
+
+        assertThat(api.getThumbnailImageUrl()).isEqualTo(thumbnailImageUrl);
+    }
+
 }

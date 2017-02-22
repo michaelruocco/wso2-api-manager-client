@@ -24,7 +24,7 @@ public interface Api {
 
     ApiStatus getStatus();
 
-    String getThumb();
+    String getThumbnailImageUrl();
 
     List<String> getTags();
 

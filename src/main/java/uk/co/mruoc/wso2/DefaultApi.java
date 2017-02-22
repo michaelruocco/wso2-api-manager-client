@@ -18,7 +18,7 @@ public class DefaultApi implements Api {
     private String provider = EMPTY;
     private ApiVisibility visibility = ApiVisibility.PUBLIC;
     private ApiStatus status = ApiStatus.CREATED;
-    private String thumb;
+    private String thumbnailImageUrl = EMPTY;
     private List<String> tags;
     private ApiEndpointType endpointType;
     private String endpointUsername;
@@ -75,8 +75,8 @@ public class DefaultApi implements Api {
     }
 
     @Override
-    public String getThumb() {
-        return thumb;
+    public String getThumbnailImageUrl() {
+        return thumbnailImageUrl;
     }
 
     @Override
@@ -160,8 +160,8 @@ public class DefaultApi implements Api {
         this.status = status;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
+    public void setThumbnailImageUrl(String thumbnailImageUrl) {
+        this.thumbnailImageUrl = thumbnailImageUrl;
     }
 
     public void setTags(String... tags) {

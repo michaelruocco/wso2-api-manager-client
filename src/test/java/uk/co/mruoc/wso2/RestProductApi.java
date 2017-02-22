@@ -14,7 +14,7 @@ public class RestProductApi extends DefaultApi {
         setProvider("admin");
         setVisibility(ApiVisibility.PUBLIC);
         setStatus(ApiStatus.PUBLISHED);
-        setThumb("");
+        setThumbnailImageUrl("");
         setTags("product", "products");
         setEndpointType(ApiEndpointType.UNSECURED);
         setEndpointUsername("");
