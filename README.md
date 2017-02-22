@@ -6,7 +6,8 @@
 
 This library provides an abstraction layer around the WSO2 API Manager Publisher
 to try and make it as easy as possible to programatically interact with the publisher
-API.
+API. It is built and tested around version 1.9.0 of the WSO2 API Manager, you can find the
+API documenation [here](https://docs.wso2.com/display/AM190/Publisher+APIs).
 
 ## Usage
 
@@ -49,7 +50,7 @@ a true boolean value.
 
 Once you have logged in you can get a list of all the currently deployed
 apis by calling the listAll method, it will return you a list of ApiSummary
-objects containing some high leve details about each api that is deployed.
+objects containing some high level details about each api that is deployed.
 
 ```
 List<ApiSummary> summaries = client.listAll();
@@ -61,19 +62,18 @@ provider and status.
 ## Getting a Specific API
 
 It is also possible to get the details for a specific API, to do this you need
-to provide the name, version and provider of the API using the GetApiParams interface.
+to provide the name, version and provider of the API using the SelectApiParams interface.
 There is a default implementation that you can use as shown in the example below.
 The ApiSummary class returned when listing all APIs also implements this interface
 so it is possible to use those to get the full API details, this is also shown below.
 
-Using DefaultGetApiParams:
+Using DefaultSelectApiParams:
 
 ```
-GetApiParams params = new DefaultGetApiParamsBuilder()
-    .setName("api-name");
-    .setVersion("v1");
-    .setProvider("api-provider")
-    .build();
+SelectApiParams params = new DefaultSelectApiParams()
+params.setName("api-name");
+params.setVersion("v1");
+params.setProvider("api-provider")
 Api api = client.getApi(params);
 ```
 
@@ -87,13 +87,44 @@ for (ApiSummary summary : summaries) {
 }
 ```
 
+## Creating an API
+
+To create an api you need to create an instance of DefaultAddApiParams,
+there are various parameters that need to be set, you can find the details
+by reading the [API manager documentation](https://docs.wso2.com/display/AM190/Publisher+APIs#PublisherAPIs-AddAPI).
+
+The addApi call will return true if successful and will throw an exception if ApiPublisherException
+if an error occurs.
+
+An example of how you might create an API is shown below:
+
+```
+DefaultAddApiParams params = new DefaultAddApiParams();
+params.setName("rest-product");
+params.setContext("/product");
+params.setVersion("v1");
+params.setDescription("Rest Product API");
+params.setTags("prod", "rest-product", "product");
+params.setSwagger("{\"consumes\":[\"application/json\"],\"info\":{\"description\":\"rest-taxonomy : (build 20170103134850)\",\"title\":\"rest-taxonomy\",\"version\":\"v1\"},\"paths\":{\"/z20170103134850\":{\"get\":{\"responses\":{\"200\":{}},\"x-auth-type\":\"Application\",\"x-throttling-tier\":\"Unlimited\"}},\"/{catalog}/paged*\":{\"get\":{\"parameters\":[{\"description\":\"Catalog id (for ex. GroupMasterProductCatalog)\",\"in\":\"path\",\"name\":\"catalog\",\"required\":true,\"type\":\"string\"},{\"in\":\"query\",\"name\":\"limit\",\"required\":true,\"type\":\"integer\"},{\"in\":\"query\",\"name\":\"offset\",\"required\":true,\"type\":\"integer\"}],\"responses\":{\"200\":{}},\"x-auth-type\":\"Application\",\"x-throttling-tier\":\"Unlimited\"}}},\"produces\":[\"application/json\"],\"schemes\":[\"https\"],\"swagger\":\"2.0\"}");
+params.setEndpointConfig("{\"production_endpoints\": {\"url\":\"http://ws-uat1.dev.tppim.co.uk/pimwebservices/services/rest-taxonomy-entity-v1/taxonomy\", \"config\": null},\"endpoint_type\":\"http\"}");
+client.addApi(params);
+```
+
+## Checking that an API Exists by Name
+
+You can also check whether or not an api exists simply by passing the name of the API as shown below:
+
+```
+String name = "rest-product";
+boolean exists = client.apiExists(name);
+```
+
 ## Missing functionality
 
 Functionality still needs to be added to allow the following:
 
-* Creation of new APIs
-* Updating of existing APIs
-* Checking that an API exists by Name
+* Updating of existing APIs - partially implemented but needs improvement
+* Updating the status of an API.
 
 ## Running the tests
 
