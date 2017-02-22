@@ -10,7 +10,7 @@ import static uk.co.mruoc.wso2.ApiEndpointType.UNSECURED;
 
 public class EndpointSecurityArgumentBuilderTest {
 
-    private static final String PREFIX = "&endpointSecurity=";
+    private static final String PREFIX = "&endpointType=";
 
     private final EndpointSecurityArgumentBuilder builder = new EndpointSecurityArgumentBuilder();
 

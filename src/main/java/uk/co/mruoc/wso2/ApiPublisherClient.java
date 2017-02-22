@@ -17,5 +17,7 @@ public interface ApiPublisherClient {
     boolean apiExists(String name);
 
     boolean updateApi(UpdateApiParams params);
-    
+
+    boolean removeApi(SelectApiParams params);
+
 }

@@ -4,6 +4,7 @@ import com.google.gson.*;
 import uk.co.mruoc.wso2.ApiSummary.ApiSummaryBuilder;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 public class ApiSummaryDeserializer implements JsonDeserializer<ApiSummary> {
 

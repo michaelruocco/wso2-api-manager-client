@@ -14,4 +14,8 @@ public interface UpdateApiParams extends SelectApiParams, ApiVisibilityParams, T
 
     String getSwagger();
 
+    String getContext();
+
+    String getThumb();
+
 }

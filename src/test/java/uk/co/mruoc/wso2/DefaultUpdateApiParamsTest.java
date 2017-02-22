@@ -11,11 +11,6 @@ public class DefaultUpdateApiParamsTest {
 
     private final DefaultUpdateApiParams params = new DefaultUpdateApiParams();
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void setProviderShouldNotBeSupported() {
-        params.setProvider("provider");
-    }
-
     @Test
     public void visibilityShouldDefaultToPublic() {
         assertThat(params.getVisibility()).isEqualTo(PUBLIC);
@@ -172,6 +167,34 @@ public class DefaultUpdateApiParamsTest {
         params.setSwagger(swagger);
 
         assertThat(params.getSwagger()).isEqualTo(swagger);
+    }
+
+    @Test
+    public void contextShouldDefaultToEmpty() {
+        assertThat(params.getContext()).isEmpty();
+    }
+
+    @Test
+    public void shouldSetContext() {
+        String context = "context/v1";
+
+        params.setContext(context);
+
+        assertThat(params.getContext()).isEqualTo(context);
+    }
+
+    @Test
+    public void thumbShouldDefaultToEmpty() {
+        assertThat(params.getThumb()).isEmpty();
+    }
+
+    @Test
+    public void shouldSetThumb() {
+        String thumb = "context/v1";
+
+        params.setThumb(thumb);
+
+        assertThat(params.getThumb()).isEqualTo(thumb);
     }
 
 }

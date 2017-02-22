@@ -108,7 +108,7 @@ public class DefaultAddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&endpointSecurity=secured&epUsername=admin&epPassword=pass");
+        assertThat(queryString).isEqualTo("?action=addAPI&endpointType=secured&epUsername=admin&epPassword=pass");
     }
 
     @Test

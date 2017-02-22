@@ -23,7 +23,7 @@ public class SelectApiParamsToQueryStringConverterTest {
 
         String expectedQueryString = "?action=getAPI&name=" + NAME + "&version=" + VERSION + "&provider=" + PROVIDER;
 
-        String result = converter.toQueryString(params);
+        String result = converter.convert(params);
 
         assertThat(result).isEqualTo(expectedQueryString);
     }

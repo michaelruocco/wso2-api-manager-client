@@ -8,6 +8,7 @@ import java.util.List;
 public class DefaultUpdateApiParamsToQueryStringConverter implements UpdateApiParamsToQueryStringConverter {
 
     private final StringArgumentBuilder nameArgumentBuilder = new StringArgumentBuilder("name");
+    private final StringArgumentBuilder contextArgumentBuilder = new StringArgumentBuilder("context");
     private final StringArgumentBuilder versionArgumentBuilder = new StringArgumentBuilder("version");
     private final StringArgumentBuilder providerArgumentBuilder = new StringArgumentBuilder("provider");
     private final StringArgumentBuilder descriptionArgumentBuilder = new StringArgumentBuilder("description");
@@ -15,6 +16,7 @@ public class DefaultUpdateApiParamsToQueryStringConverter implements UpdateApiPa
     private final StringArgumentBuilder endpointConfigArgumentBuilder = new StringArgumentBuilder("endpoint_config");
     private final StringArgumentBuilder tagsArgumentBuilder = new StringArgumentBuilder("tags");
     private final StringArgumentBuilder tiersCollectionArgumentBuilder = new StringArgumentBuilder("tiersCollection");
+    private final StringArgumentBuilder thumbArgumentBuilder = new StringArgumentBuilder("thumbUrl");
 
     private final TransportsArgumentBuilder transportsArgumentBuilder = new TransportsArgumentBuilder();
     private final EndpointSecurityArgumentBuilder endpointSecurityArgumentBuilder = new EndpointSecurityArgumentBuilder();
@@ -24,16 +26,18 @@ public class DefaultUpdateApiParamsToQueryStringConverter implements UpdateApiPa
     public String convert(UpdateApiParams params) {
         return "?action=updateAPI" +
                 nameArgumentBuilder.build(params.getName()) +
+                contextArgumentBuilder.build(params.getContext()) +
                 versionArgumentBuilder.build(params.getVersion()) +
                 providerArgumentBuilder.build(params.getProvider()) +
-                descriptionArgumentBuilder.build(params.getDescription()) +
-                swaggerArgumentBuilder.build(params.getSwagger()) +
-                endpointConfigArgumentBuilder.build(params.getEndpointConfig()) +
-                tagsArgumentBuilder.build(params.getTags()) +
-                tiersCollectionArgumentBuilder.build(toNames(params.getTiers())) +
                 visibilityArgumentBuilder.build(params) +
+                thumbArgumentBuilder.build(params.getThumb()) +
+                descriptionArgumentBuilder.build(params.getDescription()) +
+                tagsArgumentBuilder.build(params.getTags()) +
                 endpointSecurityArgumentBuilder.build(params) +
-                transportsArgumentBuilder.build(params);
+                tiersCollectionArgumentBuilder.build(toNames(params.getTiers())) +
+                transportsArgumentBuilder.build(params) +
+                swaggerArgumentBuilder.build(params.getSwagger()) +
+                endpointConfigArgumentBuilder.build(params.getEndpointConfig());
     }
 
     private static List<String> toNames(List<ApiTierAvailability> values) {

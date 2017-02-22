@@ -39,4 +39,13 @@ public class StringArgumentBuilderTest {
         assertThat(result).isEqualTo("&" + NAME + "=value+1,value+2");
     }
 
+    @Test
+    public void shouldFormatBooleanValue() {
+        boolean value = false;
+
+        String result = builder.build(value);
+
+        assertThat(result).isEqualTo("&" + NAME + "=false");
+    }
+
 }

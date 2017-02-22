@@ -24,6 +24,11 @@ public class StringArgumentBuilder {
         return buildArgument(encodedValue);
     }
 
+    public String build(boolean value) {
+        String encodedValue = Boolean.toString(value);
+        return buildArgument(encodedValue);
+    }
+
     private String buildArgument(String encodedValue) {
         if (StringUtils.isEmpty(encodedValue))
             return EMPTY;

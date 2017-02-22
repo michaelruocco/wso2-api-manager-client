@@ -9,6 +9,8 @@ import uk.co.mruoc.http.client.SimpleHttpClient;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     private final HttpClient client;
@@ -19,6 +21,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final AddApiUrlBuilder addApiUrlBuilder;
     private final ApiExistsUrlBuilder apiExistsUrlBuilder;
     private final UpdateApiUrlBuilder updateApiUrlBuilder;
+    private final RemoveApiUrlBuilder removeApiUrlBuilder;
     private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
@@ -29,7 +32,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                 new DefaultGetApiUrlBuilder(hostUrl),
                 new DefaultAddApiUrlBuilder(hostUrl),
                 new DefaultApiExistsUrlBuilder(hostUrl),
-                new DefaultUpdateApiUrlBuilder(hostUrl));
+                new DefaultUpdateApiUrlBuilder(hostUrl),
+                new DefaultRemoveApiUrlBuilder(hostUrl));
     }
 
     public DefaultApiPublisherClient(HttpClient client,
@@ -39,7 +43,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      GetApiUrlBuilder getApiUrlBuilder,
                                      AddApiUrlBuilder addApiUrlBuilder,
                                      ApiExistsUrlBuilder apiExistsUrlBuilder,
-                                     UpdateApiUrlBuilder updateApiUrlBuilder) {
+                                     UpdateApiUrlBuilder updateApiUrlBuilder,
+                                     RemoveApiUrlBuilder removeApiUrlBuilder) {
         this.client = client;
         this.loginUrlBuilder = loginUrlBuilder;
         this.logoutUrlBuilder = logoutUrlBuilder;
@@ -48,13 +53,14 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.addApiUrlBuilder = addApiUrlBuilder;
         this.apiExistsUrlBuilder = apiExistsUrlBuilder;
         this.updateApiUrlBuilder = updateApiUrlBuilder;
+        this.removeApiUrlBuilder = removeApiUrlBuilder;
         this.gson = buildGson();
     }
 
     @Override
     public boolean login(Credentials credentials) {
         String url = loginUrlBuilder.build(credentials);
-        Response response = client.post(url, "");
+        Response response = client.post(url, EMPTY);
         checkForError(response);
         return true;
     }
@@ -86,7 +92,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     @Override
     public boolean addApi(AddApiParams params) {
         String url = addApiUrlBuilder.build(params);
-        Response response = client.post(url, "");
+        Response response = client.post(url, EMPTY);
         checkForError(response);
         return true;
     }
@@ -102,7 +108,15 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     @Override
     public boolean updateApi(UpdateApiParams params) {
         String url = updateApiUrlBuilder.build(params);
-        Response response = client.get(url);
+        Response response = client.post(url, EMPTY);
+        checkForError(response);
+        return true;
+    }
+
+    @Override
+    public boolean removeApi(SelectApiParams params) {
+        String url = removeApiUrlBuilder.build(params);
+        Response response = client.post(url, EMPTY);
         checkForError(response);
         return true;
     }

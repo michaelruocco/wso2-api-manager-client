@@ -5,7 +5,7 @@ import static uk.co.mruoc.wso2.ApiEndpointType.*;
 
 public class EndpointSecurityArgumentBuilder {
 
-    private final StringArgumentBuilder securityArgumentBuilder = new StringArgumentBuilder("endpointSecurity");
+    private final StringArgumentBuilder securityArgumentBuilder = new StringArgumentBuilder("endpointType");
     private final StringArgumentBuilder usernameArgumentBuilder = new StringArgumentBuilder("epUsername");
     private final StringArgumentBuilder passwordArgumentBuilder = new StringArgumentBuilder("epPassword");
 

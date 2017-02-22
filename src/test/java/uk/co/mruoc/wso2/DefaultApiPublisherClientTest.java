@@ -18,6 +18,7 @@ public class DefaultApiPublisherClientTest {
     private static final String ADD_API_URL = "add-api-url";
     private static final String API_EXISTS_URL = "api-apiExists-url";
     private static final String UPDATE_API_URL = "update-api-url";
+    private static final String REMOVE_API_URL = "remove-api-url";
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
@@ -28,12 +29,14 @@ public class DefaultApiPublisherClientTest {
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
     private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
     private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder);
+    private final RemoveApiUrlBuilder removeApiUrlBuilder = new StubRemoveApiUrlBuilder(REMOVE_API_URL);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
-    private final SelectApiParams selectApiParams = mock(SelectApiParams.class);
+    private final SelectApiParams getApiParams = mock(SelectApiParams.class);
     private final AddApiParams addApiParams = mock(AddApiParams.class);
     private final UpdateApiParams updateApiParams = mock(UpdateApiParams.class);
+    private final SelectApiParams removeApiParams = mock(UpdateApiParams.class);
 
     @Test
     public void loginShouldCallCorrectUrl() {
@@ -135,7 +138,7 @@ public class DefaultApiPublisherClientTest {
     public void getApiShouldCallCorrectUrl() {
         givenWillReturnListApiEmptySuccess();
 
-        client.getApi(selectApiParams);
+        client.getApi(getApiParams);
 
         assertThat(httpClient.lastRequestUri()).isEqualTo(GET_API_URL);
     }
@@ -144,21 +147,21 @@ public class DefaultApiPublisherClientTest {
     public void getApiShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        client.getApi(selectApiParams);
+        client.getApi(getApiParams);
     }
 
     @Test(expected = ApiPublisherException.class)
     public void getApiShouldThrowExceptionIfApiNotFound() {
         givenWillReturnGetApiFailure();
 
-        client.getApi(selectApiParams);
+        client.getApi(getApiParams);
     }
 
     @Test
     public void getApiShouldReturnApiIfExists() {
         givenWillReturnGetApiSuccess();
 
-        Api api = client.getApi(selectApiParams);
+        Api api = client.getApi(getApiParams);
 
         assertThat(api).isEqualToComparingFieldByField(new RestProductApi());
     }
@@ -194,7 +197,7 @@ public class DefaultApiPublisherClientTest {
     }
 
     @Test
-    public void existsShouldCallCorrectUrl() {
+    public void apiExistsShouldCallCorrectUrl() {
         givenWillReturnApiExistsSuccess();
 
         client.apiExists("name");
@@ -203,21 +206,21 @@ public class DefaultApiPublisherClientTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void existsShouldThrowExceptionIfNon200Response() {
+    public void apiExistsShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
         client.apiExists("name");
     }
 
     @Test
-    public void existsShouldReturnFalseFailure() {
+    public void apiExistsShouldReturnFalseFailure() {
         givenWillReturnApiExistsFailure();
 
         assertThat(client.apiExists("name")).isFalse();
     }
 
     @Test
-    public void existsShouldReturnTrueOnSuccess() {
+    public void apiExistsShouldReturnTrueOnSuccess() {
         givenWillReturnApiExistsSuccess();
 
         assertThat(client.apiExists("name")).isTrue();
@@ -251,6 +254,27 @@ public class DefaultApiPublisherClientTest {
         givenWillReturnUpdateApiSuccess();
 
         assertThat(client.updateApi(updateApiParams)).isTrue();
+    }
+
+    @Test(expected = ApiPublisherException.class)
+    public void removeApiShouldThrowExceptionIfNon200Response() {
+        givenWillReturnNon200();
+
+        client.removeApi(removeApiParams);
+    }
+
+    @Test(expected = ApiPublisherException.class)
+    public void removeApiShouldThrowExceptionOnRemoveApiFailure() {
+        givenWillReturnRemoveApiFailure();
+
+        client.removeApi(removeApiParams);
+    }
+
+    @Test
+    public void removeApiShouldReturnTrueOnRemoveApiSuccess() {
+        givenWillReturnRemoveApiSuccess();
+
+        assertThat(client.removeApi(removeApiParams)).isTrue();
     }
 
     private void givenWillReturnNon200() {
@@ -324,6 +348,17 @@ public class DefaultApiPublisherClientTest {
 
     private void givenWillReturnUpdateApiSuccess() {
         String body = load("update-api-success.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+
+    private void givenWillReturnRemoveApiFailure() {
+        String body = load("remove-api-failure.json");
+        httpClient.cannedResponse(200, body);
+    }
+
+    private void givenWillReturnRemoveApiSuccess() {
+        String body = load("remove-api-success.json");
         httpClient.cannedResponse(200, body);
     }
 

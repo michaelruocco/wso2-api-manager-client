@@ -17,9 +17,20 @@ public class ApiDeserializer implements JsonDeserializer<Api> {
                 .setContext(parser.getContext())
                 .setLastUpdated(parser.getLastUpdated())
                 .setSubscriberCount(parser.getSubscriberCount())
+                .setProvider(parser.getProvider())
+                .setVisibility(parser.getVisibility())
+                .setStatus(parser.getStatus())
+                .setThumb(parser.getThumbnailImagePath())
+                .setTags(parser.getTags())
+                .setEndpointType(parser.getEndpointType())
+                .setEndpointUsername(parser.getEndpointUsername())
+                .setEndpointPassword(parser.getEndpointPassword())
+                .setEndpointConfig(parser.getEndpointConfig())
+                .setHttpChecked(parser.getHttpChecked())
+                .setHttpsChecked(parser.getHttpsChecked())
+                .setTiers(parser.getTiers())
+                .setRoles(parser.getRoles())
                 .build();
     }
-
-
 
 }

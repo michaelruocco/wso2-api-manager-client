@@ -24,11 +24,8 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     private boolean httpsChecked = true;
     private String endpointConfig = EMPTY;
     private String swagger = EMPTY;
-
-    @Override
-    public void setProvider(String provider) {
-        throw new UnsupportedOperationException("setProvider not supported");
-    }
+    private String context = EMPTY;
+    private String thumb = EMPTY;
 
     @Override
     public ApiVisibility getVisibility() {
@@ -45,7 +42,11 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     }
 
     public void setRoles(String... roles) {
-        this.roles = Arrays.asList(roles);
+        setRoles(Arrays.asList(roles));
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -63,7 +64,11 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     }
 
     public void setTags(String... tags) {
-        this.tags = Arrays.asList(tags);
+        setTags(Arrays.asList(tags));
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     @Override
@@ -99,7 +104,11 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     }
 
     public void setTiers(ApiTierAvailability... tiers) {
-        this.tiers = Arrays.asList(tiers);
+        setTiers(Arrays.asList(tiers));
+    }
+
+    public void setTiers(List<ApiTierAvailability> tiers) {
+        this.tiers = tiers;
     }
 
     @Override
@@ -136,6 +145,24 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
 
     public void setSwagger(String swagger) {
         this.swagger = swagger;
+    }
+
+    @Override
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    @Override
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
     }
 
 }

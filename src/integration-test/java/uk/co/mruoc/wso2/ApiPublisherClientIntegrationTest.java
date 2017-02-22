@@ -11,6 +11,7 @@ public class ApiPublisherClientIntegrationTest {
 
     private static final int CONTAINER_START_TIMEOUT = 60000;
     private static final String BASE_URL = "https://localhost:9443";
+    private static final String USERNAME = "admin";
 
     private final Wso2ContainerStartupChecker startupChecker = new Wso2ContainerStartupChecker(CONTAINER_START_TIMEOUT);
 
@@ -19,7 +20,7 @@ public class ApiPublisherClientIntegrationTest {
             .withExposedPorts(9443, 9763)
             .withLogConsumer(startupChecker);
 
-    private final Credentials credentials = new Credentials("admin", "admin");
+    private final Credentials credentials = new Credentials(USERNAME, "admin");
     private final ApiPublisherClient client = new DefaultApiPublisherClient(BASE_URL);
 
     @Before
@@ -43,7 +44,7 @@ public class ApiPublisherClientIntegrationTest {
     }
 
     @Test
-    public void shouldReturnWhetherApiExists() {
+    public void shouldReturnApiExists() {
         AddApiParams params = StubAddApiParamsBuilder.build();
 
         client.addApi(params);
@@ -52,34 +53,67 @@ public class ApiPublisherClientIntegrationTest {
     }
 
     @Test
-    @Ignore
+    public void shouldRemoveApi() {
+        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
+        client.addApi(addApiParams);
+        assertThat(client.apiExists(addApiParams.getName())).isTrue();
+
+        SelectApiParams selectApiParams = toSelectParams(addApiParams);
+        client.removeApi(selectApiParams);
+        assertThat(client.apiExists(addApiParams.getName())).isFalse();
+    }
+
+    @Test
     public void shouldUpdateApi() {
         String updatedDescription = "updatedDescription";
 
         AddApiParams addParams = StubAddApiParamsBuilder.build();
-
         client.addApi(addParams);
 
-        DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams();
-        updateParams.setDescription(updatedDescription);
-        updateParams.setName(addParams.getName());
-        updateParams.setDescription(updatedDescription);
+        SelectApiParams selectApiParams = toSelectParams(addParams);
+        Api api = client.getApi(selectApiParams);
 
+        DefaultUpdateApiParams updateParams = toUpdateParams(api);
+        updateParams.setDescription(updatedDescription);
+        updateParams.setSwagger(addParams.getSwagger());
         client.updateApi(updateParams);
 
-        DefaultSelectApiParams getParams = new DefaultSelectApiParams();
-        getParams.setName(addParams.getName());
-        getParams.setProvider("admin");
-        getParams.setVersion(addParams.getVersion());
+        Api updatedApi = client.getApi(selectApiParams);
 
-        Api api = client.getApi(getParams);
-
-        assertThat(api.getDescription()).isEqualTo(updatedDescription);
+        assertThat(updatedApi.getDescription()).isEqualTo(updatedDescription);
     }
 
     @After
     public void tearDown() {
         client.logout();
+    }
+
+    private SelectApiParams toSelectParams(AddApiParams addParams) {
+        DefaultSelectApiParams selectParams = new DefaultSelectApiParams();
+        selectParams.setName(addParams.getName());
+        selectParams.setVersion(addParams.getVersion());
+        selectParams.setProvider(USERNAME);
+        return selectParams;
+    }
+
+    private DefaultUpdateApiParams toUpdateParams(Api api) {
+        DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams();
+        updateParams.setName(api.getName());
+        updateParams.setVersion(api.getVersion());
+        updateParams.setContext(api.getContext());
+        updateParams.setProvider(api.getProvider());
+        updateParams.setRoles(api.getRoles());
+        updateParams.setTags(api.getTags());
+        updateParams.setTiers(api.getTiers());
+        updateParams.setHttpChecked(api.isHttpChecked());
+        updateParams.setHttpsChecked(api.isHttpsChecked());
+        updateParams.setEndpointType(api.getEndpointType());
+        updateParams.setEndpointUsername(api.getEndpointUsername());
+        updateParams.setEndpointPassword(api.getEndpointPassword());
+        updateParams.setVisibility(api.getVisibility());
+        updateParams.setEndpointConfig(api.getEndpointConfig());
+        updateParams.setThumb(api.getThumb());
+        return updateParams;
     }
 
 }

@@ -18,7 +18,7 @@ public class DefaultGetApiUrlBuilder implements GetApiUrlBuilder {
     }
 
     private String buildQueryString(SelectApiParams params) {
-        return converter.toQueryString(params);
+        return converter.convert(params);
     }
 
 }

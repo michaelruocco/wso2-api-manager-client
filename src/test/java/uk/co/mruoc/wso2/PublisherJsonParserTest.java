@@ -105,6 +105,13 @@ public class PublisherJsonParserTest {
         assertThat(parser.getError()).isFalse();
     }
 
+    @Test
+    public void shouldDefaultListOfStringsValueToEmptyList() {
+        PublisherJsonParser parser = new PublisherJsonParser("{ \"tags\": null}");
+
+        assertThat(parser.getTags()).isEmpty();
+    }
+
     @Test(expected = ApiPublisherException.class)
     public void shouldThrowExceptionForNullTimeValue() {
         PublisherJsonParser parser = new PublisherJsonParser("{ \"lastUpdated\": null}");

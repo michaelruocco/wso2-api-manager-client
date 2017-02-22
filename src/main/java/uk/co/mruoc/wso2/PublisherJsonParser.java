@@ -5,6 +5,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class PublisherJsonParser {
 
     private final JsonObject json;
@@ -65,6 +70,52 @@ public class PublisherJsonParser {
         return toBoolean(json, "exist");
     }
 
+    public ApiVisibility getVisibility() {
+        return toVisibility(json, "visibility");
+    }
+
+    public List<String> getTags() {
+        return toList(json, "tags");
+    }
+
+    public ApiEndpointType getEndpointType() {
+        boolean secured = toBoolean(json, "endpointTypeSecured");
+        if (secured)
+            return ApiEndpointType.SECURED;
+        return ApiEndpointType.UNSECURED;
+    }
+
+    public String getEndpointUsername() {
+        return toString(json, "epUsername");
+    }
+
+    public String getEndpointPassword() {
+        return toString(json, "epPassword");
+    }
+
+    public String getEndpointConfig() {
+        return toString(json, "endpointConfig");
+    }
+
+    public boolean getHttpChecked() {
+        String value = toString(json, "transport_http");
+        return value.equals("checked");
+    }
+
+    public boolean getHttpsChecked() {
+        String value = toString(json, "transport_https");
+        return value.equals("checked");
+    }
+
+    public List<ApiTierAvailability> getTiers() {
+        List<String> values = toList(json, "availableTiers");
+        return toTiers(values);
+    }
+
+    public List<String> getRoles() {
+        return toList(json, "roles");
+    }
+
     private static String toString(JsonObject json, String name) {
         JsonElement value = json.get(name);
         if (value.isJsonNull())
@@ -89,6 +140,26 @@ public class PublisherJsonParser {
     private static boolean toBoolean(JsonObject json, String name) {
         JsonElement value = json.get(name);
         return !value.isJsonNull() && value.getAsBoolean();
+    }
+
+    private static ApiVisibility toVisibility(JsonObject json, String name) {
+        JsonElement value = json.get(name);
+        if (value.isJsonNull())
+            throw new ApiPublisherException(name + " cannot be null");
+        return ApiVisibility.valueOf(value.getAsString().toUpperCase());
+    }
+
+    private static List<String> toList(JsonObject json, String name) {
+        JsonElement value = json.get(name);
+        if (value.isJsonNull())
+            return Collections.emptyList();
+        return Arrays.asList(value.getAsString().split(","));
+    }
+
+    private static List<ApiTierAvailability> toTiers(List<String> values) {
+        List<ApiTierAvailability> tiers = new ArrayList<>();
+        values.forEach(v -> tiers.add(ApiTierAvailability.valueOf(v.toUpperCase())));
+        return tiers;
     }
 
 }
