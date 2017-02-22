@@ -253,4 +253,16 @@ public class DefaultApiTest {
         assertThat(api.getTiers()).containsExactly(ApiTierAvailability.GOLD,ApiTierAvailability.BRONZE);
     }
 
+    @Test
+    public void rolesShouldDefaultToEmptyList() {
+        assertThat(api.getRoles()).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnRoles() {
+        api.setRoles("role1", "role2");
+
+        assertThat(api.getRoles()).containsExactly("role1", "role2");
+    }
+
 }
