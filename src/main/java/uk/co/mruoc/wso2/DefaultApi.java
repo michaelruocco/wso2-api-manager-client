@@ -21,10 +21,10 @@ public class DefaultApi implements Api {
     private ApiStatus status = ApiStatus.CREATED;
     private String thumbnailImageUrl = EMPTY;
     private List<String> tags = Collections.emptyList();
-    private ApiEndpointType endpointType;
-    private String endpointUsername;
-    private String endpointPassword;
-    private String endpointConfig;
+    private ApiEndpointType endpointType = ApiEndpointType.UNSECURED;
+    private String endpointUsername = EMPTY;
+    private String endpointPassword = EMPTY;
+    private String endpointConfig = EMPTY;
     private boolean httpChecked;
     private boolean httpsChecked;
     private List<ApiTierAvailability> tiers;

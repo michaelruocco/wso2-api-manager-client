@@ -161,4 +161,60 @@ public class DefaultApiTest {
         assertThat(api.getTags()).containsExactly("tag1", "tag2");
     }
 
+    @Test
+    public void endpointTypeShouldDefaultToUnsecured() {
+        assertThat(api.getEndpointType()).isEqualTo(ApiEndpointType.UNSECURED);
+    }
+
+    @Test
+    public void shouldReturnEndpointType() {
+        ApiEndpointType type = ApiEndpointType.SECURED;
+
+        api.setEndpointType(type);
+
+        assertThat(api.getEndpointType()).isEqualTo(type);
+    }
+
+    @Test
+    public void endpointUsernameShouldDefaultToEmpty() {
+        assertThat(api.getEndpointUsername()).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnEndpointUsername() {
+        String username = "username";
+
+        api.setEndpointUsername(username);
+
+        assertThat(api.getEndpointUsername()).isEqualTo(username);
+    }
+
+    @Test
+    public void endpointPasswordShouldDefaultToEmpty() {
+        assertThat(api.getEndpointPassword()).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnEndpointPassword() {
+        String password = "pass";
+
+        api.setEndpointPassword(password);
+
+        assertThat(api.getEndpointPassword()).isEqualTo(password);
+    }
+
+    @Test
+    public void endpointConfigShouldDefaultToEmpty() {
+        assertThat(api.getEndpointConfig()).isEmpty();
+    }
+
+    @Test
+    public void shouldReturnEndpointConfig() {
+        String config = "{ config }";
+
+        api.setEndpointConfig(config);
+
+        assertThat(api.getEndpointConfig()).isEqualTo(config);
+    }
+
 }
