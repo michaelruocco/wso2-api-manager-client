@@ -217,4 +217,28 @@ public class DefaultApiTest {
         assertThat(api.getEndpointConfig()).isEqualTo(config);
     }
 
+    @Test
+    public void httpCheckedShouldDefaultToTrue() {
+        assertThat(api.isHttpChecked()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnHttpChecked() {
+        api.setHttpChecked(false);
+
+        assertThat(api.isHttpChecked()).isFalse();
+    }
+
+    @Test
+    public void httpsCheckedShouldDefaultToTrue() {
+        assertThat(api.isHttpsChecked()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnHttpsChecked() {
+        api.setHttpsChecked(false);
+
+        assertThat(api.isHttpsChecked()).isFalse();
+    }
+
 }

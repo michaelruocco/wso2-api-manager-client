@@ -25,8 +25,8 @@ public class DefaultApi implements Api {
     private String endpointUsername = EMPTY;
     private String endpointPassword = EMPTY;
     private String endpointConfig = EMPTY;
-    private boolean httpChecked;
-    private boolean httpsChecked;
+    private boolean httpChecked = true;
+    private boolean httpsChecked = true;
     private List<ApiTierAvailability> tiers;
     private List<String> roles;
 
