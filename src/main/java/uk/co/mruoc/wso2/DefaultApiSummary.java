@@ -1,28 +1,10 @@
 package uk.co.mruoc.wso2;
 
-public class DefaultApiSummary implements ApiSummary {
+public class DefaultApiSummary extends DefaultSelectApiParams implements ApiSummary {
 
-    private String name;
-    private String version;
-    private String provider;
     private ApiStatus status;
     private String thumbnailImageUrl;
     private int subscriberCount;
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getVersion() {
-        return version;
-    }
-
-    @Override
-    public String getProvider() {
-        return provider;
-    }
 
     @Override
     public ApiStatus getStatus() {
@@ -37,18 +19,6 @@ public class DefaultApiSummary implements ApiSummary {
     @Override
     public int getSubscriberCount() {
         return subscriberCount;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
     }
 
     public void setStatus(ApiStatus status) {
