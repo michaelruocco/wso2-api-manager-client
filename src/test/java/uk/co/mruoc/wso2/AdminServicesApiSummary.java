@@ -1,15 +1,14 @@
 package uk.co.mruoc.wso2;
 
-public class AdminServicesApiSummary extends ApiSummary {
+public class AdminServicesApiSummary extends DefaultApiSummary {
 
     public AdminServicesApiSummary() {
-        super(new ApiSummaryBuilder()
-                .setName("admin-services")
-                .setVersion("v1")
-                .setProvider("admin")
-                .setStatus(ApiStatus.PUBLISHED)
-                .setThumbnailImageUrl("")
-                .setSubscriberCount(0));
+        setName("admin-services");
+        setVersion("v1");
+        setProvider("admin");
+        setStatus(ApiStatus.PUBLISHED);
+        setThumbnailImageUrl("");
+        setSubscriberCount(0);
     }
 
 }

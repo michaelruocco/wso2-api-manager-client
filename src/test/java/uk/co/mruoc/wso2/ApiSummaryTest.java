@@ -1,19 +1,18 @@
 package uk.co.mruoc.wso2;
 
 import org.junit.Test;
-import uk.co.mruoc.wso2.ApiSummary.ApiSummaryBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiSummaryTest {
 
-    private ApiSummaryBuilder builder = new ApiSummaryBuilder();
+    private DefaultApiSummary summary = new DefaultApiSummary();
 
     @Test
     public void shouldReturnName() {
         String name = "api-name";
 
-        ApiSummary summary = builder.setName(name).build();
+        summary.setName(name);
 
         assertThat(summary.getName()).isEqualTo(name);
     }
@@ -22,7 +21,7 @@ public class ApiSummaryTest {
     public void shouldReturnVersion() {
         String version = "v1";
 
-        ApiSummary summary = builder.setVersion(version).build();
+        summary.setVersion(version);
 
         assertThat(summary.getVersion()).isEqualTo(version);
     }
@@ -31,7 +30,7 @@ public class ApiSummaryTest {
     public void shouldReturnProvider() {
         String provider = "admin";
 
-        ApiSummary summary = builder.setProvider(provider).build();
+        summary.setProvider(provider);
 
         assertThat(summary.getProvider()).isEqualTo(provider);
     }
@@ -40,7 +39,7 @@ public class ApiSummaryTest {
     public void shouldReturnStatus() {
         ApiStatus status = ApiStatus.CREATED;
 
-        ApiSummary summary = builder.setStatus(status).build();
+        summary.setStatus(status);
 
         assertThat(summary.getStatus()).isEqualTo(status);
     }
@@ -49,7 +48,7 @@ public class ApiSummaryTest {
     public void shouldReturnThumbnailImagePath() {
         String thumbnailImagePath = "/path/image.png";
 
-        ApiSummary summary = builder.setThumbnailImageUrl(thumbnailImagePath).build();
+        summary.setThumbnailImageUrl(thumbnailImagePath);
 
         assertThat(summary.getThumbnailImageUrl()).isEqualTo(thumbnailImagePath);
     }
@@ -58,7 +57,7 @@ public class ApiSummaryTest {
     public void shouldReturnSubscriberCount() {
         int subscriberCount = 3;
 
-        ApiSummary summary = builder.setSubscriberCount(subscriberCount).build();
+        summary.setSubscriberCount(subscriberCount);
 
         assertThat(summary.getSubscriberCount()).isEqualTo(subscriberCount);
     }
