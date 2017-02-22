@@ -46,7 +46,7 @@ client.login(credentials);
 The login method will throw an exception if the login fails, otherwise it will return
 a true boolean value.
 
-## Listing Apis
+## Listing APIs
 
 Once you have logged in you can get a list of all the currently deployed
 apis by calling the listAll method, it will return you a list of ApiSummary
@@ -124,7 +124,7 @@ boolean exists = client.apiExists(name);
 Functionality still needs to be added to allow the following:
 
 * Updating of existing APIs - partially implemented but needs improvement
-* Updating the status of an API.
+* Updating the status of an API
 
 ## Running the tests
 
