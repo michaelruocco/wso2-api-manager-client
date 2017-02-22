@@ -241,4 +241,16 @@ public class DefaultApiTest {
         assertThat(api.isHttpsChecked()).isFalse();
     }
 
+    @Test
+    public void tiersShouldDefaultToUnlimited() {
+        assertThat(api.getTiers()).containsExactly(ApiTierAvailability.UNLIMITED);
+    }
+
+    @Test
+    public void shouldReturnTiers() {
+        api.setTiers(ApiTierAvailability.GOLD, ApiTierAvailability.BRONZE);
+
+        assertThat(api.getTiers()).containsExactly(ApiTierAvailability.GOLD,ApiTierAvailability.BRONZE);
+    }
+
 }

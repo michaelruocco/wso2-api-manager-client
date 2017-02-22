@@ -27,7 +27,7 @@ public class DefaultApi implements Api {
     private String endpointConfig = EMPTY;
     private boolean httpChecked = true;
     private boolean httpsChecked = true;
-    private List<ApiTierAvailability> tiers;
+    private List<ApiTierAvailability> tiers = Collections.singletonList(ApiTierAvailability.UNLIMITED);
     private List<String> roles;
 
     @Override
