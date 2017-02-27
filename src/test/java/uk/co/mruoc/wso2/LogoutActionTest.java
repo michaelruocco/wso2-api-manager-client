@@ -4,48 +4,45 @@ import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
-public class LoginActionTest {
+public class LogoutActionTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String URL = "login-url";
+    private static final String URL = "logout-url";
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final LoginUrlBuilder loginUrlBuilder = new StubLoginUrlBuilder(URL);
-    private final LoginAction client = new LoginAction(httpClient, loginUrlBuilder);
-
-    private final Credentials credentials = mock(Credentials.class);
+    private final LogoutUrlBuilder logoutUrlBuilder = new StubLogoutUrlBuilder(URL);
+    private final LogoutAction action = new LogoutAction(httpClient, logoutUrlBuilder);
 
     @Test
-    public void loginShouldCallCorrectUrl() {
+    public void logoutShouldCallCorrectUrl() {
         givenWillReturnSuccess();
 
-        client.login(credentials);
+        action.logout();
 
         assertThat(httpClient.lastRequestUri()).isEqualTo(URL);
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void loginShouldThrowExceptionIfNon200Response() {
+    public void logoutShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        client.login(credentials);
+        action.logout();
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void loginShouldThrowExceptionOnLoginFailureResponse() {
+    public void logoutShouldThrowExceptionOnLogoutFailure() {
         givenWillReturnFailure();
 
-        client.login(credentials);
+        action.logout();
     }
 
     @Test
-    public void loginShouldReturnTrueOnLoginSuccessResponse() {
+    public void logoutShouldReturnTrueOnLogoutSuccess() {
         givenWillReturnSuccess();
 
-        assertThat(client.login(credentials)).isTrue();
+        assertThat(action.logout()).isTrue();
     }
 
     private void givenWillReturnNon200() {
@@ -53,12 +50,12 @@ public class LoginActionTest {
     }
 
     private void givenWillReturnSuccess() {
-        String body = load("login-success.json");
+        String body = load("logout-success.json");
         httpClient.cannedResponse(200, body);
     }
 
     private void givenWillReturnFailure() {
-        String body = load("login-failure.json");
+        String body = load("logout-failure.json");
         httpClient.cannedResponse(200, body);
     }
 
