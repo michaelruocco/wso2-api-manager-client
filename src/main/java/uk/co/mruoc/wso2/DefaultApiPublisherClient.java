@@ -14,7 +14,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     private final HttpClient client;
-    private final LoginUrlBuilder loginUrlBuilder;
+    private final LoginAction loginAction;
     private final LogoutUrlBuilder logoutUrlBuilder;
     private final ListAllUrlBuilder listAllUrlBuilder;
     private final GetApiUrlBuilder getApiUrlBuilder;
@@ -26,7 +26,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     public DefaultApiPublisherClient(String hostUrl) {
         this(new SimpleHttpClient(),
-                new DefaultLoginUrlBuilder(hostUrl),
+                new LoginAction(hostUrl),
                 new DefaultLogoutUrlBuilder(hostUrl),
                 new DefaultListAllUrlBuilder(hostUrl),
                 new DefaultGetApiUrlBuilder(hostUrl),
@@ -37,7 +37,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     }
 
     public DefaultApiPublisherClient(HttpClient client,
-                                     LoginUrlBuilder loginUrlBuilder,
+                                     LoginAction loginAction,
                                      LogoutUrlBuilder logoutUrlBuilder,
                                      ListAllUrlBuilder listAllUrlBuilder,
                                      GetApiUrlBuilder getApiUrlBuilder,
@@ -46,7 +46,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      UpdateApiUrlBuilder updateApiUrlBuilder,
                                      RemoveApiUrlBuilder removeApiUrlBuilder) {
         this.client = client;
-        this.loginUrlBuilder = loginUrlBuilder;
+        this.loginAction = loginAction;
         this.logoutUrlBuilder = logoutUrlBuilder;
         this.listAllUrlBuilder = listAllUrlBuilder;
         this.getApiUrlBuilder = getApiUrlBuilder;
@@ -59,10 +59,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean login(Credentials credentials) {
-        String url = loginUrlBuilder.build(credentials);
-        Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
-        return true;
+        return loginAction.login(credentials);
     }
 
     @Override

@@ -6,12 +6,12 @@ import uk.co.mruoc.http.client.FakeHttpClient;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class DefaultApiPublisherClientTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String LOGIN_URL = "login-url";
     private static final String LOGOUT_URL = "logout-url";
     private static final String LIST_ALL_URL = "list-all-url";
     private static final String GET_API_URL = "get-api-url";
@@ -22,7 +22,7 @@ public class DefaultApiPublisherClientTest {
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final LoginUrlBuilder loginUrlBuilder = new StubLoginUrlBuilder(LOGIN_URL);
+    private final LoginAction loginAction = mock(LoginAction.class);
     private final LogoutUrlBuilder logoutUrlBuilder = new StubLogoutUrlBuilder(LOGOUT_URL);
     private final ListAllUrlBuilder listAllUrlBuilder = new StubListAllUrlBuilder(LIST_ALL_URL);
     private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
@@ -30,7 +30,7 @@ public class DefaultApiPublisherClientTest {
     private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
     private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
     private final RemoveApiUrlBuilder removeApiUrlBuilder = new StubRemoveApiUrlBuilder(REMOVE_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginUrlBuilder, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
     private final SelectApiParams getApiParams = mock(SelectApiParams.class);
@@ -38,32 +38,16 @@ public class DefaultApiPublisherClientTest {
     private final UpdateApiParams updateApiParams = mock(UpdateApiParams.class);
     private final SelectApiParams removeApiParams = mock(UpdateApiParams.class);
 
-    @Test
-    public void loginShouldCallCorrectUrl() {
-        givenWillReturnLoginSuccess();
-
-        client.login(credentials);
-
-        assertThat(httpClient.lastRequestUri()).isEqualTo(LOGIN_URL);
-    }
-
     @Test(expected = ApiPublisherException.class)
-    public void loginShouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
-
-        client.login(credentials);
-    }
-
-    @Test(expected = ApiPublisherException.class)
-    public void loginShouldThrowExceptionOnLoginFailureResponse() {
-        givenWillReturnLoginFailure();
+    public void loginShouldThrowExceptionIfLoginFail() {
+        givenLoginWillFail();
 
         client.login(credentials);
     }
 
     @Test
-    public void loginShouldReturnTrueOnLoginSuccessResponse() {
-        givenWillReturnLoginSuccess();
+    public void loginShouldReturnTrueOnSuccess() {
+        givenLoginWillSucceed();
 
         assertThat(client.login(credentials)).isTrue();
     }
@@ -275,6 +259,14 @@ public class DefaultApiPublisherClientTest {
         givenWillReturnRemoveApiSuccess();
 
         assertThat(client.removeApi(removeApiParams)).isTrue();
+    }
+
+    private void givenLoginWillFail() {
+        given(loginAction.login(credentials)).willThrow(new ApiPublisherException("ERROR"));
+    }
+
+    private void givenLoginWillSucceed() {
+        given(loginAction.login(credentials)).willReturn(true);
     }
 
     private void givenWillReturnNon200() {
