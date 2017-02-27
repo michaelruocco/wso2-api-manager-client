@@ -61,7 +61,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean login(Credentials credentials) {
         String url = loginUrlBuilder.build(credentials);
         Response response = client.post(url, EMPTY);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return true;
     }
 
@@ -69,7 +69,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public List<ApiSummary> listAllApis() {
         String url = listAllUrlBuilder.build();
         Response response = client.get(url);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return toApiSummaries(response);
     }
 
@@ -77,7 +77,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean logout() {
         String url = logoutUrlBuilder.build();
         Response response = client.get(url);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return true;
     }
 
@@ -85,7 +85,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public Api getApi(SelectApiParams params) {
         String url = getApiUrlBuilder.build(params);
         Response response = client.get(url);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return toApi(response);
     }
 
@@ -93,7 +93,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean addApi(AddApiParams params) {
         String url = addApiUrlBuilder.build(params);
         Response response = client.post(url, EMPTY);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return true;
     }
 
@@ -101,7 +101,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean apiExists(String name) {
         String url = apiExistsUrlBuilder.build(name);
         Response response = client.get(url);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return exists(response);
     }
 
@@ -109,7 +109,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean updateApi(UpdateApiParams params) {
         String url = updateApiUrlBuilder.build(params);
         Response response = client.post(url, EMPTY);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return true;
     }
 
@@ -117,7 +117,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public boolean removeApi(SelectApiParams params) {
         String url = removeApiUrlBuilder.build(params);
         Response response = client.post(url, EMPTY);
-        checkForError(response);
+        ResponseErrorChecker.checkForError(response);
         return true;
     }
 
@@ -141,25 +141,9 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         return gson.fromJson(json.get("api"), DefaultApi.class);
     }
 
-    private void checkForError(Response response) {
-        if (hasError(response))
-            throw new ApiPublisherException(buildErrorMessage(response));
-    }
-
-    private boolean hasError(Response response) {
-        if (response.getStatusCode() != 200)
-            return true;
-        PublisherJsonParser parser = new PublisherJsonParser(response.getBody());
-        return parser.getError();
-    }
-
     private boolean exists(Response response) {
         PublisherJsonParser parser = new PublisherJsonParser(response.getBody());
         return parser.getExists();
-    }
-
-    private static String buildErrorMessage(Response response) {
-        return "status code: " + response.getStatusCode() + " body: " + response.getBody();
     }
 
 }
