@@ -1,6 +1,5 @@
 package uk.co.mruoc.wso2;
 
-import com.google.gson.*;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.http.client.SimpleHttpClient;
@@ -15,19 +14,18 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final LoginAction loginAction;
     private final LogoutAction logoutAction;
     private final ListAllAction listAllAction;
-    private final GetApiUrlBuilder getApiUrlBuilder;
+    private final GetApiAction getApiAction;
     private final AddApiUrlBuilder addApiUrlBuilder;
     private final ApiExistsUrlBuilder apiExistsUrlBuilder;
     private final UpdateApiUrlBuilder updateApiUrlBuilder;
     private final RemoveApiUrlBuilder removeApiUrlBuilder;
-    private final Gson gson;
 
     public DefaultApiPublisherClient(String hostUrl) {
         this(new SimpleHttpClient(),
                 new LoginAction(hostUrl),
                 new LogoutAction(hostUrl),
                 new ListAllAction(hostUrl),
-                new DefaultGetApiUrlBuilder(hostUrl),
+                new GetApiAction(hostUrl),
                 new DefaultAddApiUrlBuilder(hostUrl),
                 new DefaultApiExistsUrlBuilder(hostUrl),
                 new DefaultUpdateApiUrlBuilder(hostUrl),
@@ -38,7 +36,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      LoginAction loginAction,
                                      LogoutAction logoutAction,
                                      ListAllAction listAllAction,
-                                     GetApiUrlBuilder getApiUrlBuilder,
+                                     GetApiAction getApiAction,
                                      AddApiUrlBuilder addApiUrlBuilder,
                                      ApiExistsUrlBuilder apiExistsUrlBuilder,
                                      UpdateApiUrlBuilder updateApiUrlBuilder,
@@ -47,12 +45,11 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.listAllAction = listAllAction;
-        this.getApiUrlBuilder = getApiUrlBuilder;
+        this.getApiAction = getApiAction;
         this.addApiUrlBuilder = addApiUrlBuilder;
         this.apiExistsUrlBuilder = apiExistsUrlBuilder;
         this.updateApiUrlBuilder = updateApiUrlBuilder;
         this.removeApiUrlBuilder = removeApiUrlBuilder;
-        this.gson = buildGson();
     }
 
     @Override
@@ -72,10 +69,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public Api getApi(SelectApiParams params) {
-        String url = getApiUrlBuilder.build(params);
-        Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
-        return toApi(response);
+        return getApiAction.getApi(params);
     }
 
     @Override
@@ -108,19 +102,6 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         Response response = client.post(url, EMPTY);
         ResponseErrorChecker.checkForError(response);
         return true;
-    }
-
-    private Gson buildGson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(DefaultApiSummary.class, new ApiSummaryDeserializer());
-        gsonBuilder.registerTypeAdapter(DefaultApi.class, new ApiDeserializer());
-        return gsonBuilder.create();
-    }
-
-    private Api toApi(Response response) {
-        JsonElement element = new JsonParser().parse(response.getBody());
-        JsonObject json = element.getAsJsonObject();
-        return gson.fromJson(json.get("api"), DefaultApi.class);
     }
 
     private boolean exists(Response response) {

@@ -3,12 +3,17 @@ package uk.co.mruoc.wso2;
 import com.google.gson.*;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
+import uk.co.mruoc.http.client.SimpleHttpClient;
 
 public class GetApiAction {
 
     private final HttpClient client;
     private final GetApiUrlBuilder urlBuilder;
     private final Gson gson = buildGson();
+
+    public GetApiAction(String hostUrl) {
+        this(new SimpleHttpClient(), new DefaultGetApiUrlBuilder(hostUrl));
+    }
 
     public GetApiAction(HttpClient client, GetApiUrlBuilder urlBuilder) {
         this.client = client;

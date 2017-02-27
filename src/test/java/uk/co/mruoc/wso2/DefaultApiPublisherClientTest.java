@@ -13,7 +13,6 @@ import static org.mockito.Mockito.mock;
 public class DefaultApiPublisherClientTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String GET_API_URL = "get-api-url";
     private static final String ADD_API_URL = "add-api-url";
     private static final String API_EXISTS_URL = "api-apiExists-url";
     private static final String UPDATE_API_URL = "update-api-url";
@@ -24,18 +23,19 @@ public class DefaultApiPublisherClientTest {
     private final LoginAction loginAction = mock(LoginAction.class);
     private final LogoutAction logoutAction = mock(LogoutAction.class);
     private final ListAllAction listAllAction = mock(ListAllAction.class);
-    private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
+    private final GetApiAction getApiAction = mock(GetApiAction.class);
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
     private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
     private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
     private final RemoveApiUrlBuilder removeApiUrlBuilder = new StubRemoveApiUrlBuilder(REMOVE_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getApiAction, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
-    private final SelectApiParams getApiParams = mock(SelectApiParams.class);
+    private final SelectApiParams selectParams = mock(SelectApiParams.class);
     private final AddApiParams addApiParams = mock(AddApiParams.class);
     private final UpdateApiParams updateApiParams = mock(UpdateApiParams.class);
     private final SelectApiParams removeApiParams = mock(UpdateApiParams.class);
+    private final Throwable apiPublisherException = mock(ApiPublisherException.class);
 
     @Test(expected = ApiPublisherException.class)
     public void loginShouldThrowExceptionIfLoginFails() {
@@ -74,43 +74,27 @@ public class DefaultApiPublisherClientTest {
 
     @Test
     public void listAllShouldReturnApiSummariesIfMultipleApisDeployed() {
-        List<ApiSummary> summaries = givenListAllWillSucceed();
+        List<ApiSummary> expectedSummaries = givenListAllWillReturnSummaries();
 
         List<ApiSummary> result = client.listAllApis();
 
-        assertThat(result).isEqualTo(summaries);
-    }
-
-    @Test
-    public void getApiShouldCallCorrectUrl() {
-        givenWillReturnListApiEmptySuccess();
-
-        client.getApi(getApiParams);
-
-        assertThat(httpClient.lastRequestUri()).isEqualTo(GET_API_URL);
+        assertThat(result).isEqualTo(expectedSummaries);
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void getApiShouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
+    public void getApiShouldThrowExceptionIfGetApiFails() {
+        givenGetApiWillFail();
 
-        client.getApi(getApiParams);
-    }
-
-    @Test(expected = ApiPublisherException.class)
-    public void getApiShouldThrowExceptionIfApiNotFound() {
-        givenWillReturnGetApiFailure();
-
-        client.getApi(getApiParams);
+        client.getApi(selectParams);
     }
 
     @Test
     public void getApiShouldReturnApiIfExists() {
-        givenWillReturnGetApiSuccess();
+        Api expectedApi = givenGetApiWillReturnApi();
 
-        Api api = client.getApi(getApiParams);
+        Api result = client.getApi(selectParams);
 
-        assertThat(api).isEqualToComparingFieldByField(new RestProductApi());
+        assertThat(result).isEqualToComparingFieldByField(expectedApi);
     }
 
     @Test
@@ -229,7 +213,7 @@ public class DefaultApiPublisherClientTest {
     }
 
     private void givenLoginWillFail() {
-        given(loginAction.login(credentials)).willThrow(new ApiPublisherException("ERROR"));
+        given(loginAction.login(credentials)).willThrow(apiPublisherException);
     }
 
     private void givenLoginWillSucceed() {
@@ -237,7 +221,7 @@ public class DefaultApiPublisherClientTest {
     }
 
     private void givenLogoutWillFail() {
-        given(logoutAction.logout()).willThrow(new ApiPublisherException("ERROR"));
+        given(logoutAction.logout()).willThrow(apiPublisherException);
     }
 
     private void givenLogoutWillSucceed() {
@@ -245,10 +229,10 @@ public class DefaultApiPublisherClientTest {
     }
 
     private void givenListAllWillFail() {
-        given(listAllAction.listAllApis()).willThrow(new ApiPublisherException("ERROR"));
+        given(listAllAction.listAllApis()).willThrow(apiPublisherException);
     }
 
-    private List<ApiSummary> givenListAllWillSucceed() {
+    private List<ApiSummary> givenListAllWillReturnSummaries() {
         List<ApiSummary> summaries = buildSummaries();
         given(listAllAction.listAllApis()).willReturn(summaries);
         return summaries;
@@ -261,19 +245,14 @@ public class DefaultApiPublisherClientTest {
         return summaries;
     }
 
-    private void givenWillReturnListApiEmptySuccess() {
-        String body = load("list-api-empty-success.json");
-        httpClient.cannedResponse(200, body);
+    private void givenGetApiWillFail() {
+        given(getApiAction.getApi(selectParams)).willThrow(apiPublisherException);
     }
 
-    private void givenWillReturnGetApiFailure() {
-        String body = load("get-api-failure.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private void givenWillReturnGetApiSuccess() {
-        String body = load("get-api-success.json");
-        httpClient.cannedResponse(200, body);
+    private Api givenGetApiWillReturnApi() {
+        Api api = new RestProductApi();
+        given(getApiAction.getApi(selectParams)).willReturn(api);
+        return api;
     }
 
     private void givenWillReturnAddApiFailure() {
