@@ -13,7 +13,6 @@ import static org.mockito.Mockito.mock;
 public class DefaultApiPublisherClientTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String LIST_ALL_URL = "list-all-url";
     private static final String GET_API_URL = "get-api-url";
     private static final String ADD_API_URL = "add-api-url";
     private static final String API_EXISTS_URL = "api-apiExists-url";
@@ -264,11 +263,6 @@ public class DefaultApiPublisherClientTest {
 
     private void givenWillReturnListApiEmptySuccess() {
         String body = load("list-api-empty-success.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private void givenWillReturnListApiMultipleSuccess() {
-        String body = load("list-api-multiple-success.json");
         httpClient.cannedResponse(200, body);
     }
 
