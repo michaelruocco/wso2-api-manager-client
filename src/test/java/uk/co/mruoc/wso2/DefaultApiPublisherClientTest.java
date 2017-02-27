@@ -12,7 +12,6 @@ import static org.mockito.Mockito.mock;
 public class DefaultApiPublisherClientTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String LOGOUT_URL = "logout-url";
     private static final String LIST_ALL_URL = "list-all-url";
     private static final String GET_API_URL = "get-api-url";
     private static final String ADD_API_URL = "add-api-url";
@@ -23,14 +22,14 @@ public class DefaultApiPublisherClientTest {
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
     private final LoginAction loginAction = mock(LoginAction.class);
-    private final LogoutUrlBuilder logoutUrlBuilder = new StubLogoutUrlBuilder(LOGOUT_URL);
+    private final LogoutAction logoutAction = mock(LogoutAction.class);
     private final ListAllUrlBuilder listAllUrlBuilder = new StubListAllUrlBuilder(LIST_ALL_URL);
     private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
     private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
     private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
     private final RemoveApiUrlBuilder removeApiUrlBuilder = new StubRemoveApiUrlBuilder(REMOVE_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutUrlBuilder, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
     private final SelectApiParams getApiParams = mock(SelectApiParams.class);
@@ -39,7 +38,7 @@ public class DefaultApiPublisherClientTest {
     private final SelectApiParams removeApiParams = mock(UpdateApiParams.class);
 
     @Test(expected = ApiPublisherException.class)
-    public void loginShouldThrowExceptionIfLoginFail() {
+    public void loginShouldThrowExceptionIfLoginFails() {
         givenLoginWillFail();
 
         client.login(credentials);
@@ -52,32 +51,16 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.login(credentials)).isTrue();
     }
 
-    @Test
-    public void logoutShouldCallCorrectUrl() {
-        givenWillReturnLogoutSuccess();
-
-        client.logout();
-
-        assertThat(httpClient.lastRequestUri()).isEqualTo(LOGOUT_URL);
-    }
-
     @Test(expected = ApiPublisherException.class)
-    public void logoutShouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
-
-        client.logout();
-    }
-
-    @Test(expected = ApiPublisherException.class)
-    public void logoutShouldThrowExceptionOnLogoutFailure() {
-        givenWillReturnLogoutFailure();
+    public void logoutShouldThrowExceptionIfLogoutFails() {
+        givenLogoutWillFail();
 
         client.logout();
     }
 
     @Test
-    public void logoutShouldReturnTrueOnLogoutSuccess() {
-        givenWillReturnLogoutSuccess();
+    public void logoutShouldReturnTrueOnSuccess() {
+        givenLogoutWillSucceed();
 
         assertThat(client.logout()).isTrue();
     }
@@ -261,6 +244,10 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.removeApi(removeApiParams)).isTrue();
     }
 
+    private void givenWillReturnNon200() {
+        httpClient.cannedResponse(500, "");
+    }
+
     private void givenLoginWillFail() {
         given(loginAction.login(credentials)).willThrow(new ApiPublisherException("ERROR"));
     }
@@ -269,28 +256,12 @@ public class DefaultApiPublisherClientTest {
         given(loginAction.login(credentials)).willReturn(true);
     }
 
-    private void givenWillReturnNon200() {
-        httpClient.cannedResponse(500, "");
+    private void givenLogoutWillFail() {
+        given(logoutAction.logout()).willThrow(new ApiPublisherException("ERROR"));
     }
 
-    private void givenWillReturnLoginSuccess() {
-        String body = load("login-success.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private void givenWillReturnLoginFailure() {
-        String body = load("login-failure.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private void givenWillReturnLogoutSuccess() {
-        String body = load("logout-success.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private void givenWillReturnLogoutFailure() {
-        String body = load("logout-failure.json");
-        httpClient.cannedResponse(200, body);
+    private void givenLogoutWillSucceed() {
+        given(logoutAction.logout()).willReturn(true);
     }
 
     private void givenWillReturnListApiEmptySuccess() {

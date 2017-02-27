@@ -15,7 +15,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     private final HttpClient client;
     private final LoginAction loginAction;
-    private final LogoutUrlBuilder logoutUrlBuilder;
+    private final LogoutAction logoutAction;
     private final ListAllUrlBuilder listAllUrlBuilder;
     private final GetApiUrlBuilder getApiUrlBuilder;
     private final AddApiUrlBuilder addApiUrlBuilder;
@@ -27,7 +27,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public DefaultApiPublisherClient(String hostUrl) {
         this(new SimpleHttpClient(),
                 new LoginAction(hostUrl),
-                new DefaultLogoutUrlBuilder(hostUrl),
+                new LogoutAction(hostUrl),
                 new DefaultListAllUrlBuilder(hostUrl),
                 new DefaultGetApiUrlBuilder(hostUrl),
                 new DefaultAddApiUrlBuilder(hostUrl),
@@ -38,7 +38,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     public DefaultApiPublisherClient(HttpClient client,
                                      LoginAction loginAction,
-                                     LogoutUrlBuilder logoutUrlBuilder,
+                                     LogoutAction logoutAction,
                                      ListAllUrlBuilder listAllUrlBuilder,
                                      GetApiUrlBuilder getApiUrlBuilder,
                                      AddApiUrlBuilder addApiUrlBuilder,
@@ -47,7 +47,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      RemoveApiUrlBuilder removeApiUrlBuilder) {
         this.client = client;
         this.loginAction = loginAction;
-        this.logoutUrlBuilder = logoutUrlBuilder;
+        this.logoutAction = logoutAction;
         this.listAllUrlBuilder = listAllUrlBuilder;
         this.getApiUrlBuilder = getApiUrlBuilder;
         this.addApiUrlBuilder = addApiUrlBuilder;
@@ -72,10 +72,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean logout() {
-        String url = logoutUrlBuilder.build();
-        Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
-        return true;
+        return logoutAction.logout();
     }
 
     @Override
