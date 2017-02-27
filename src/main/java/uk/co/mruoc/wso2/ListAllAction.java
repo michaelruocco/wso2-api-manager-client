@@ -15,8 +15,8 @@ public class ListAllAction {
     private ListAllUrlBuilder urlBuilder;
     private Gson gson = buildGson();
 
-    public ListAllAction(String hostUrl) {
-        this(new SimpleHttpClient(), new DefaultListAllUrlBuilder(hostUrl));
+    public ListAllAction(HttpClient client, String hostUrl) {
+        this(client, new DefaultListAllUrlBuilder(hostUrl));
     }
 
     public ListAllAction(HttpClient client, ListAllUrlBuilder urlBuilder) {

@@ -11,8 +11,8 @@ public class LoginAction {
     private final HttpClient client;
     private final LoginUrlBuilder urlBuilder;
 
-    public LoginAction(String hostUrl) {
-        this(new SimpleHttpClient(), new DefaultLoginUrlBuilder(hostUrl));
+    public LoginAction(HttpClient client, String hostUrl) {
+        this(client, new DefaultLoginUrlBuilder(hostUrl));
     }
 
     public LoginAction(HttpClient client, LoginUrlBuilder urlBuilder) {

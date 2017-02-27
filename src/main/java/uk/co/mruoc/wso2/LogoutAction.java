@@ -9,8 +9,8 @@ public class LogoutAction {
     private final HttpClient client;
     private final LogoutUrlBuilder  urlBuilder;
 
-    public LogoutAction(String hostUrl) {
-        this(new SimpleHttpClient(), new DefaultLogoutUrlBuilder(hostUrl));
+    public LogoutAction(HttpClient client, String hostUrl) {
+        this(client, new DefaultLogoutUrlBuilder(hostUrl));
     }
 
     public LogoutAction(HttpClient client, LogoutUrlBuilder urlBuilder) {

@@ -21,11 +21,15 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final RemoveApiUrlBuilder removeApiUrlBuilder;
 
     public DefaultApiPublisherClient(String hostUrl) {
-        this(new SimpleHttpClient(),
-                new LoginAction(hostUrl),
-                new LogoutAction(hostUrl),
-                new ListAllAction(hostUrl),
-                new GetApiAction(hostUrl),
+        this(new SimpleHttpClient(), hostUrl);
+    }
+
+    public DefaultApiPublisherClient(HttpClient client, String hostUrl) {
+        this(client,
+                new LoginAction(client, hostUrl),
+                new LogoutAction(client, hostUrl),
+                new ListAllAction(client, hostUrl),
+                new GetApiAction(client, hostUrl),
                 new DefaultAddApiUrlBuilder(hostUrl),
                 new DefaultApiExistsUrlBuilder(hostUrl),
                 new DefaultUpdateApiUrlBuilder(hostUrl),

@@ -11,8 +11,8 @@ public class GetApiAction {
     private final GetApiUrlBuilder urlBuilder;
     private final Gson gson = buildGson();
 
-    public GetApiAction(String hostUrl) {
-        this(new SimpleHttpClient(), new DefaultGetApiUrlBuilder(hostUrl));
+    public GetApiAction(HttpClient client, String hostUrl) {
+        this(client, new DefaultGetApiUrlBuilder(hostUrl));
     }
 
     public GetApiAction(HttpClient client, GetApiUrlBuilder urlBuilder) {
