@@ -44,6 +44,17 @@ public class ApiPublisherClientIntegrationTest {
     }
 
     @Test
+    public void listAllShouldReturnSummariesForDeployedApis() {
+        AddApiParams params = StubAddApiParamsBuilder.build();
+        client.addApi(params);
+
+        List<ApiSummary> summaries = client.listAllApis();
+
+        assertThat(summaries.size()).isEqualTo(1);
+        assertThat(summaries.get(0)).isEqualToComparingFieldByField(new RestProductApiSummary());
+    }
+
+    @Test
     public void shouldReturnApiExists() {
         AddApiParams params = StubAddApiParamsBuilder.build();
 
