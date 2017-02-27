@@ -1,12 +1,10 @@
 package uk.co.mruoc.wso2;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.http.client.SimpleHttpClient;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -16,7 +14,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final HttpClient client;
     private final LoginAction loginAction;
     private final LogoutAction logoutAction;
-    private final ListAllUrlBuilder listAllUrlBuilder;
+    private final ListAllAction listAllAction;
     private final GetApiUrlBuilder getApiUrlBuilder;
     private final AddApiUrlBuilder addApiUrlBuilder;
     private final ApiExistsUrlBuilder apiExistsUrlBuilder;
@@ -28,7 +26,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this(new SimpleHttpClient(),
                 new LoginAction(hostUrl),
                 new LogoutAction(hostUrl),
-                new DefaultListAllUrlBuilder(hostUrl),
+                new ListAllAction(hostUrl),
                 new DefaultGetApiUrlBuilder(hostUrl),
                 new DefaultAddApiUrlBuilder(hostUrl),
                 new DefaultApiExistsUrlBuilder(hostUrl),
@@ -39,7 +37,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public DefaultApiPublisherClient(HttpClient client,
                                      LoginAction loginAction,
                                      LogoutAction logoutAction,
-                                     ListAllUrlBuilder listAllUrlBuilder,
+                                     ListAllAction listAllAction,
                                      GetApiUrlBuilder getApiUrlBuilder,
                                      AddApiUrlBuilder addApiUrlBuilder,
                                      ApiExistsUrlBuilder apiExistsUrlBuilder,
@@ -48,7 +46,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.client = client;
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
-        this.listAllUrlBuilder = listAllUrlBuilder;
+        this.listAllAction = listAllAction;
         this.getApiUrlBuilder = getApiUrlBuilder;
         this.addApiUrlBuilder = addApiUrlBuilder;
         this.apiExistsUrlBuilder = apiExistsUrlBuilder;
@@ -64,10 +62,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public List<ApiSummary> listAllApis() {
-        String url = listAllUrlBuilder.build();
-        Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
-        return toApiSummaries(response);
+        return listAllAction.listAllApis();
     }
 
     @Override
@@ -120,13 +115,6 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         gsonBuilder.registerTypeAdapter(DefaultApiSummary.class, new ApiSummaryDeserializer());
         gsonBuilder.registerTypeAdapter(DefaultApi.class, new ApiDeserializer());
         return gsonBuilder.create();
-    }
-
-    private List<ApiSummary> toApiSummaries(Response response) {
-        JsonElement element = new JsonParser().parse(response.getBody());
-        JsonObject json = element.getAsJsonObject();
-        Type listType = new TypeToken<List<DefaultApiSummary>>() {}.getType();
-        return gson.fromJson(json.get("apis"), listType);
     }
 
     private Api toApi(Response response) {

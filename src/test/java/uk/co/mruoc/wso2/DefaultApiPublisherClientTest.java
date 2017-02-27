@@ -3,6 +3,7 @@ package uk.co.mruoc.wso2;
 import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,13 +24,13 @@ public class DefaultApiPublisherClientTest {
     private final FakeHttpClient httpClient = new FakeHttpClient();
     private final LoginAction loginAction = mock(LoginAction.class);
     private final LogoutAction logoutAction = mock(LogoutAction.class);
-    private final ListAllUrlBuilder listAllUrlBuilder = new StubListAllUrlBuilder(LIST_ALL_URL);
+    private final ListAllAction listAllAction = mock(ListAllAction.class);
     private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
     private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
     private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
     private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
     private final RemoveApiUrlBuilder removeApiUrlBuilder = new StubRemoveApiUrlBuilder(REMOVE_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllUrlBuilder, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getApiUrlBuilder, addApiUrlBuilder, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
     private final SelectApiParams getApiParams = mock(SelectApiParams.class);
@@ -65,40 +66,20 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.logout()).isTrue();
     }
 
-    @Test
-    public void listAllShouldCallCorrectUrl() {
-        givenWillReturnListApiEmptySuccess();
-
-        client.listAllApis();
-
-        assertThat(httpClient.lastRequestUri()).isEqualTo(LIST_ALL_URL);
-    }
-
     @Test(expected = ApiPublisherException.class)
-    public void listAllShouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
+    public void listAllShouldThrowExceptionIfListAllFails() {
+        givenListAllWillFail();
 
         client.listAllApis();
-    }
-
-    @Test
-    public void listAllShouldReturnEmptyListIfNoApisDeployed() {
-        givenWillReturnListApiEmptySuccess();
-
-        List<ApiSummary> apiSummaries = client.listAllApis();
-
-        assertThat(apiSummaries.size()).isEqualTo(0);
     }
 
     @Test
     public void listAllShouldReturnApiSummariesIfMultipleApisDeployed() {
-        givenWillReturnListApiMultipleSuccess();
+        List<ApiSummary> summaries = givenListAllWillSucceed();
 
-        List<ApiSummary> apiSummaries = client.listAllApis();
+        List<ApiSummary> result = client.listAllApis();
 
-        assertThat(apiSummaries.size()).isEqualTo(2);
-        assertThat(apiSummaries.get(0)).isEqualToComparingFieldByField(new AdminServicesApiSummary());
-        assertThat(apiSummaries.get(1)).isEqualToComparingFieldByField(new ColleagueApiSummary());
+        assertThat(result).isEqualTo(summaries);
     }
 
     @Test
@@ -262,6 +243,23 @@ public class DefaultApiPublisherClientTest {
 
     private void givenLogoutWillSucceed() {
         given(logoutAction.logout()).willReturn(true);
+    }
+
+    private void givenListAllWillFail() {
+        given(listAllAction.listAllApis()).willThrow(new ApiPublisherException("ERROR"));
+    }
+
+    private List<ApiSummary> givenListAllWillSucceed() {
+        List<ApiSummary> summaries = buildSummaries();
+        given(listAllAction.listAllApis()).willReturn(summaries);
+        return summaries;
+    }
+
+    private List<ApiSummary> buildSummaries() {
+        List<ApiSummary> summaries = new ArrayList<>();
+        summaries.add(new AdminServicesApiSummary());
+        summaries.add(new ColleagueApiSummary());
+        return summaries;
     }
 
     private void givenWillReturnListApiEmptySuccess() {
