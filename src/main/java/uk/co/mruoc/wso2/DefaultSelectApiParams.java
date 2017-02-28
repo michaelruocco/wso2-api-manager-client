@@ -13,22 +13,22 @@ public class DefaultSelectApiParams implements SelectApiParams {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
     @Override
     public String getProvider() {
         return provider;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public void setProvider(String provider) {

@@ -13,22 +13,22 @@ public class DefaultSetStatusApiParams extends DefaultSelectApiParams implements
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public boolean isPublishToGateway() {
         return publishToGateway;
     }
 
-    public void setPublishToGateway(boolean publishToGateway) {
-        this.publishToGateway = publishToGateway;
-    }
-
     @Override
     public boolean isRequireSubscription() {
         return requireSubscription;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setPublishToGateway(boolean publishToGateway) {
+        this.publishToGateway = publishToGateway;
     }
 
     public void setRequireSubscription(boolean requireSubscription) {

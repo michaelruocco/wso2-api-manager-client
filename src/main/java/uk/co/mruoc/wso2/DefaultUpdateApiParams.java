@@ -32,13 +32,73 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
         return visibility;
     }
 
-    public void setVisibility(ApiVisibility visibility) {
-        this.visibility = visibility;
-    }
-
     @Override
     public List<String> getRoles() {
         return roles;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public List<String> getTags() {
+        return tags;
+    }
+
+    @Override
+    public ApiEndpointType getEndpointType() {
+        return endpointType;
+    }
+
+    @Override
+    public String getEndpointUsername() {
+        return endpointUsername;
+    }
+
+    @Override
+    public String getEndpointPassword() {
+        return endpointPassword;
+    }
+
+    @Override
+    public List<ApiTierAvailability> getTiers() {
+        return tiers;
+    }
+
+    @Override
+    public boolean isHttpChecked() {
+        return httpChecked;
+    }
+
+    @Override
+    public boolean isHttpsChecked() {
+        return httpsChecked;
+    }
+
+    @Override
+    public String getEndpointConfig() {
+        return endpointConfig;
+    }
+
+    @Override
+    public String getSwagger() {
+        return swagger;
+    }
+
+    @Override
+    public String getContext() {
+        return context;
+    }
+
+    @Override
+    public String getThumbnailImagePath() {
+        return thumbnailImagePath;
+    }
+
+    public void setVisibility(ApiVisibility visibility) {
+        this.visibility = visibility;
     }
 
     public void setRoles(String... roles) {
@@ -49,18 +109,8 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
         this.roles = roles;
     }
 
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public List<String> getTags() {
-        return tags;
     }
 
     public void setTags(String... tags) {
@@ -71,36 +121,16 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
         this.tags = tags;
     }
 
-    @Override
-    public ApiEndpointType getEndpointType() {
-        return endpointType;
-    }
-
     public void setEndpointType(ApiEndpointType endpointType) {
         this.endpointType = endpointType;
-    }
-
-    @Override
-    public String getEndpointUsername() {
-        return endpointUsername;
     }
 
     public void setEndpointUsername(String endpointUsername) {
         this.endpointUsername = endpointUsername;
     }
 
-    @Override
-    public String getEndpointPassword() {
-        return endpointPassword;
-    }
-
     public void setEndpointPassword(String endpointPassword) {
         this.endpointPassword = endpointPassword;
-    }
-
-    @Override
-    public List<ApiTierAvailability> getTiers() {
-        return tiers;
     }
 
     public void setTiers(ApiTierAvailability... tiers) {
@@ -111,54 +141,24 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
         this.tiers = tiers;
     }
 
-    @Override
-    public boolean isHttpChecked() {
-        return httpChecked;
-    }
-
     public void setHttpChecked(boolean httpChecked) {
         this.httpChecked = httpChecked;
-    }
-
-    @Override
-    public boolean isHttpsChecked() {
-        return httpsChecked;
     }
 
     public void setHttpsChecked(boolean httpsChecked) {
         this.httpsChecked = httpsChecked;
     }
 
-    @Override
-    public String getEndpointConfig() {
-        return endpointConfig;
-    }
-
     public void setEndpointConfig(String endpointConfig) {
         this.endpointConfig = endpointConfig;
-    }
-
-    @Override
-    public String getSwagger() {
-        return swagger;
     }
 
     public void setSwagger(String swagger) {
         this.swagger = swagger;
     }
 
-    @Override
-    public String getContext() {
-        return context;
-    }
-
     public void setContext(String context) {
         this.context = context;
-    }
-
-    @Override
-    public String getThumbnailImagePath() {
-        return thumbnailImagePath;
     }
 
     public void setThumbnailImagePath(String thumbnailImagePath) {
