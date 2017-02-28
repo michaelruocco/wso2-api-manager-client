@@ -15,7 +15,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final LogoutAction logoutAction;
     private final ListAllAction listAllAction;
     private final GetApiAction getApiAction;
-    private final AddApiUrlBuilder addApiUrlBuilder;
+    private final AddApiAction addApiAction;
     private final ApiExistsUrlBuilder apiExistsUrlBuilder;
     private final UpdateApiUrlBuilder updateApiUrlBuilder;
     private final RemoveApiUrlBuilder removeApiUrlBuilder;
@@ -30,7 +30,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                 new LogoutAction(client, hostUrl),
                 new ListAllAction(client, hostUrl),
                 new GetApiAction(client, hostUrl),
-                new DefaultAddApiUrlBuilder(hostUrl),
+                new AddApiAction(client, hostUrl),
                 new DefaultApiExistsUrlBuilder(hostUrl),
                 new DefaultUpdateApiUrlBuilder(hostUrl),
                 new DefaultRemoveApiUrlBuilder(hostUrl));
@@ -41,7 +41,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      LogoutAction logoutAction,
                                      ListAllAction listAllAction,
                                      GetApiAction getApiAction,
-                                     AddApiUrlBuilder addApiUrlBuilder,
+                                     AddApiAction addApiAction,
                                      ApiExistsUrlBuilder apiExistsUrlBuilder,
                                      UpdateApiUrlBuilder updateApiUrlBuilder,
                                      RemoveApiUrlBuilder removeApiUrlBuilder) {
@@ -50,7 +50,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.logoutAction = logoutAction;
         this.listAllAction = listAllAction;
         this.getApiAction = getApiAction;
-        this.addApiUrlBuilder = addApiUrlBuilder;
+        this.addApiAction = addApiAction;
         this.apiExistsUrlBuilder = apiExistsUrlBuilder;
         this.updateApiUrlBuilder = updateApiUrlBuilder;
         this.removeApiUrlBuilder = removeApiUrlBuilder;
@@ -78,10 +78,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean addApi(AddApiParams params) {
-        String url = addApiUrlBuilder.build(params);
-        Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
-        return true;
+        return addApiAction.addApi(params);
     }
 
     @Override

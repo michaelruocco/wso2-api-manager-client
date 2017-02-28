@@ -10,6 +10,10 @@ public class AddApiAction {
     private HttpClient client;
     private AddApiUrlBuilder urlBuilder;
 
+    public AddApiAction(HttpClient client, String hostUrl) {
+        this(client, new DefaultAddApiUrlBuilder(hostUrl));
+    }
+
     public AddApiAction(HttpClient client, AddApiUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;
