@@ -15,7 +15,6 @@ public class DefaultApiPublisherClientTest {
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
     private static final String API_NAME = "api-name";
     private static final String UPDATE_API_URL = "update-api-url";
-    private static final String REMOVE_API_URL = "remove-api-url";
 
     private final FileLoader fileLoader = new FileLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
@@ -26,14 +25,14 @@ public class DefaultApiPublisherClientTest {
     private final AddApiAction addAction = mock(AddApiAction.class);
     private final ApiExistsAction existsAction = mock(ApiExistsAction.class);
     private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
-    private final RemoveApiUrlBuilder removeApiUrlBuilder = new StubRemoveApiUrlBuilder(REMOVE_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getAction, addAction, existsAction, updateApiUrlBuilder, removeApiUrlBuilder);
+    private final RemoveApiAction removeAction = mock(RemoveApiAction.class);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getAction, addAction, existsAction, updateApiUrlBuilder, removeAction);
 
     private final Credentials credentials = mock(Credentials.class);
     private final SelectApiParams selectParams = mock(SelectApiParams.class);
     private final AddApiParams addParams = mock(AddApiParams.class);
     private final UpdateApiParams updateApiParams = mock(UpdateApiParams.class);
-    private final SelectApiParams removeApiParams = mock(UpdateApiParams.class);
+    private final SelectApiParams removeParams = mock(UpdateApiParams.class);
     private final Throwable apiPublisherException = mock(ApiPublisherException.class);
 
     @Test(expected = ApiPublisherException.class)
@@ -162,24 +161,17 @@ public class DefaultApiPublisherClientTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void removeApiShouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
+    public void removeApiShouldThrowExceptionOnFailure() {
+        givenRemoveApiWillFail();
 
-        client.removeApi(removeApiParams);
-    }
-
-    @Test(expected = ApiPublisherException.class)
-    public void removeApiShouldThrowExceptionOnRemoveApiFailure() {
-        givenWillReturnRemoveApiFailure();
-
-        client.removeApi(removeApiParams);
+        client.removeApi(removeParams);
     }
 
     @Test
-    public void removeApiShouldReturnTrueOnRemoveApiSuccess() {
-        givenWillReturnRemoveApiSuccess();
+    public void removeApiShouldReturnTrueOnSuccess() {
+        givenRemoveApiWillSucceed();
 
-        assertThat(client.removeApi(removeApiParams)).isTrue();
+        assertThat(client.removeApi(removeParams)).isTrue();
     }
 
     private void givenWillReturnNon200() {
@@ -259,14 +251,12 @@ public class DefaultApiPublisherClientTest {
         httpClient.cannedResponse(200, body);
     }
 
-    private void givenWillReturnRemoveApiFailure() {
-        String body = load("remove-api-failure.json");
-        httpClient.cannedResponse(200, body);
+    private void givenRemoveApiWillFail() {
+        given(removeAction.removeApi(removeParams)).willThrow(apiPublisherException);
     }
 
-    private void givenWillReturnRemoveApiSuccess() {
-        String body = load("remove-api-success.json");
-        httpClient.cannedResponse(200, body);
+    private void givenRemoveApiWillSucceed() {
+        given(removeAction.removeApi(removeParams)).willReturn(true);
     }
 
     private String load(String filename) {

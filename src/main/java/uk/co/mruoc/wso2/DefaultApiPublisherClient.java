@@ -18,7 +18,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final AddApiAction addAction;
     private final ApiExistsAction existsAction;
     private final UpdateApiUrlBuilder updateApiUrlBuilder;
-    private final RemoveApiUrlBuilder removeApiUrlBuilder;
+    private final RemoveApiAction removeAction;
 
     public DefaultApiPublisherClient(String hostUrl) {
         this(new SimpleHttpClient(), hostUrl);
@@ -33,7 +33,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                 new AddApiAction(client, hostUrl),
                 new ApiExistsAction(client, hostUrl),
                 new DefaultUpdateApiUrlBuilder(hostUrl),
-                new DefaultRemoveApiUrlBuilder(hostUrl));
+                new RemoveApiAction(client, hostUrl));
     }
 
     public DefaultApiPublisherClient(HttpClient client,
@@ -44,7 +44,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      AddApiAction addAction,
                                      ApiExistsAction existsAction,
                                      UpdateApiUrlBuilder updateApiUrlBuilder,
-                                     RemoveApiUrlBuilder removeApiUrlBuilder) {
+                                     RemoveApiAction removeAction) {
         this.client = client;
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
@@ -53,7 +53,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.addAction = addAction;
         this.existsAction = existsAction;
         this.updateApiUrlBuilder = updateApiUrlBuilder;
-        this.removeApiUrlBuilder = removeApiUrlBuilder;
+        this.removeAction = removeAction;
     }
 
     @Override
@@ -96,10 +96,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean removeApi(SelectApiParams params) {
-        String url = removeApiUrlBuilder.build(params);
-        Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
-        return true;
+        return removeAction.removeApi(params);
     }
 
 }
