@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2;
 
 import org.junit.Test;
-import uk.co.mruoc.http.client.FakeHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,26 +11,22 @@ import static org.mockito.Mockito.mock;
 
 public class DefaultApiPublisherClientTest {
 
-    private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
     private static final String API_NAME = "api-name";
-    private static final String UPDATE_API_URL = "update-api-url";
 
-    private final FileLoader fileLoader = new FileLoader();
-    private final FakeHttpClient httpClient = new FakeHttpClient();
     private final LoginAction loginAction = mock(LoginAction.class);
     private final LogoutAction logoutAction = mock(LogoutAction.class);
     private final ListAllAction listAllAction = mock(ListAllAction.class);
     private final GetApiAction getAction = mock(GetApiAction.class);
     private final AddApiAction addAction = mock(AddApiAction.class);
     private final ApiExistsAction existsAction = mock(ApiExistsAction.class);
-    private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
+    private final UpdateApiAction updateAction = mock(UpdateApiAction.class);
     private final RemoveApiAction removeAction = mock(RemoveApiAction.class);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getAction, addAction, existsAction, updateApiUrlBuilder, removeAction);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(loginAction, logoutAction, listAllAction, getAction, addAction, existsAction, updateAction, removeAction);
 
     private final Credentials credentials = mock(Credentials.class);
     private final SelectApiParams selectParams = mock(SelectApiParams.class);
     private final AddApiParams addParams = mock(AddApiParams.class);
-    private final UpdateApiParams updateApiParams = mock(UpdateApiParams.class);
+    private final UpdateApiParams updateParams = mock(UpdateApiParams.class);
     private final SelectApiParams removeParams = mock(UpdateApiParams.class);
     private final Throwable apiPublisherException = mock(ApiPublisherException.class);
 
@@ -130,34 +125,18 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.apiExists(API_NAME)).isFalse();
     }
 
-    @Test
-    public void updateApiShouldCallCorrectUrl() {
-        givenWillReturnUpdateApiSuccess();
-
-        client.updateApi(updateApiParams);
-
-        assertThat(httpClient.lastRequestUri()).isEqualTo(UPDATE_API_URL);
-    }
-
     @Test(expected = ApiPublisherException.class)
-    public void updateApiShouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
+    public void updateApiShouldThrowExceptionIfUpdateApiFails() {
+        givenUpdateApiWillFail();
 
-        client.updateApi(updateApiParams);
-    }
-
-    @Test(expected = ApiPublisherException.class)
-    public void updateApiShouldThrowExceptionOnUpdateApiFailure() {
-        givenWillReturnUpdateApiFailure();
-
-        client.updateApi(updateApiParams);
+        client.updateApi(updateParams);
     }
 
     @Test
-    public void updateApiShouldReturnTrueOnUpdateApiSuccess() {
-        givenWillReturnUpdateApiSuccess();
+    public void updateApiShouldReturnTrueOnSuccess() {
+        givenUpdateApiWillSucceed();
 
-        assertThat(client.updateApi(updateApiParams)).isTrue();
+        assertThat(client.updateApi(updateParams)).isTrue();
     }
 
     @Test(expected = ApiPublisherException.class)
@@ -172,10 +151,6 @@ public class DefaultApiPublisherClientTest {
         givenRemoveApiWillSucceed();
 
         assertThat(client.removeApi(removeParams)).isTrue();
-    }
-
-    private void givenWillReturnNon200() {
-        httpClient.cannedResponse(500, "");
     }
 
     private void givenLoginWillFail() {
@@ -241,14 +216,12 @@ public class DefaultApiPublisherClientTest {
         given(existsAction.apiExists(API_NAME)).willReturn(false);
     }
 
-    private void givenWillReturnUpdateApiFailure() {
-        String body = load("update-api-failure.json");
-        httpClient.cannedResponse(200, body);
+    private void givenUpdateApiWillFail() {
+        given(updateAction.updateApi(updateParams)).willThrow(apiPublisherException);
     }
 
-    private void givenWillReturnUpdateApiSuccess() {
-        String body = load("update-api-success.json");
-        httpClient.cannedResponse(200, body);
+    private void givenUpdateApiWillSucceed() {
+        given(updateAction.updateApi(updateParams)).willReturn(true);
     }
 
     private void givenRemoveApiWillFail() {
@@ -257,15 +230,6 @@ public class DefaultApiPublisherClientTest {
 
     private void givenRemoveApiWillSucceed() {
         given(removeAction.removeApi(removeParams)).willReturn(true);
-    }
-
-    private String load(String filename) {
-        String path = buildPath(filename);
-        return fileLoader.loadContent(path);
-    }
-
-    private String buildPath(String filename) {
-        return RESPONSE_FILE_PATH + filename;
     }
 
 }

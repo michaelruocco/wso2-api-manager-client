@@ -1,23 +1,19 @@
 package uk.co.mruoc.wso2;
 
 import uk.co.mruoc.http.client.HttpClient;
-import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.http.client.SimpleHttpClient;
 
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-
 public class DefaultApiPublisherClient implements ApiPublisherClient {
 
-    private final HttpClient client;
     private final LoginAction loginAction;
     private final LogoutAction logoutAction;
     private final ListAllAction listAllAction;
     private final GetApiAction getAction;
     private final AddApiAction addAction;
     private final ApiExistsAction existsAction;
-    private final UpdateApiUrlBuilder updateApiUrlBuilder;
+    private final UpdateApiAction updateAction;
     private final RemoveApiAction removeAction;
 
     public DefaultApiPublisherClient(String hostUrl) {
@@ -25,34 +21,31 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     }
 
     public DefaultApiPublisherClient(HttpClient client, String hostUrl) {
-        this(client,
-                new LoginAction(client, hostUrl),
+        this(new LoginAction(client, hostUrl),
                 new LogoutAction(client, hostUrl),
                 new ListAllAction(client, hostUrl),
                 new GetApiAction(client, hostUrl),
                 new AddApiAction(client, hostUrl),
                 new ApiExistsAction(client, hostUrl),
-                new DefaultUpdateApiUrlBuilder(hostUrl),
+                new UpdateApiAction(client, hostUrl),
                 new RemoveApiAction(client, hostUrl));
     }
 
-    public DefaultApiPublisherClient(HttpClient client,
-                                     LoginAction loginAction,
+    public DefaultApiPublisherClient(LoginAction loginAction,
                                      LogoutAction logoutAction,
                                      ListAllAction listAllAction,
                                      GetApiAction getAction,
                                      AddApiAction addAction,
                                      ApiExistsAction existsAction,
-                                     UpdateApiUrlBuilder updateApiUrlBuilder,
+                                     UpdateApiAction updateAction,
                                      RemoveApiAction removeAction) {
-        this.client = client;
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.listAllAction = listAllAction;
         this.getAction = getAction;
         this.addAction = addAction;
         this.existsAction = existsAction;
-        this.updateApiUrlBuilder = updateApiUrlBuilder;
+        this.updateAction = updateAction;
         this.removeAction = removeAction;
     }
 
@@ -88,10 +81,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean updateApi(UpdateApiParams params) {
-        String url = updateApiUrlBuilder.build(params);
-        Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
-        return true;
+        return updateAction.updateApi(params);
     }
 
     @Override

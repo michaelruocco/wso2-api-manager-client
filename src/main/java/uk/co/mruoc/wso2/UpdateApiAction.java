@@ -13,7 +13,7 @@ public class UpdateApiAction {
     public UpdateApiAction(HttpClient client, String hostUrl) {
         this(client, new DefaultUpdateApiUrlBuilder(hostUrl));
     }
-    
+
     public UpdateApiAction(HttpClient client, UpdateApiUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;
