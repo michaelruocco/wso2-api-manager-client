@@ -16,7 +16,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final ListAllAction listAllAction;
     private final GetApiAction getAction;
     private final AddApiAction addAction;
-    private final ApiExistsUrlBuilder apiExistsUrlBuilder;
+    private final ApiExistsAction existsAction;
     private final UpdateApiUrlBuilder updateApiUrlBuilder;
     private final RemoveApiUrlBuilder removeApiUrlBuilder;
 
@@ -31,7 +31,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                 new ListAllAction(client, hostUrl),
                 new GetApiAction(client, hostUrl),
                 new AddApiAction(client, hostUrl),
-                new DefaultApiExistsUrlBuilder(hostUrl),
+                new ApiExistsAction(client, hostUrl),
                 new DefaultUpdateApiUrlBuilder(hostUrl),
                 new DefaultRemoveApiUrlBuilder(hostUrl));
     }
@@ -42,7 +42,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      ListAllAction listAllAction,
                                      GetApiAction getAction,
                                      AddApiAction addAction,
-                                     ApiExistsUrlBuilder apiExistsUrlBuilder,
+                                     ApiExistsAction existsAction,
                                      UpdateApiUrlBuilder updateApiUrlBuilder,
                                      RemoveApiUrlBuilder removeApiUrlBuilder) {
         this.client = client;
@@ -51,7 +51,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.listAllAction = listAllAction;
         this.getAction = getAction;
         this.addAction = addAction;
-        this.apiExistsUrlBuilder = apiExistsUrlBuilder;
+        this.existsAction = existsAction;
         this.updateApiUrlBuilder = updateApiUrlBuilder;
         this.removeApiUrlBuilder = removeApiUrlBuilder;
     }
@@ -83,10 +83,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public boolean apiExists(String name) {
-        String url = apiExistsUrlBuilder.build(name);
-        Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
-        return exists(response);
+        return existsAction.apiExists(name);
     }
 
     @Override
@@ -103,11 +100,6 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         Response response = client.post(url, EMPTY);
         ResponseErrorChecker.checkForError(response);
         return true;
-    }
-
-    private boolean exists(Response response) {
-        PublisherJsonParser parser = new PublisherJsonParser(response.getBody());
-        return parser.getExists();
     }
 
 }

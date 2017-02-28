@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 public class DefaultApiPublisherClientTest {
 
     private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String API_EXISTS_URL = "api-apiExists-url";
+    private static final String API_NAME = "api-name";
     private static final String UPDATE_API_URL = "update-api-url";
     private static final String REMOVE_API_URL = "remove-api-url";
 
@@ -24,10 +24,10 @@ public class DefaultApiPublisherClientTest {
     private final ListAllAction listAllAction = mock(ListAllAction.class);
     private final GetApiAction getAction = mock(GetApiAction.class);
     private final AddApiAction addAction = mock(AddApiAction.class);
-    private final ApiExistsUrlBuilder apiExistsUrlBuilder = new StubApiExistsUrlBuilder(API_EXISTS_URL);
+    private final ApiExistsAction existsAction = mock(ApiExistsAction.class);
     private final UpdateApiUrlBuilder updateApiUrlBuilder = new StubUpdateApiUrlBuilder(UPDATE_API_URL);
     private final RemoveApiUrlBuilder removeApiUrlBuilder = new StubRemoveApiUrlBuilder(REMOVE_API_URL);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getAction, addAction, apiExistsUrlBuilder, updateApiUrlBuilder, removeApiUrlBuilder);
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(httpClient, loginAction, logoutAction, listAllAction, getAction, addAction, existsAction, updateApiUrlBuilder, removeApiUrlBuilder);
 
     private final Credentials credentials = mock(Credentials.class);
     private final SelectApiParams selectParams = mock(SelectApiParams.class);
@@ -110,34 +110,25 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.addApi(addParams)).isTrue();
     }
 
-    @Test
-    public void apiExistsShouldCallCorrectUrl() {
-        givenWillReturnApiExistsSuccess();
-
-        client.apiExists("name");
-
-        assertThat(httpClient.lastRequestUri()).isEqualTo(API_EXISTS_URL);
-    }
-
     @Test(expected = ApiPublisherException.class)
-    public void apiExistsShouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
+    public void apiExistsShouldThrowExceptionIfApiExistsFails() {
+        givenApiExistsWillFail();
 
-        client.apiExists("name");
+        client.apiExists(API_NAME);
     }
 
     @Test
-    public void apiExistsShouldReturnFalseFailure() {
-        givenWillReturnApiExistsFailure();
+    public void apiExistsShouldReturnTrueIfApiExists() {
+        givenApiExists();
 
-        assertThat(client.apiExists("name")).isFalse();
+        assertThat(client.apiExists(API_NAME)).isTrue();
     }
 
     @Test
-    public void apiExistsShouldReturnTrueOnSuccess() {
-        givenWillReturnApiExistsSuccess();
+    public void apiExistsShouldReturnFalseIfApiDoesNotExist() {
+        givenApiDoesNotExist();
 
-        assertThat(client.apiExists("name")).isTrue();
+        assertThat(client.apiExists(API_NAME)).isFalse();
     }
 
     @Test
@@ -246,14 +237,16 @@ public class DefaultApiPublisherClientTest {
         given(addAction.addApi(addParams)).willReturn(true);
     }
 
-    private void givenWillReturnApiExistsFailure() {
-        String body = load("api-exists-failure.json");
-        httpClient.cannedResponse(200, body);
+    private void givenApiExistsWillFail() {
+        given(existsAction.apiExists(API_NAME)).willThrow(apiPublisherException);
     }
 
-    private void givenWillReturnApiExistsSuccess() {
-        String body = load("api-exists-success.json");
-        httpClient.cannedResponse(200, body);
+    private void givenApiExists() {
+        given(existsAction.apiExists(API_NAME)).willReturn(true);
+    }
+
+    private void givenApiDoesNotExist() {
+        given(existsAction.apiExists(API_NAME)).willReturn(false);
     }
 
     private void givenWillReturnUpdateApiFailure() {
