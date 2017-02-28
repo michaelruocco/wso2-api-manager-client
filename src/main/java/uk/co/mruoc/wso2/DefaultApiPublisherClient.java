@@ -14,8 +14,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final LoginAction loginAction;
     private final LogoutAction logoutAction;
     private final ListAllAction listAllAction;
-    private final GetApiAction getApiAction;
-    private final AddApiAction addApiAction;
+    private final GetApiAction getAction;
+    private final AddApiAction addAction;
     private final ApiExistsUrlBuilder apiExistsUrlBuilder;
     private final UpdateApiUrlBuilder updateApiUrlBuilder;
     private final RemoveApiUrlBuilder removeApiUrlBuilder;
@@ -40,8 +40,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      LoginAction loginAction,
                                      LogoutAction logoutAction,
                                      ListAllAction listAllAction,
-                                     GetApiAction getApiAction,
-                                     AddApiAction addApiAction,
+                                     GetApiAction getAction,
+                                     AddApiAction addAction,
                                      ApiExistsUrlBuilder apiExistsUrlBuilder,
                                      UpdateApiUrlBuilder updateApiUrlBuilder,
                                      RemoveApiUrlBuilder removeApiUrlBuilder) {
@@ -49,8 +49,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.listAllAction = listAllAction;
-        this.getApiAction = getApiAction;
-        this.addApiAction = addApiAction;
+        this.getAction = getAction;
+        this.addAction = addAction;
         this.apiExistsUrlBuilder = apiExistsUrlBuilder;
         this.updateApiUrlBuilder = updateApiUrlBuilder;
         this.removeApiUrlBuilder = removeApiUrlBuilder;
@@ -73,12 +73,12 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public Api getApi(SelectApiParams params) {
-        return getApiAction.getApi(params);
+        return getAction.getApi(params);
     }
 
     @Override
     public boolean addApi(AddApiParams params) {
-        return addApiAction.addApi(params);
+        return addAction.addApi(params);
     }
 
     @Override

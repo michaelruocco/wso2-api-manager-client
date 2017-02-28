@@ -9,13 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ListAllActionTest {
 
-    private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String LIST_ALL_URL = "list-all-url";
+    private static final String URL = "list-all-url";
 
-    private final FileLoader fileLoader = new FileLoader();
-    private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final ListAllUrlBuilder listAllUrlBuilder = new StubListAllUrlBuilder(LIST_ALL_URL);
-    private final ListAllAction action = new ListAllAction(httpClient, listAllUrlBuilder);
+    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final FakeHttpClient client = new FakeHttpClient();
+    private final ListAllUrlBuilder urlBuilder = new StubListAllUrlBuilder(URL);
+    private final ListAllAction action = new ListAllAction(client, urlBuilder);
 
     @Test
     public void listAllShouldCallCorrectUrl() {
@@ -23,7 +22,7 @@ public class ListAllActionTest {
 
         action.listAllApis();
 
-        assertThat(httpClient.lastRequestUri()).isEqualTo(LIST_ALL_URL);
+        assertThat(client.lastRequestUri()).isEqualTo(URL);
     }
 
     @Test
@@ -54,26 +53,17 @@ public class ListAllActionTest {
     }
 
     private void givenWillReturnNon200() {
-        httpClient.cannedResponse(500, "");
+        client.cannedResponse(500, "");
     }
 
     private void givenWillReturnEmptySuccess() {
-        String body = load("list-api-empty-success.json");
-        httpClient.cannedResponse(200, body);
+        String body = responseLoader.load("list-api-empty-success.json");
+        client.cannedResponse(200, body);
     }
 
     private void givenWillReturnMultipleSuccess() {
-        String body = load("list-api-multiple-success.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private String load(String filename) {
-        String path = buildPath(filename);
-        return fileLoader.loadContent(path);
-    }
-
-    private String buildPath(String filename) {
-        return RESPONSE_FILE_PATH + filename;
+        String body = responseLoader.load("list-api-multiple-success.json");
+        client.cannedResponse(200, body);
     }
 
 }

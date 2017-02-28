@@ -8,69 +8,59 @@ import static org.mockito.Mockito.mock;
 
 public class GetApiActionTest {
 
-    private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String GET_API_URL = "get-api-url";
+    private static final String URL = "get-api-url";
 
-    private final FileLoader fileLoader = new FileLoader();
-    private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final GetApiUrlBuilder getApiUrlBuilder = new StubGetApiUrlBuilder(GET_API_URL);
-    private final GetApiAction action = new GetApiAction(httpClient, getApiUrlBuilder);
+    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final FakeHttpClient client = new FakeHttpClient();
+    private final GetApiUrlBuilder urlBuilder = new StubGetApiUrlBuilder(URL);
+    private final GetApiAction action = new GetApiAction(client, urlBuilder);
 
-    private final SelectApiParams selectParams = mock(SelectApiParams.class);
+    private final SelectApiParams params = mock(SelectApiParams.class);
 
     @Test
     public void getApiShouldCallCorrectUrl() {
         givenWillReturnSuccess();
 
-        action.getApi(selectParams);
+        action.getApi(params);
 
-        assertThat(httpClient.lastRequestUri()).isEqualTo(GET_API_URL);
+        assertThat(client.lastRequestUri()).isEqualTo(URL);
     }
 
     @Test(expected = ApiPublisherException.class)
     public void getApiShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        action.getApi(selectParams);
+        action.getApi(params);
     }
 
     @Test(expected = ApiPublisherException.class)
     public void getApiShouldThrowExceptionIfApiNotFound() {
         givenWillReturnFailure();
 
-        action.getApi(selectParams);
+        action.getApi(params);
     }
 
     @Test
     public void getApiShouldReturnApiIfExists() {
         givenWillReturnSuccess();
 
-        Api api = action.getApi(selectParams);
+        Api api = action.getApi(params);
 
         assertThat(api).isEqualToComparingFieldByField(new RestProductApi());
     }
 
     private void givenWillReturnNon200() {
-        httpClient.cannedResponse(500, "");
+        client.cannedResponse(500, "");
     }
 
     private void givenWillReturnFailure() {
-        String body = load("get-api-failure.json");
-        httpClient.cannedResponse(200, body);
+        String body = responseLoader.load("get-api-failure.json");
+        client.cannedResponse(200, body);
     }
 
     private void givenWillReturnSuccess() {
-        String body = load("get-api-success.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private String load(String filename) {
-        String path = buildPath(filename);
-        return fileLoader.loadContent(path);
-    }
-
-    private String buildPath(String filename) {
-        return RESPONSE_FILE_PATH + filename;
+        String body = responseLoader.load("get-api-success.json");
+        client.cannedResponse(200, body);
     }
 
 }

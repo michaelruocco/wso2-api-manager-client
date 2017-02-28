@@ -8,58 +8,48 @@ import static org.mockito.Mockito.mock;
 
 public class AddApiActionTest {
 
-    private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-    private static final String ADD_API_URL = "add-api-url";
+    private static final String URL = "add-api-url";
 
-    private final FileLoader fileLoader = new FileLoader();
-    private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final AddApiUrlBuilder addApiUrlBuilder = new StubAddApiUrlBuilder(ADD_API_URL);
-    private final AddApiAction action = new AddApiAction(httpClient, addApiUrlBuilder);
+    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final FakeHttpClient client = new FakeHttpClient();
+    private final AddApiUrlBuilder urlBuilder = new StubAddApiUrlBuilder(URL);
+    private final AddApiAction action = new AddApiAction(client, urlBuilder);
 
-    private final AddApiParams addApiParams = mock(AddApiParams.class);
+    private final AddApiParams params = mock(AddApiParams.class);
 
     @Test(expected = ApiPublisherException.class)
     public void addApiShouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        action.addApi(addApiParams);
+        action.addApi(params);
     }
 
     @Test(expected = ApiPublisherException.class)
     public void addApiShouldThrowExceptionOnAddApiFailure() {
         givenWillReturnAddApiFailure();
 
-        action.addApi(addApiParams);
+        action.addApi(params);
     }
 
     @Test
     public void addApiShouldReturnTrueOnAddApiSuccess() {
         givenWillReturnAddApiSuccess();
 
-        assertThat(action.addApi(addApiParams)).isTrue();
+        assertThat(action.addApi(params)).isTrue();
     }
 
     private void givenWillReturnNon200() {
-        httpClient.cannedResponse(500, "");
+        client.cannedResponse(500, "");
     }
 
     private void givenWillReturnAddApiFailure() {
-        String body = load("add-api-failure.json");
-        httpClient.cannedResponse(200, body);
+        String body = responseLoader.load("add-api-failure.json");
+        client.cannedResponse(200, body);
     }
 
     private void givenWillReturnAddApiSuccess() {
-        String body = load("add-api-success.json");
-        httpClient.cannedResponse(200, body);
-    }
-
-    private String load(String filename) {
-        String path = buildPath(filename);
-        return fileLoader.loadContent(path);
-    }
-
-    private String buildPath(String filename) {
-        return RESPONSE_FILE_PATH + filename;
+        String body = responseLoader.load("add-api-success.json");
+        client.cannedResponse(200, body);
     }
 
 }
