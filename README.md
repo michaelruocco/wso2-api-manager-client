@@ -119,11 +119,37 @@ String name = "rest-product";
 boolean exists = client.apiExists(name);
 ```
 
+## Updating an API
+
+In order to update an API you will need to get the API details as described above,
+those API details can then be used to create an instance of DefaultUpdateApiParams.
+Once you have an instance you can override the properties that you want to update
+and set them with a new value. Additionally, because of a bug with the publisher API
+you will also always have to provide an up to date swagger definition of the API, even
+if you are not changing the definition itself. An example is shown below:
+
+```
+// first you need to get the existing API details
+SelectApiParams params = new DefaultSelectApiParams()
+params.setName("api-name");
+params.setVersion("v1");
+params.setProvider("api-provider")
+Api api = client.getApi(params);
+
+// you can use the API details to create some update parameters
+DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams(api);
+updateParams.setDescription(updatedDescription);
+// swagger always needs to be set even if not updating due to a bug
+// with the update API
+updateParams.setSwagger(swagger);
+
+client.updateApi(updateParams);
+```
+
 ## Missing functionality
 
 Functionality still needs to be added to allow the following:
 
-* Updating of existing APIs - partially implemented but needs improvement
 * Updating the status of an API
 
 ## Running the tests

@@ -84,7 +84,7 @@ public class ApiPublisherClientIntegrationTest {
         SelectApiParams selectApiParams = toSelectParams(addParams);
         Api api = client.getApi(selectApiParams);
 
-        DefaultUpdateApiParams updateParams = toUpdateParams(api);
+        DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams(api);
         updateParams.setDescription(updatedDescription);
         updateParams.setSwagger(addParams.getSwagger());
         client.updateApi(updateParams);
@@ -105,26 +105,6 @@ public class ApiPublisherClientIntegrationTest {
         selectParams.setVersion(addParams.getVersion());
         selectParams.setProvider(USERNAME);
         return selectParams;
-    }
-
-    private DefaultUpdateApiParams toUpdateParams(Api api) {
-        DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams();
-        updateParams.setName(api.getName());
-        updateParams.setVersion(api.getVersion());
-        updateParams.setContext(api.getContext());
-        updateParams.setProvider(api.getProvider());
-        updateParams.setRoles(api.getRoles());
-        updateParams.setTags(api.getTags());
-        updateParams.setTiers(api.getTiers());
-        updateParams.setHttpChecked(api.isHttpChecked());
-        updateParams.setHttpsChecked(api.isHttpsChecked());
-        updateParams.setEndpointType(api.getEndpointType());
-        updateParams.setEndpointUsername(api.getEndpointUsername());
-        updateParams.setEndpointPassword(api.getEndpointPassword());
-        updateParams.setVisibility(api.getVisibility());
-        updateParams.setEndpointConfig(api.getEndpointConfig());
-        updateParams.setThumbnailImagePath(api.getThumbnailImageUrl());
-        return updateParams;
     }
 
 }
