@@ -39,7 +39,7 @@ public class DefaultUpdateApiParamsTest {
 
     @Test
     public void descriptionShouldDefaultToEmpty() {
-        assertThat(params.getDescription()).isEmpty();
+        assertThat(params.getApiDescription()).isEmpty();
     }
 
     @Test
@@ -48,7 +48,7 @@ public class DefaultUpdateApiParamsTest {
 
         params.setDescription(description);
 
-        assertThat(params.getDescription()).isEqualTo(description);
+        assertThat(params.getApiDescription()).isEqualTo(description);
     }
 
     @Test

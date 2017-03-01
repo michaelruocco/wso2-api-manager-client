@@ -14,7 +14,7 @@ public class ApiSummaryTest {
 
         summary.setName(name);
 
-        assertThat(summary.getName()).isEqualTo(name);
+        assertThat(summary.getApiName()).isEqualTo(name);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class ApiSummaryTest {
 
         summary.setVersion(version);
 
-        assertThat(summary.getVersion()).isEqualTo(version);
+        assertThat(summary.getApiVersion()).isEqualTo(version);
     }
 
     @Test

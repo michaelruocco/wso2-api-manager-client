@@ -22,7 +22,7 @@ public class UrlEncoder {
 
     public static String encodeToCommaSeparatedList(List<String> values) {
         values.replaceAll(UrlEncoder::encode);
-        return ListToCommaSeparatedStringConverter.toCommaSeparatedString(values);
+        return CommaSeparatedStringConverter.toString(values);
     }
 
 }

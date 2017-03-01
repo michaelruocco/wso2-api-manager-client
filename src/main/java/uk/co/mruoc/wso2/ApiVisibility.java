@@ -6,4 +6,8 @@ public enum ApiVisibility {
     PRIVATE,
     RESTRICTED;
 
+    public static ApiVisibility parse(String name) {
+        return valueOf(name.toUpperCase().trim());
+    }
+
 }

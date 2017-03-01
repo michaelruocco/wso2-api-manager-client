@@ -44,7 +44,7 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     }
 
     @Override
-    public String getDescription() {
+    public String getApiDescription() {
         return description;
     }
 

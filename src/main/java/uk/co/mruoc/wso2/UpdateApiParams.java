@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface UpdateApiParams extends SelectApiParams, ApiVisibilityParams, TransportParams, EndpointSecurityParams {
 
-    String getDescription();
+    String getApiDescription();
 
     List<String> getTags();
 

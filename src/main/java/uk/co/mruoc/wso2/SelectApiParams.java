@@ -2,9 +2,9 @@ package uk.co.mruoc.wso2;
 
 public interface SelectApiParams {
 
-    String getName();
+    String getApiName();
 
-    String getVersion();
+    String getApiVersion();
 
     String getProvider();
 

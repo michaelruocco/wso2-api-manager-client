@@ -17,8 +17,8 @@ public class SelectApiParamsToQueryStringConverterTest {
     @Test
     public void shouldBuildQueryString() {
         SelectApiParams params = mock(SelectApiParams.class);
-        given(params.getName()).willReturn(NAME);
-        given(params.getVersion()).willReturn(VERSION);
+        given(params.getApiName()).willReturn(NAME);
+        given(params.getApiVersion()).willReturn(VERSION);
         given(params.getProvider()).willReturn(PROVIDER);
 
         String expectedQueryString = "?action=getAPI&name=" + NAME + "&version=" + VERSION + "&provider=" + PROVIDER;

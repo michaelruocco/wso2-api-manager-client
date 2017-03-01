@@ -25,13 +25,13 @@ public class DefaultUpdateApiParamsToQueryStringConverter implements UpdateApiPa
     @Override
     public String convert(UpdateApiParams params) {
         return "?action=updateAPI" +
-                nameArgumentBuilder.build(params.getName()) +
+                nameArgumentBuilder.build(params.getApiName()) +
                 contextArgumentBuilder.build(params.getContext()) +
-                versionArgumentBuilder.build(params.getVersion()) +
+                versionArgumentBuilder.build(params.getApiVersion()) +
                 providerArgumentBuilder.build(params.getProvider()) +
                 visibilityArgumentBuilder.build(params) +
                 thumbArgumentBuilder.build(params.getThumbnailImagePath()) +
-                descriptionArgumentBuilder.build(params.getDescription()) +
+                descriptionArgumentBuilder.build(params.getApiDescription()) +
                 tagsArgumentBuilder.build(params.getTags()) +
                 endpointSecurityArgumentBuilder.build(params) +
                 tiersCollectionArgumentBuilder.build(toNames(params.getTiers())) +

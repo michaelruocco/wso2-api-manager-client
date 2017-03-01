@@ -16,8 +16,8 @@ public class SelectApiParamsToQueryStringConverter {
 
     public String convert(SelectApiParams params) {
         String queryString = String.format(QUERY_STRING, action);
-        queryString += nameArgumentBuilder.build(params.getName());
-        queryString += versionArgumentBuilder.build(params.getVersion());
+        queryString += nameArgumentBuilder.build(params.getApiName());
+        queryString += versionArgumentBuilder.build(params.getApiVersion());
         queryString += providerArgumentBuilder.build(params.getProvider());
         return queryString;
     }

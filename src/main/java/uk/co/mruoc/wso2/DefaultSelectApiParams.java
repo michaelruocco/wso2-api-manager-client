@@ -9,12 +9,12 @@ public class DefaultSelectApiParams implements SelectApiParams {
     private String provider = EMPTY;
 
     @Override
-    public String getName() {
+    public String getApiName() {
         return name;
     }
 
     @Override
-    public String getVersion() {
+    public String getApiVersion() {
         return version;
     }
 

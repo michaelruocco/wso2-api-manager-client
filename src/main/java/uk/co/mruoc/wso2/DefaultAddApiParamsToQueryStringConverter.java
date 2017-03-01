@@ -27,10 +27,10 @@ public class DefaultAddApiParamsToQueryStringConverter implements AddApiParamsTo
     @Override
     public String convert(AddApiParams params) {
         return "?action=addAPI" +
-                nameArgumentBuilder.build(params.getName()) +
+                nameArgumentBuilder.build(params.getApiName()) +
                 contextArgumentBuilder.build(params.getContext()) +
-                versionArgumentBuilder.build(params.getVersion()) +
-                descriptionArgumentBuilder.build(params.getDescription()) +
+                versionArgumentBuilder.build(params.getApiVersion()) +
+                descriptionArgumentBuilder.build(params.getApiDescription()) +
                 swaggerArgumentBuilder.build(params.getSwagger()) +
                 endpointConfigArgumentBuilder.build(params.getEndpointConfig()) +
                 tagsArgumentBuilder.build(params.getTags()) +

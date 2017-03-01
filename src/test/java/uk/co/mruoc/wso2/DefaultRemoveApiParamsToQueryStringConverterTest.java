@@ -14,7 +14,7 @@ public class DefaultRemoveApiParamsToQueryStringConverterTest {
 
     @Test
     public void shouldConvertName() {
-        given(params.getName()).willReturn("api-name");
+        given(params.getApiName()).willReturn("api-name");
 
         String queryString = converter.convert(params);
 
@@ -23,7 +23,7 @@ public class DefaultRemoveApiParamsToQueryStringConverterTest {
 
     @Test
     public void shouldConvertVersion() {
-        given(params.getVersion()).willReturn("v1");
+        given(params.getApiVersion()).willReturn("v1");
 
         String queryString = converter.convert(params);
 

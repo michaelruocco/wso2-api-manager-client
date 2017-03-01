@@ -60,18 +60,18 @@ public class ApiPublisherClientIntegrationTest {
 
         client.addApi(params);
 
-        assertThat(client.apiExists(params.getName())).isTrue();
+        assertThat(client.apiExists(params.getApiName())).isTrue();
     }
 
     @Test
     public void shouldRemoveApi() {
         AddApiParams addApiParams = StubAddApiParamsBuilder.build();
         client.addApi(addApiParams);
-        assertThat(client.apiExists(addApiParams.getName())).isTrue();
+        assertThat(client.apiExists(addApiParams.getApiName())).isTrue();
 
         SelectApiParams selectApiParams = toSelectParams(addApiParams);
         client.removeApi(selectApiParams);
-        assertThat(client.apiExists(addApiParams.getName())).isFalse();
+        assertThat(client.apiExists(addApiParams.getApiName())).isFalse();
     }
 
     @Test
@@ -101,8 +101,8 @@ public class ApiPublisherClientIntegrationTest {
 
     private SelectApiParams toSelectParams(AddApiParams addParams) {
         DefaultSelectApiParams selectParams = new DefaultSelectApiParams();
-        selectParams.setName(addParams.getName());
-        selectParams.setVersion(addParams.getVersion());
+        selectParams.setName(addParams.getApiName());
+        selectParams.setVersion(addParams.getApiVersion());
         selectParams.setProvider(USERNAME);
         return selectParams;
     }
