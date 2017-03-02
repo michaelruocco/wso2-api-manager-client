@@ -4,14 +4,14 @@ import org.testcontainers.containers.GenericContainer;
 
 import static java.util.Arrays.asList;
 
-public class Wso2Container<SELF extends GenericContainer<SELF>> extends GenericContainer {
+public class Wso2Container<T extends GenericContainer<T>> extends GenericContainer {
 
     public Wso2Container(String image) {
         super(image);
     }
 
     @Override
-    public SELF withExposedPorts(Integer... ports) {
+    public T withExposedPorts(Integer... ports) {
         this.setExposedPorts(asList(ports));
         for (Integer port : ports)
             addFixedExposedPort(port, port);
@@ -19,8 +19,8 @@ public class Wso2Container<SELF extends GenericContainer<SELF>> extends GenericC
     }
 
     @Override
-    public SELF self() {
-        return (SELF) this;
+    public T self() {
+        return (T) this;
     }
 
 }
