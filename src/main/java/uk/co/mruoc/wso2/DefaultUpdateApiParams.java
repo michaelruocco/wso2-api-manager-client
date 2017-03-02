@@ -188,4 +188,5 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
         setEndpointConfig(api.getEndpointConfig());
         setThumbnailImagePath(api.getThumbnailImageUrl());
     }
+
 }
