@@ -3,7 +3,6 @@ package uk.co.mruoc.wso2;
 import com.google.gson.*;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
-import uk.co.mruoc.http.client.SimpleHttpClient;
 
 public class GetApiAction {
 

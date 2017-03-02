@@ -2,7 +2,6 @@ package uk.co.mruoc.wso2;
 
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
-import uk.co.mruoc.http.client.SimpleHttpClient;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 

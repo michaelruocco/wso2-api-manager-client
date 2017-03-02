@@ -99,12 +99,16 @@ public class PublisherJsonParser {
 
     public boolean getHttpChecked() {
         String value = toString(json, "transport_http");
-        return value.equals("checked");
+        return isChecked(value);
     }
 
     public boolean getHttpsChecked() {
         String value = toString(json, "transport_https");
-        return value.equals("checked");
+        return isChecked(value);
+    }
+
+    private boolean isChecked(String value) {
+        return "checked".equals(value);
     }
 
     public List<ApiTierAvailability> getTiers() {

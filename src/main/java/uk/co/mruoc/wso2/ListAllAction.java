@@ -4,7 +4,6 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
-import uk.co.mruoc.http.client.SimpleHttpClient;
 
 import java.lang.reflect.Type;
 import java.util.List;

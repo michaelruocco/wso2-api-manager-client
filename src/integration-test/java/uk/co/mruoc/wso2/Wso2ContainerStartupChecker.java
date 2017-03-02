@@ -33,7 +33,7 @@ public class Wso2ContainerStartupChecker implements Consumer<OutputFrame> {
             slept += DELAY;
         }
         if (!isStarted())
-            throw new RuntimeException("container did not start within timeout " + waitTimeout);
+            throw new StartupTimeoutException("container did not start within timeout " + waitTimeout);
     }
 
     private boolean isStarted() {

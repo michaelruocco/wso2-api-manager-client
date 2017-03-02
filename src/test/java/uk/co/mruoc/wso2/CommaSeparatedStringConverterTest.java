@@ -1,6 +1,5 @@
 package uk.co.mruoc.wso2;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.util.Arrays;
