@@ -20,11 +20,6 @@ public class DefaultAddApiParams extends DefaultUpdateApiParams implements AddAp
     private List<String> tenants = new ArrayList<>();
 
     @Override
-    public void setProvider(String provider) {
-        throw new UnsupportedOperationException("setProvider not supported");
-    }
-
-    @Override
     public String getContext() {
         return context;
     }

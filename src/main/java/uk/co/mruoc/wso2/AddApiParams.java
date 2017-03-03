@@ -10,4 +10,6 @@ public interface AddApiParams extends UpdateApiParams, SequenceParams, Subscript
 
     boolean isDefaultVersion();
 
+    String getProvider();
+
 }

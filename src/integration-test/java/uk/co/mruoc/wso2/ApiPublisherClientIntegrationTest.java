@@ -1,6 +1,7 @@
 package uk.co.mruoc.wso2;
 
 import org.junit.*;
+import org.testcontainers.containers.Container;
 import org.testcontainers.containers.GenericContainer;
 
 import java.util.List;
@@ -9,23 +10,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiPublisherClientIntegrationTest {
 
-    private static final int CONTAINER_START_TIMEOUT = 60000;
-    private static final String BASE_URL = "https://localhost:9443";
-    private static final String USERNAME = "admin";
+    private static final String DOCKER_IMAGE = "michaelruocco/wso2am:1.9.1";
+    private static final String URL = "https://%s:%d";
+    private static final int PORT = 9443;
 
-    private final Wso2ContainerStartupChecker startupChecker = new Wso2ContainerStartupChecker(CONTAINER_START_TIMEOUT);
+    private final StartupCheckLogConsumer logConsumer = new Wso2StartupCheckLogConsumer();
+    private final Credentials credentials = new TestCredentials();
 
     @Rule
-    public final GenericContainer container = new Wso2Container("michaelruocco/wso2am:1.9.1")
-            .withExposedPorts(9443, 9763)
-            .withLogConsumer(startupChecker);
+    public final GenericContainer container = new GenericContainer(DOCKER_IMAGE)
+            .withExposedPorts(PORT)
+            .withLogConsumer(logConsumer);
 
-    private final Credentials credentials = new Credentials(USERNAME, "admin");
-    private final ApiPublisherClient client = new DefaultApiPublisherClient(BASE_URL);
+    private ApiPublisherClient client;
 
     @Before
     public void setUp() {
-        startupChecker.waitForContainerToStart();
+        client = new DefaultApiPublisherClient(buildBaseUrl(container));
+        logConsumer.waitForStartupMessageInLog();
         client.login(credentials);
     }
 
@@ -99,11 +101,15 @@ public class ApiPublisherClientIntegrationTest {
         client.logout();
     }
 
+    private String buildBaseUrl(Container container) {
+        return String.format(URL, container.getContainerIpAddress(), container.getMappedPort(PORT));
+    }
+
     private SelectApiParams toSelectParams(AddApiParams addParams) {
         DefaultSelectApiParams selectParams = new DefaultSelectApiParams();
         selectParams.setName(addParams.getApiName());
         selectParams.setVersion(addParams.getApiVersion());
-        selectParams.setProvider(USERNAME);
+        selectParams.setProvider(addParams.getProvider());
         return selectParams;
     }
 

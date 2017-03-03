@@ -9,11 +9,6 @@ public class DefaultAddApiParamsTest {
 
     private final DefaultAddApiParams params = new DefaultAddApiParams();
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void setProviderShouldNotBeSupported() {
-        params.setProvider("provider");
-    }
-
     @Test
     public void contextShouldDefaultToEmpty() {
         assertThat(params.getContext()).isEmpty();
