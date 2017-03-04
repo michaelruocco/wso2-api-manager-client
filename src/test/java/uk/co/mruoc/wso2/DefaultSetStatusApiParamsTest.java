@@ -3,14 +3,16 @@ package uk.co.mruoc.wso2;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.co.mruoc.wso2.ApiStatus.CREATED;
+import static uk.co.mruoc.wso2.ApiStatus.PUBLISHED;
 
 public class DefaultSetStatusApiParamsTest {
 
     private final DefaultSetStatusApiParams params = new DefaultSetStatusApiParams();
 
     @Test
-    public void statusShouldDefaultToEmptyString() {
-        assertThat(params.getStatus()).isEmpty();
+    public void statusShouldDefaultToCreated() {
+        assertThat(params.getStatus()).isEqualTo(CREATED);
     }
 
     @Test
@@ -20,12 +22,12 @@ public class DefaultSetStatusApiParamsTest {
 
     @Test
     public void requireSubscriptionShouldDefaultToTrue() {
-        assertThat(params.isRequireSubscription()).isTrue();
+        assertThat(params.isRequireResubscription()).isTrue();
     }
 
     @Test
     public void shouldStatus() {
-        String status = "PUBLISHED";
+        ApiStatus status = PUBLISHED;
 
         params.setStatus(status);
 
@@ -47,7 +49,7 @@ public class DefaultSetStatusApiParamsTest {
 
         params.setRequireSubscription(requireSubscription);
 
-        assertThat(params.isRequireSubscription()).isEqualTo(requireSubscription);
+        assertThat(params.isRequireResubscription()).isEqualTo(requireSubscription);
     }
 
 }

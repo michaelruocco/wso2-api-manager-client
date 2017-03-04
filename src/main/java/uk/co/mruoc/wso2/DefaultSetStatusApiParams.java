@@ -1,15 +1,13 @@
 package uk.co.mruoc.wso2;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-
 public class DefaultSetStatusApiParams extends DefaultSelectApiParams implements SetStatusApiParams {
 
-    private String status = EMPTY;
+    private ApiStatus status = ApiStatus.CREATED;
     private boolean publishToGateway = true;
     private boolean requireSubscription = true;
 
     @Override
-    public String getStatus() {
+    public ApiStatus getStatus() {
         return status;
     }
 
@@ -19,11 +17,11 @@ public class DefaultSetStatusApiParams extends DefaultSelectApiParams implements
     }
 
     @Override
-    public boolean isRequireSubscription() {
+    public boolean isRequireResubscription() {
         return requireSubscription;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ApiStatus status) {
         this.status = status;
     }
 

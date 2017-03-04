@@ -7,6 +7,10 @@ public enum ApiStatus {
     PUBLISHED,
     DEPRECATED,
     RETIRED,
-    BLOCKED
+    BLOCKED;
+
+    public static ApiStatus parse(String name) {
+        return valueOf(name.toUpperCase().trim());
+    }
 
 }

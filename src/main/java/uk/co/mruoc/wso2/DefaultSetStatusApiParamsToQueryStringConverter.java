@@ -2,7 +2,7 @@ package uk.co.mruoc.wso2;
 
 public class DefaultSetStatusApiParamsToQueryStringConverter extends SelectApiParamsToQueryStringConverter implements PublishApiParamsToQueryStringConverter {
 
-    private final StringArgumentBuilder statusArgumentBuilder = new StringArgumentBuilder("status");
+    private final StatusArgumentBuilder statusArgumentBuilder = new StatusArgumentBuilder();
     private final StringArgumentBuilder publishArgumentBuilder = new StringArgumentBuilder("publishToGateway");
     private final StringArgumentBuilder subscriptionArgumentBuilder = new StringArgumentBuilder("requireResubscription");
 
@@ -12,9 +12,11 @@ public class DefaultSetStatusApiParamsToQueryStringConverter extends SelectApiPa
 
     public String convert(SetStatusApiParams params) {
         String queryString = super.convert(params);
-        queryString += statusArgumentBuilder.build(params.getStatus());
-        queryString += publishArgumentBuilder.build(params.isPublishToGateway());
-        queryString += subscriptionArgumentBuilder.build(params.isRequireSubscription());
+        queryString += statusArgumentBuilder.build(params);
+        if (params.isPublishToGateway())
+            queryString += publishArgumentBuilder.build(params.isPublishToGateway());
+        if (params.isRequireResubscription())
+            queryString += subscriptionArgumentBuilder.build(params.isRequireResubscription());
         return queryString;
     }
 
