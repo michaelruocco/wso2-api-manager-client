@@ -1,6 +1,6 @@
 package uk.co.mruoc.wso2;
 
-public interface SetStatusApiParams extends SelectApiParams {
+public interface SetStatusParams extends SelectApiParams {
 
     ApiStatus getStatus();
 

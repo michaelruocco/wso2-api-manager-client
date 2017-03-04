@@ -18,21 +18,21 @@ public class RemoveApiActionTest {
     private final SelectApiParams params = mock(SelectApiParams.class);
 
     @Test(expected = ApiPublisherException.class)
-    public void removeApiShouldThrowExceptionIfNon200Response() {
+    public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
         action.removeApi(params);
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void removeApiShouldThrowExceptionOnRemoveApiFailure() {
+    public void shouldThrowExceptionOnRemoveApiFailure() {
         givenWillReturnRemoveApiFailure();
 
         action.removeApi(params);
     }
 
     @Test
-    public void removeApiShouldReturnTrueOnRemoveApiSuccess() {
+    public void shouldReturnTrueOnRemoveApiSuccess() {
         givenWillReturnRemoveApiSuccess();
 
         assertThat(action.removeApi(params)).isTrue();

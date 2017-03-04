@@ -8,16 +8,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class AddApiActionTest {
+public class SetStatusActionTest {
 
-    private static final String URL = "add-api-url";
+    private static final String URL = "set-status-url";
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
-    private final AddApiUrlBuilder urlBuilder = mock(AddApiUrlBuilder.class);
-    private final AddApiAction action = new AddApiAction(client, urlBuilder);
+    private final SetStatusApiUrlBuilder urlBuilder = mock(SetStatusApiUrlBuilder.class);
+    private final SetStatusAction action = new SetStatusAction(client, urlBuilder);
 
-    private final AddApiParams params = mock(AddApiParams.class);
+    private final SetStatusParams params = mock(SetStatusParams.class);
 
     @Before
     public void setUp() {
@@ -28,7 +28,7 @@ public class AddApiActionTest {
     public void shouldCallCorrectUrl() {
         givenWillReturnSuccess();
 
-        action.addApi(params);
+        action.setStatus(params);
 
         assertThat(client.lastRequestUri()).isEqualTo(URL);
     }
@@ -37,34 +37,34 @@ public class AddApiActionTest {
     public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        action.addApi(params);
+        action.setStatus(params);
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void shouldThrowExceptionOnAddApiFailure() {
+    public void shouldThrowExceptionOnFailureResponse() {
         givenWillReturnFailure();
 
-        action.addApi(params);
+        action.setStatus(params);
     }
 
     @Test
-    public void shouldReturnTrueOnAddApiSuccess() {
+    public void shouldReturnTrueOnSuccessResponse() {
         givenWillReturnSuccess();
 
-        assertThat(action.addApi(params)).isTrue();
+        assertThat(action.setStatus(params)).isTrue();
     }
 
     private void givenWillReturnNon200() {
         client.cannedResponse(500, "");
     }
 
-    private void givenWillReturnFailure() {
-        String body = responseLoader.load("add-api-failure.json");
+    private void givenWillReturnSuccess() {
+        String body = responseLoader.load("set-status-success.json");
         client.cannedResponse(200, body);
     }
 
-    private void givenWillReturnSuccess() {
-        String body = responseLoader.load("add-api-success.json");
+    private void givenWillReturnFailure() {
+        String body = responseLoader.load("set-status-failure.json");
         client.cannedResponse(200, body);
     }
 

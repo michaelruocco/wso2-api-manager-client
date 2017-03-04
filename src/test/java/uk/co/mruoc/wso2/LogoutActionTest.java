@@ -16,7 +16,7 @@ public class LogoutActionTest {
     private final LogoutAction action = new LogoutAction(httpClient, logoutUrlBuilder);
 
     @Test
-    public void logoutShouldCallCorrectUrl() {
+    public void shouldCallCorrectUrl() {
         givenWillReturnSuccess();
 
         action.logout();
@@ -25,21 +25,21 @@ public class LogoutActionTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void logoutShouldThrowExceptionIfNon200Response() {
+    public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
         action.logout();
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void logoutShouldThrowExceptionOnLogoutFailure() {
+    public void shouldThrowExceptionOnFailure() {
         givenWillReturnFailure();
 
         action.logout();
     }
 
     @Test
-    public void logoutShouldReturnTrueOnLogoutSuccess() {
+    public void shouldReturnTrueOnuccess() {
         givenWillReturnSuccess();
 
         assertThat(action.logout()).isTrue();

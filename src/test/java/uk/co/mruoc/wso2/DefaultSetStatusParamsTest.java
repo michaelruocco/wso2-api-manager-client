@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static uk.co.mruoc.wso2.ApiStatus.CREATED;
 import static uk.co.mruoc.wso2.ApiStatus.PUBLISHED;
 
-public class DefaultSetStatusApiParamsTest {
+public class DefaultSetStatusParamsTest {
 
-    private final DefaultSetStatusApiParams params = new DefaultSetStatusApiParams();
+    private final DefaultSetStatusParams params = new DefaultSetStatusParams();
 
     @Test
     public void statusShouldDefaultToCreated() {

@@ -17,7 +17,7 @@ public class ListAllActionTest {
     private final ListAllAction action = new ListAllAction(client, urlBuilder);
 
     @Test
-    public void listAllShouldCallCorrectUrl() {
+    public void shouldCallCorrectUrl() {
         givenWillReturnEmptySuccess();
 
         action.listAllApis();
@@ -26,7 +26,7 @@ public class ListAllActionTest {
     }
 
     @Test
-    public void listAllShouldReturnEmptyListIfNoApisDeployed() {
+    public void shouldReturnEmptyListIfNoApisDeployed() {
         givenWillReturnEmptySuccess();
 
         List<ApiSummary> apiSummaries = action.listAllApis();
@@ -35,14 +35,14 @@ public class ListAllActionTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void listAllShouldThrowExceptionIfNon200Response() {
+    public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
         action.listAllApis();
     }
 
     @Test
-    public void listAllShouldReturnApiSummariesIfMultipleApisDeployed() {
+    public void shouldReturnApiSummariesIfMultipleApisDeployed() {
         givenWillReturnMultipleSuccess();
 
         List<ApiSummary> apiSummaries = action.listAllApis();

@@ -18,7 +18,7 @@ public class GetApiActionTest {
     private final SelectApiParams params = mock(SelectApiParams.class);
 
     @Test
-    public void getApiShouldCallCorrectUrl() {
+    public void shouldCallCorrectUrl() {
         givenWillReturnSuccess();
 
         action.getApi(params);
@@ -27,21 +27,21 @@ public class GetApiActionTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void getApiShouldThrowExceptionIfNon200Response() {
+    public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
         action.getApi(params);
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void getApiShouldThrowExceptionIfApiNotFound() {
+    public void shouldThrowExceptionIfApiNotFound() {
         givenWillReturnFailure();
 
         action.getApi(params);
     }
 
     @Test
-    public void getApiShouldReturnApiIfExists() {
+    public void shouldReturnApiIfExists() {
         givenWillReturnSuccess();
 
         Api api = action.getApi(params);

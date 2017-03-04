@@ -1,6 +1,6 @@
 package uk.co.mruoc.wso2;
 
-public class DefaultSetStatusApiParams extends DefaultSelectApiParams implements SetStatusApiParams {
+public class DefaultSetStatusParams extends DefaultSelectApiParams implements SetStatusParams {
 
     private ApiStatus status = ApiStatus.CREATED;
     private boolean publishToGateway = true;

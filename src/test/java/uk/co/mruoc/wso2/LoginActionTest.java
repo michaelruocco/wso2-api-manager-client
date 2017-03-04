@@ -18,7 +18,7 @@ public class LoginActionTest {
     private final Credentials credentials = mock(Credentials.class);
 
     @Test
-    public void loginShouldCallCorrectUrl() {
+    public void shouldCallCorrectUrl() {
         givenWillReturnSuccess();
 
         action.login(credentials);
@@ -27,21 +27,21 @@ public class LoginActionTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void loginShouldThrowExceptionIfNon200Response() {
+    public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
         action.login(credentials);
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void loginShouldThrowExceptionOnLoginFailureResponse() {
+    public void shouldThrowExceptionOnLoginFailureResponse() {
         givenWillReturnFailure();
 
         action.login(credentials);
     }
 
     @Test
-    public void loginShouldReturnTrueOnLoginSuccessResponse() {
+    public void shouldReturnTrueOnSuccessResponse() {
         givenWillReturnSuccess();
 
         assertThat(action.login(credentials)).isTrue();

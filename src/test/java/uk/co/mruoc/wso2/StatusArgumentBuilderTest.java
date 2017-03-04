@@ -14,7 +14,7 @@ public class StatusArgumentBuilderTest {
 
     private final StatusArgumentBuilder builder = new StatusArgumentBuilder();
 
-    private final SetStatusApiParams params = mock(SetStatusApiParams.class);
+    private final SetStatusParams params = mock(SetStatusParams.class);
 
     @Test
     public void shouldReturnEmptyStringIfNotSet() {
