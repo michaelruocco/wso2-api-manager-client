@@ -15,6 +15,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     private final ApiExistsAction existsAction;
     private final UpdateApiAction updateAction;
     private final RemoveApiAction removeAction;
+    private final SetStatusAction setStatusAction;
 
     public DefaultApiPublisherClient(String hostUrl) {
         this(new SimpleHttpClient(), hostUrl);
@@ -28,7 +29,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                 new AddApiAction(client, hostUrl),
                 new ApiExistsAction(client, hostUrl),
                 new UpdateApiAction(client, hostUrl),
-                new RemoveApiAction(client, hostUrl));
+                new RemoveApiAction(client, hostUrl),
+                new SetStatusAction(client, hostUrl));
     }
 
     public DefaultApiPublisherClient(LoginAction loginAction,
@@ -38,7 +40,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      AddApiAction addAction,
                                      ApiExistsAction existsAction,
                                      UpdateApiAction updateAction,
-                                     RemoveApiAction removeAction) {
+                                     RemoveApiAction removeAction,
+                                     SetStatusAction setStatusAction) {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.listAllAction = listAllAction;
@@ -47,6 +50,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
         this.existsAction = existsAction;
         this.updateAction = updateAction;
         this.removeAction = removeAction;
+        this.setStatusAction = setStatusAction;
     }
 
     @Override
@@ -87,6 +91,11 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     @Override
     public boolean removeApi(SelectApiParams params) {
         return removeAction.removeApi(params);
+    }
+
+    @Override
+    public boolean setStatus(SetStatusParams params) {
+        return setStatusAction.setStatus(params);
     }
 
 }

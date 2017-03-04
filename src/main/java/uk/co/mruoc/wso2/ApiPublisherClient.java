@@ -20,4 +20,6 @@ public interface ApiPublisherClient {
 
     boolean removeApi(SelectApiParams params);
 
+    boolean setStatus(SetStatusParams params);
+
 }

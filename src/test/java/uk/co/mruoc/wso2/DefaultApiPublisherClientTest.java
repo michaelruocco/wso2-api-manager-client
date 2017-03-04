@@ -21,14 +21,25 @@ public class DefaultApiPublisherClientTest {
     private final ApiExistsAction existsAction = mock(ApiExistsAction.class);
     private final UpdateApiAction updateAction = mock(UpdateApiAction.class);
     private final RemoveApiAction removeAction = mock(RemoveApiAction.class);
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(loginAction, logoutAction, listAllAction, getAction, addAction, existsAction, updateAction, removeAction);
+    private final SetStatusAction setStatusAction = mock(SetStatusAction.class);
 
     private final Credentials credentials = mock(Credentials.class);
     private final SelectApiParams selectParams = mock(SelectApiParams.class);
     private final AddApiParams addParams = mock(AddApiParams.class);
     private final UpdateApiParams updateParams = mock(UpdateApiParams.class);
     private final SelectApiParams removeParams = mock(UpdateApiParams.class);
+    private final SetStatusParams setStatusParams = mock(SetStatusParams.class);
     private final Throwable apiPublisherException = mock(ApiPublisherException.class);
+
+    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(loginAction,
+            logoutAction,
+            listAllAction,
+            getAction,
+            addAction,
+            existsAction,
+            updateAction,
+            removeAction,
+            setStatusAction);
 
     @Test(expected = ApiPublisherException.class)
     public void loginShouldThrowExceptionIfLoginFails() {
@@ -153,6 +164,20 @@ public class DefaultApiPublisherClientTest {
         assertThat(client.removeApi(removeParams)).isTrue();
     }
 
+    @Test(expected = ApiPublisherException.class)
+    public void setStatusShouldThrowExceptionIfSetStatusFails() {
+        givenSetStatusWillFail();
+
+        client.setStatus(setStatusParams);
+    }
+
+    @Test
+    public void setStatusShouldReturnTrueSetStatusOnSuccess() {
+        givenSetStatusWillSucceed();
+
+        assertThat(client.setStatus(setStatusParams)).isTrue();
+    }
+
     private void givenLoginWillFail() {
         given(loginAction.login(credentials)).willThrow(apiPublisherException);
     }
@@ -230,6 +255,14 @@ public class DefaultApiPublisherClientTest {
 
     private void givenRemoveApiWillSucceed() {
         given(removeAction.removeApi(removeParams)).willReturn(true);
+    }
+
+    private void givenSetStatusWillFail() {
+        given(setStatusAction.setStatus(setStatusParams)).willThrow(apiPublisherException);
+    }
+
+    private void givenSetStatusWillSucceed() {
+        given(setStatusAction.setStatus(setStatusParams)).willReturn(true);
     }
 
 }
