@@ -1,9 +1,11 @@
 package uk.co.mruoc.wso2;
 
+import org.junit.Before;
 import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class LoginActionTest {
@@ -12,10 +14,15 @@ public class LoginActionTest {
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final LoginUrlBuilder urlBuilder = new StubLoginUrlBuilder(URL);
+    private final LoginUrlBuilder urlBuilder = mock(LoginUrlBuilder.class);
+    private final Credentials credentials = mock(Credentials.class);
+
     private final LoginAction action = new LoginAction(httpClient, urlBuilder);
 
-    private final Credentials credentials = mock(Credentials.class);
+    @Before
+    public void setUp() {
+        given(urlBuilder.build(credentials)).willReturn(URL);
+    }
 
     @Test
     public void shouldCallCorrectUrl() {
@@ -34,14 +41,14 @@ public class LoginActionTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void shouldThrowExceptionOnLoginFailureResponse() {
+    public void shouldThrowExceptionOnFailure() {
         givenWillReturnFailure();
 
         action.login(credentials);
     }
 
     @Test
-    public void shouldReturnTrueOnSuccessResponse() {
+    public void shouldReturnTrueOnSuccess() {
         givenWillReturnSuccess();
 
         assertThat(action.login(credentials)).isTrue();
