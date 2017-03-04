@@ -1,45 +1,55 @@
 package uk.co.mruoc.wso2;
 
+import org.junit.Before;
 import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 public class ApiExistsActionTest {
 
     private static final String URL = "api-exists-url";
+    private static final String NAME = "name";
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
-    private final ApiExistsUrlBuilder urlBuilder = new StubApiExistsUrlBuilder(URL);
+    private final ApiExistsUrlBuilder urlBuilder = mock(ApiExistsUrlBuilder.class);
+
     private final ApiExistsAction action = new ApiExistsAction(client, urlBuilder);
 
-    @Test
-    public void apiExistsShouldCallCorrectUrl() {
-        givenWillReturnApiExistsSuccess();
+    @Before
+    public void setUp() {
+        given(urlBuilder.build(NAME)).willReturn(URL);
+    }
 
-        action.apiExists("name");
+    @Test
+    public void shouldCallCorrectUrl() {
+        givenWillReturnSuccess();
+
+        action.apiExists(NAME);
 
         assertThat(client.lastRequestUri()).isEqualTo(URL);
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void apiExistsShouldThrowExceptionIfNon200Response() {
+    public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        action.apiExists("name");
+        action.apiExists(NAME);
     }
 
     @Test
-    public void apiExistsShouldReturnFalseFailure() {
-        givenWillReturnApiExistsFailure();
+    public void shouldReturnFalseOnFailure() {
+        givenWillReturnFailure();
 
-        assertThat(action.apiExists("name")).isFalse();
+        assertThat(action.apiExists(NAME)).isFalse();
     }
 
     @Test
-    public void apiExistsShouldReturnTrueOnSuccess() {
-        givenWillReturnApiExistsSuccess();
+    public void shouldReturnTrueOnSuccess() {
+        givenWillReturnSuccess();
 
         assertThat(action.apiExists("name")).isTrue();
     }
@@ -48,12 +58,12 @@ public class ApiExistsActionTest {
         client.cannedResponse(500, "");
     }
 
-    private void givenWillReturnApiExistsFailure() {
+    private void givenWillReturnFailure() {
         String body = responseLoader.load("api-exists-failure.json");
         client.cannedResponse(200, body);
     }
 
-    private void givenWillReturnApiExistsSuccess() {
+    private void givenWillReturnSuccess() {
         String body = responseLoader.load("api-exists-success.json");
         client.cannedResponse(200, body);
     }

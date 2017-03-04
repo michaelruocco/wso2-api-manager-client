@@ -9,7 +9,7 @@ public class ApiExistsAction {
     private final ApiExistsUrlBuilder urlBuilder;
 
     public ApiExistsAction(HttpClient client, String hostUrl) {
-        this(client, new DefaultApiExistsUrlBuilder(hostUrl));
+        this(client, new ApiExistsUrlBuilder(hostUrl));
     }
 
     public ApiExistsAction(HttpClient client, ApiExistsUrlBuilder urlBuilder) {

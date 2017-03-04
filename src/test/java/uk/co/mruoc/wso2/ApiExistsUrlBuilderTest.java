@@ -13,8 +13,8 @@ public class ApiExistsUrlBuilderTest {
     private static final String QUERY_STRING = "?queryString=value";
     private static final String NAME = "name";
 
-    private final NameToExistsQueryStringConverter queryStringConverter = mock(NameToExistsQueryStringConverter.class);
-    private final ApiExistsUrlBuilder builder = new DefaultApiExistsUrlBuilder(HOST_URL, queryStringConverter);
+    private final NameToApiExistsQueryStringConverter queryStringConverter = mock(NameToApiExistsQueryStringConverter.class);
+    private final ApiExistsUrlBuilder builder = new ApiExistsUrlBuilder(HOST_URL, queryStringConverter);
 
     @Test
     public void shouldBuildUrl() {
