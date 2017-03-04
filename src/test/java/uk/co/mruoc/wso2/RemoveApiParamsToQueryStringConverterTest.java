@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class DefaultRemoveApiParamsToQueryStringConverterTest {
+public class RemoveApiParamsToQueryStringConverterTest {
 
-    private RemoveApiParamsToQueryStringConverter converter = new DefaultRemoveApiParamsToQueryStringConverter();
+    private RemoveApiParamsToQueryStringConverter converter = new RemoveApiParamsToQueryStringConverter();
 
     private SelectApiParams params = mock(SelectApiParams.class);
 

@@ -13,7 +13,7 @@ public class RemoveApiUrlBuilderTest {
     private static final String QUERY_STRING = "?queryString=value";
 
     private final RemoveApiParamsToQueryStringConverter queryStringConverter = mock(RemoveApiParamsToQueryStringConverter.class);
-    private final RemoveApiUrlBuilder builder = new DefaultRemoveApiUrlBuilder(HOST_URL, queryStringConverter);
+    private final RemoveApiUrlBuilder builder = new RemoveApiUrlBuilder(HOST_URL, queryStringConverter);
 
     @Test
     public void shouldBuildUrl() {

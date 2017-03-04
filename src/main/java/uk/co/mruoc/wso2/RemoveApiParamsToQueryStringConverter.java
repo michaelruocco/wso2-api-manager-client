@@ -1,7 +1,9 @@
 package uk.co.mruoc.wso2;
 
-public interface RemoveApiParamsToQueryStringConverter {
+public class RemoveApiParamsToQueryStringConverter extends SelectApiParamsToQueryStringConverter {
 
-    String convert(SelectApiParams params);
+    public RemoveApiParamsToQueryStringConverter() {
+        super("removeAPI");
+    }
 
 }

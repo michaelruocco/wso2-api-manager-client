@@ -11,7 +11,7 @@ public class RemoveApiAction {
     private final RemoveApiUrlBuilder urlBuilder;
 
     public RemoveApiAction(HttpClient client, String hostUrl) {
-        this(client, new DefaultRemoveApiUrlBuilder(hostUrl));
+        this(client, new RemoveApiUrlBuilder(hostUrl));
     }
 
     public RemoveApiAction(HttpClient client, RemoveApiUrlBuilder urlBuilder) {
