@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class DefaultRemoveApiUrlBuilderTest {
+public class RemoveApiUrlBuilderTest {
 
     private static final String HOST_URL = "https://localhost:8443";
     private static final String RESOURCE = "/publisher/site/blocks/item-add/ajax/remove.jag";

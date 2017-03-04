@@ -6,18 +6,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class DefaultUpdateApiUrlBuilderTest {
+public class SetStatusApiUrlBuilderTest {
 
     private static final String HOST_URL = "https://localhost:8443";
-    private static final String RESOURCE = "/publisher/site/blocks/item-add/ajax/add.jag";
+    private static final String RESOURCE = "/publisher/site/blocks/life-cycles/ajax/life-cycles.jag";
     private static final String QUERY_STRING = "?queryString=value";
 
-    private final UpdateApiParamsToQueryStringConverter queryStringConverter = mock(UpdateApiParamsToQueryStringConverter.class);
-    private final UpdateApiUrlBuilder builder = new DefaultUpdateApiUrlBuilder(HOST_URL, queryStringConverter);
+    private final SetStatusApiParamsToQueryStringConverter queryStringConverter = mock(SetStatusApiParamsToQueryStringConverter.class);
+    private final SetStatusApiUrlBuilder builder = new DefaultSetStatusApiUrlBuilder(HOST_URL, queryStringConverter);
 
     @Test
     public void shouldBuildUrl() {
-        AddApiParams params = mock(AddApiParams.class);
+        SetStatusApiParams params = mock(SetStatusApiParams.class);
         given(queryStringConverter.convert(params)).willReturn(QUERY_STRING);
 
         String url = builder.build(params);
