@@ -8,24 +8,40 @@ import static org.mockito.Mockito.mock;
 
 public class SelectApiParamsToQueryStringConverterTest {
 
+    private static final String PREFIX = "?action=getAPI";
     private static final String NAME = "api-name";
     private static final String VERSION = "v1";
     private static final String PROVIDER = "admin";
 
+    private final SelectApiParams params = mock(SelectApiParams.class);
+
     private final GetApiParamsToQueryStringConverter converter = new GetApiParamsToQueryStringConverter();
 
     @Test
-    public void shouldBuildQueryString() {
-        SelectApiParams params = mock(SelectApiParams.class);
+    public void shouldConvertName() {
         given(params.getApiName()).willReturn(NAME);
-        given(params.getApiVersion()).willReturn(VERSION);
-        given(params.getProvider()).willReturn(PROVIDER);
-
-        String expectedQueryString = "?action=getAPI&name=" + NAME + "&version=" + VERSION + "&provider=" + PROVIDER;
 
         String result = converter.convert(params);
 
-        assertThat(result).isEqualTo(expectedQueryString);
+        assertThat(result).isEqualTo(PREFIX + "&name=" + NAME);
+    }
+
+    @Test
+    public void shouldConvertVersion() {
+        given(params.getApiVersion()).willReturn(VERSION);
+
+        String result = converter.convert(params);
+
+        assertThat(result).isEqualTo(PREFIX + "&version=" + VERSION);
+    }
+
+    @Test
+    public void shouldConvertProvider() {
+        given(params.getProvider()).willReturn(PROVIDER);
+
+        String result = converter.convert(params);
+
+        assertThat(result).isEqualTo(PREFIX + "&provider=" + PROVIDER);
     }
 
 }

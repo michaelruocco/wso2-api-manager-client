@@ -15,15 +15,15 @@ public class GetApiActionTest {
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final GetApiUrlBuilder urlBuilder = mock(GetApiUrlBuilder.class);
-    private final GetApiAction action = new GetApiAction(client, urlBuilder);
-
     private final SelectApiParams params = mock(SelectApiParams.class);
+
+    private final GetApiAction action = new GetApiAction(client, urlBuilder);
 
     @Before
     public void setUp() {
         given(urlBuilder.build(params)).willReturn(URL);
     }
-    
+
     @Test
     public void shouldCallCorrectUrl() {
         givenWillReturnSuccess();
