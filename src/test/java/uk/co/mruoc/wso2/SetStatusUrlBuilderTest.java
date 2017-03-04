@@ -13,7 +13,7 @@ public class SetStatusUrlBuilderTest {
     private static final String QUERY_STRING = "?queryString=value";
 
     private final SetStatusParamsToQueryStringConverter queryStringConverter = mock(SetStatusParamsToQueryStringConverter.class);
-    private final SetStatusApiUrlBuilder builder = new DefaultSetStatusUrlBuilder(HOST_URL, queryStringConverter);
+    private final SetStatusUrlBuilder builder = new SetStatusUrlBuilder(HOST_URL, queryStringConverter);
 
     @Test
     public void shouldBuildUrl() {

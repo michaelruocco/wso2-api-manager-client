@@ -1,22 +1,21 @@
 package uk.co.mruoc.wso2;
 
-public class DefaultSetStatusUrlBuilder implements SetStatusApiUrlBuilder {
+public class SetStatusUrlBuilder {
 
     private static final String RESOURCE_URL = "/publisher/site/blocks/life-cycles/ajax/life-cycles.jag";
 
     private final SetStatusParamsToQueryStringConverter queryStringConverter;
     private final String url;
 
-    public DefaultSetStatusUrlBuilder(String hostUrl) {
-        this(hostUrl, new DefaultSetStatusParamsToQueryStringConverter());
+    public SetStatusUrlBuilder(String hostUrl) {
+        this(hostUrl, new SetStatusParamsToQueryStringConverter());
     }
 
-    public DefaultSetStatusUrlBuilder(String hostUrl, SetStatusParamsToQueryStringConverter queryStringConverter) {
+    public SetStatusUrlBuilder(String hostUrl, SetStatusParamsToQueryStringConverter queryStringConverter) {
         this.url = hostUrl + RESOURCE_URL;
         this.queryStringConverter = queryStringConverter;
     }
 
-    @Override
     public String build(SetStatusParams params) {
         String queryString = buildQueryString(params);
         return url + queryString;

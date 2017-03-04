@@ -7,9 +7,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static uk.co.mruoc.wso2.ApiStatus.PUBLISHED;
 
-public class DefaultSetStatusParamsToQueryStringConverterTest {
+public class SetStatusParamsToQueryStringConverterTest {
 
-    private DefaultSetStatusParamsToQueryStringConverter converter = new DefaultSetStatusParamsToQueryStringConverter();
+    private SetStatusParamsToQueryStringConverter converter = new SetStatusParamsToQueryStringConverter();
 
     private SetStatusParams params = mock(SetStatusParams.class);
 

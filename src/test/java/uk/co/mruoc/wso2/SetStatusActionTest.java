@@ -14,7 +14,7 @@ public class SetStatusActionTest {
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
-    private final SetStatusApiUrlBuilder urlBuilder = mock(SetStatusApiUrlBuilder.class);
+    private final SetStatusUrlBuilder urlBuilder = mock(SetStatusUrlBuilder.class);
     private final SetStatusAction action = new SetStatusAction(client, urlBuilder);
 
     private final SetStatusParams params = mock(SetStatusParams.class);
@@ -41,14 +41,14 @@ public class SetStatusActionTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void shouldThrowExceptionOnFailureResponse() {
+    public void shouldThrowExceptionOnFailure() {
         givenWillReturnFailure();
 
         action.setStatus(params);
     }
 
     @Test
-    public void shouldReturnTrueOnSuccessResponse() {
+    public void shouldReturnTrueOnSuccess() {
         givenWillReturnSuccess();
 
         assertThat(action.setStatus(params)).isTrue();
