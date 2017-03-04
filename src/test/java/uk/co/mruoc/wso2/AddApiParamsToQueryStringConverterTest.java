@@ -12,9 +12,9 @@ import static uk.co.mruoc.wso2.ApiSubscriptions.SPECIFIC_TENANTS;
 import static uk.co.mruoc.wso2.ApiTierAvailability.*;
 import static uk.co.mruoc.wso2.ApiVisibility.*;
 
-public class DefaultAddApiParamsToQueryStringConverterTest {
+public class AddApiParamsToQueryStringConverterTest {
 
-    private DefaultAddApiParamsToQueryStringConverter converter = new DefaultAddApiParamsToQueryStringConverter();
+    private AddApiParamsToQueryStringConverter converter = new AddApiParamsToQueryStringConverter();
 
     private AddApiParams params = mock(AddApiParams.class);
 

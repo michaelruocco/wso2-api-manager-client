@@ -11,7 +11,7 @@ public class AddApiAction {
     private AddApiUrlBuilder urlBuilder;
 
     public AddApiAction(HttpClient client, String hostUrl) {
-        this(client, new DefaultAddApiUrlBuilder(hostUrl));
+        this(client, new AddApiUrlBuilder(hostUrl));
     }
 
     public AddApiAction(HttpClient client, AddApiUrlBuilder urlBuilder) {

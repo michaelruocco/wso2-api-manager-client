@@ -15,9 +15,9 @@ public class AddApiActionTest {
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final AddApiUrlBuilder urlBuilder = mock(AddApiUrlBuilder.class);
-    private final AddApiAction action = new AddApiAction(client, urlBuilder);
-
     private final AddApiParams params = mock(AddApiParams.class);
+
+    private final AddApiAction action = new AddApiAction(client, urlBuilder);
 
     @Before
     public void setUp() {
