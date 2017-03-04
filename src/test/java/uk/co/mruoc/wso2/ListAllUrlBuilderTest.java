@@ -10,7 +10,7 @@ public class ListAllUrlBuilderTest {
     private static final String RESOURCE = "/publisher/site/blocks/listing/ajax/item-list.jag";
     private static final String QUERY_STRING = "?action=getAllAPIs";
 
-    private final ListAllUrlBuilder builder = new DefaultListAllUrlBuilder(HOST);
+    private final ListAllUrlBuilder builder = new ListAllUrlBuilder(HOST);
 
     @Test
     public void shouldBuildUrl() {

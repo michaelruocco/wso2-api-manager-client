@@ -1,11 +1,14 @@
 package uk.co.mruoc.wso2;
 
+import org.junit.Before;
 import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 public class ListAllActionTest {
 
@@ -13,8 +16,13 @@ public class ListAllActionTest {
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
-    private final ListAllUrlBuilder urlBuilder = new StubListAllUrlBuilder(URL);
+    private final ListAllUrlBuilder urlBuilder = mock(ListAllUrlBuilder.class);
     private final ListAllAction action = new ListAllAction(client, urlBuilder);
+
+    @Before
+    public void setUp() {
+        given(urlBuilder.build()).willReturn(URL);
+    }
 
     @Test
     public void shouldCallCorrectUrl() {
