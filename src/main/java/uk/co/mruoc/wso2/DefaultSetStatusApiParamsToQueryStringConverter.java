@@ -1,6 +1,6 @@
 package uk.co.mruoc.wso2;
 
-public class DefaultSetStatusApiParamsToQueryStringConverter extends SelectApiParamsToQueryStringConverter implements PublishApiParamsToQueryStringConverter {
+public class DefaultSetStatusApiParamsToQueryStringConverter extends SelectApiParamsToQueryStringConverter implements SetStatusApiParamsToQueryStringConverter {
 
     private final StatusArgumentBuilder statusArgumentBuilder = new StatusArgumentBuilder();
     private final StringArgumentBuilder publishArgumentBuilder = new StringArgumentBuilder("publishToGateway");
