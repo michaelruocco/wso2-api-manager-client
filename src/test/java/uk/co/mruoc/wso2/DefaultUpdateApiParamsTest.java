@@ -185,7 +185,7 @@ public class DefaultUpdateApiParamsTest {
 
     @Test
     public void thumbShouldDefaultToEmpty() {
-        assertThat(params.getThumbnailImagePath()).isEmpty();
+        assertThat(params.getThumbnailImageUrl()).isEmpty();
     }
 
     @Test
@@ -194,7 +194,7 @@ public class DefaultUpdateApiParamsTest {
 
         params.setThumbnailImagePath(thumb);
 
-        assertThat(params.getThumbnailImagePath()).isEqualTo(thumb);
+        assertThat(params.getThumbnailImageUrl()).isEqualTo(thumb);
     }
 
 }

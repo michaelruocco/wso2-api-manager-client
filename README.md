@@ -136,8 +136,9 @@ params.setVersion("v1");
 params.setProvider("api-provider")
 Api api = client.getApi(params);
 
-// you can use the API details to create some update parameters
-DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams(api);
+// you can use the API details and a converter to create some update parameters
+ApiToUpdateApiParamsConverter converter = new ApiToUpdateApiParamsConverter();
+DefaultUpdateApiParams updateParams = converter.convert(api);
 updateParams.setDescription(updatedDescription);
 // swagger always needs to be set even if not updating due to a bug
 // with the update API

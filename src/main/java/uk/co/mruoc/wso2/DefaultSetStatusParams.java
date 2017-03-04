@@ -4,7 +4,7 @@ public class DefaultSetStatusParams extends DefaultSelectApiParams implements Se
 
     private ApiStatus status = ApiStatus.CREATED;
     private boolean publishToGateway = true;
-    private boolean requireSubscription = true;
+    private boolean requireResubscription = false;
 
     @Override
     public ApiStatus getStatus() {
@@ -18,7 +18,7 @@ public class DefaultSetStatusParams extends DefaultSelectApiParams implements Se
 
     @Override
     public boolean isRequireResubscription() {
-        return requireSubscription;
+        return requireResubscription;
     }
 
     public void setStatus(ApiStatus status) {
@@ -29,8 +29,8 @@ public class DefaultSetStatusParams extends DefaultSelectApiParams implements Se
         this.publishToGateway = publishToGateway;
     }
 
-    public void setRequireSubscription(boolean requireSubscription) {
-        this.requireSubscription = requireSubscription;
+    public void setRequireResubscription(boolean requireResubscription) {
+        this.requireResubscription = requireResubscription;
     }
 
 }

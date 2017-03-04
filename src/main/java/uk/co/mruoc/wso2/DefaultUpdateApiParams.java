@@ -27,12 +27,6 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     private String context = EMPTY;
     private String thumbnailImagePath = EMPTY;
 
-    public DefaultUpdateApiParams() { }
-
-    public DefaultUpdateApiParams(Api api) {
-        populateFrom(api);
-    }
-
     @Override
     public ApiVisibility getVisibility() {
         return visibility;
@@ -99,7 +93,7 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
     }
 
     @Override
-    public String getThumbnailImagePath() {
+    public String getThumbnailImageUrl() {
         return thumbnailImagePath;
     }
 
@@ -169,24 +163,6 @@ public class DefaultUpdateApiParams extends DefaultSelectApiParams implements Up
 
     public void setThumbnailImagePath(String thumbnailImagePath) {
         this.thumbnailImagePath = thumbnailImagePath;
-    }
-
-    private void populateFrom(Api api) {
-        setName(api.getName());
-        setVersion(api.getVersion());
-        setContext(api.getContext());
-        setProvider(api.getProvider());
-        setRoles(api.getRoles());
-        setTags(api.getTags());
-        setTiers(api.getTiers());
-        setHttpChecked(api.isHttpChecked());
-        setHttpsChecked(api.isHttpsChecked());
-        setEndpointType(api.getEndpointType());
-        setEndpointUsername(api.getEndpointUsername());
-        setEndpointPassword(api.getEndpointPassword());
-        setVisibility(api.getVisibility());
-        setEndpointConfig(api.getEndpointConfig());
-        setThumbnailImagePath(api.getThumbnailImageUrl());
     }
 
 }

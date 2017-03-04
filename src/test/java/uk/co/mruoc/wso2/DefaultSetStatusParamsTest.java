@@ -21,8 +21,8 @@ public class DefaultSetStatusParamsTest {
     }
 
     @Test
-    public void requireSubscriptionShouldDefaultToTrue() {
-        assertThat(params.isRequireResubscription()).isTrue();
+    public void requireResubscriptionShouldDefaultToFalse() {
+        assertThat(params.isRequireResubscription()).isFalse();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class DefaultSetStatusParamsTest {
     public void shouldRequireSubscription() {
         boolean requireSubscription = false;
 
-        params.setRequireSubscription(requireSubscription);
+        params.setRequireResubscription(requireSubscription);
 
         assertThat(params.isRequireResubscription()).isEqualTo(requireSubscription);
     }

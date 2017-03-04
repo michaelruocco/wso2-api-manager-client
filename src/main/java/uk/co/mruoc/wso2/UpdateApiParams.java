@@ -16,6 +16,6 @@ public interface UpdateApiParams extends SelectApiParams, ApiVisibilityParams, T
 
     String getContext();
 
-    String getThumbnailImagePath();
+    String getThumbnailImageUrl();
 
 }

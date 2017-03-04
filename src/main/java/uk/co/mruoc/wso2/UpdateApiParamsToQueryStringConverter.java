@@ -29,7 +29,7 @@ public class UpdateApiParamsToQueryStringConverter {
                 versionArgumentBuilder.build(params.getApiVersion()) +
                 providerArgumentBuilder.build(params.getProvider()) +
                 visibilityArgumentBuilder.build(params) +
-                thumbArgumentBuilder.build(params.getThumbnailImagePath()) +
+                thumbArgumentBuilder.build(params.getThumbnailImageUrl()) +
                 descriptionArgumentBuilder.build(params.getApiDescription()) +
                 tagsArgumentBuilder.build(params.getTags()) +
                 endpointSecurityArgumentBuilder.build(params) +

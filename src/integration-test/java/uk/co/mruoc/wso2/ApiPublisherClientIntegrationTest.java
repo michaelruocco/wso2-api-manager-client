@@ -86,7 +86,8 @@ public class ApiPublisherClientIntegrationTest {
         SelectApiParams selectApiParams = toSelectParams(addParams);
         Api api = client.getApi(selectApiParams);
 
-        DefaultUpdateApiParams updateParams = new DefaultUpdateApiParams(api);
+        ApiToUpdateApiParamsConverter converter = new ApiToUpdateApiParamsConverter();
+        DefaultUpdateApiParams updateParams = converter.convert(api);
         updateParams.setDescription(updatedDescription);
         updateParams.setSwagger(addParams.getSwagger());
         client.updateApi(updateParams);
@@ -94,6 +95,26 @@ public class ApiPublisherClientIntegrationTest {
         Api updatedApi = client.getApi(selectApiParams);
 
         assertThat(updatedApi.getDescription()).isEqualTo(updatedDescription);
+    }
+
+    @Test
+    public void shouldSetApiStatus() {
+        ApiStatus updatedStatus = ApiStatus.PUBLISHED;
+
+        AddApiParams addParams = StubAddApiParamsBuilder.build();
+        client.addApi(addParams);
+
+        SelectApiParams selectApiParams = toSelectParams(addParams);
+        Api api = client.getApi(selectApiParams);
+
+        ApiToSetStatusParamsConverter converter = new ApiToSetStatusParamsConverter();
+        DefaultSetStatusParams setStatusParams = converter.convert(api);
+        setStatusParams.setStatus(updatedStatus);
+        client.setStatus(setStatusParams);
+
+        Api updatedApi = client.getApi(selectApiParams);
+
+        assertThat(updatedApi.getStatus()).isEqualTo(updatedStatus);
     }
 
     @After
