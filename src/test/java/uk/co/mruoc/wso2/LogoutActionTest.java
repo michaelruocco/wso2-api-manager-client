@@ -10,10 +10,9 @@ import static org.mockito.Mockito.mock;
 
 public class LogoutActionTest {
 
-    private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
     private static final String URL = "logout-url";
 
-    private final FileLoader fileLoader = new FileLoader();
+    private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final LogoutUrlBuilder urlBuilder = mock(LogoutUrlBuilder.class);
 
@@ -59,22 +58,13 @@ public class LogoutActionTest {
     }
 
     private void givenWillReturnSuccess() {
-        String body = load("logout-success.json");
+        String body = responseLoader.load("logout-success.json");
         client.cannedResponse(200, body);
     }
 
     private void givenWillReturnFailure() {
-        String body = load("logout-failure.json");
+        String body = responseLoader.load("logout-failure.json");
         client.cannedResponse(200, body);
-    }
-
-    private String load(String filename) {
-        String path = buildPath(filename);
-        return fileLoader.loadContent(path);
-    }
-
-    private String buildPath(String filename) {
-        return RESPONSE_FILE_PATH + filename;
     }
 
 }

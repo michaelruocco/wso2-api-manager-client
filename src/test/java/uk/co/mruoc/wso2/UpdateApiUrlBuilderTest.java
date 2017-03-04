@@ -13,7 +13,7 @@ public class UpdateApiUrlBuilderTest {
     private static final String QUERY_STRING = "?queryString=value";
 
     private final UpdateApiParamsToQueryStringConverter queryStringConverter = mock(UpdateApiParamsToQueryStringConverter.class);
-    private final UpdateApiUrlBuilder builder = new DefaultUpdateApiUrlBuilder(HOST_URL, queryStringConverter);
+    private final UpdateApiUrlBuilder builder = new UpdateApiUrlBuilder(HOST_URL, queryStringConverter);
 
     @Test
     public void shouldBuildUrl() {

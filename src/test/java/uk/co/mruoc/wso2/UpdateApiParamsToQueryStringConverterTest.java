@@ -12,9 +12,9 @@ import static uk.co.mruoc.wso2.ApiTierAvailability.BRONZE;
 import static uk.co.mruoc.wso2.ApiTierAvailability.GOLD;
 import static uk.co.mruoc.wso2.ApiVisibility.RESTRICTED;
 
-public class DefaultUpdateApiParamsToQueryStringConverterTest {
+public class UpdateApiParamsToQueryStringConverterTest {
 
-    private DefaultUpdateApiParamsToQueryStringConverter converter = new DefaultUpdateApiParamsToQueryStringConverter();
+    private UpdateApiParamsToQueryStringConverter converter = new UpdateApiParamsToQueryStringConverter();
 
     private UpdateApiParams params = mock(UpdateApiParams.class);
 

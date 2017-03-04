@@ -11,7 +11,7 @@ public class UpdateApiAction {
     private final UpdateApiUrlBuilder urlBuilder;
 
     public UpdateApiAction(HttpClient client, String hostUrl) {
-        this(client, new DefaultUpdateApiUrlBuilder(hostUrl));
+        this(client, new UpdateApiUrlBuilder(hostUrl));
     }
 
     public UpdateApiAction(HttpClient client, UpdateApiUrlBuilder urlBuilder) {
