@@ -11,7 +11,7 @@ public class LogoutUrlBuilderTest {
 
     private static final String LOGOUT_QUERY_STRING = "?action=logout";
 
-    private final LogoutUrlBuilder builder = new DefaultLogoutUrlBuilder(HOST);
+    private final LogoutUrlBuilder builder = new LogoutUrlBuilder(HOST);
 
     @Test
     public void shouldBuildLogoutUrl() {

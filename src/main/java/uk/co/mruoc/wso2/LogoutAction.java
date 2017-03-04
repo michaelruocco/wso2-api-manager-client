@@ -9,7 +9,7 @@ public class LogoutAction {
     private final LogoutUrlBuilder  urlBuilder;
 
     public LogoutAction(HttpClient client, String hostUrl) {
-        this(client, new DefaultLogoutUrlBuilder(hostUrl));
+        this(client, new LogoutUrlBuilder(hostUrl));
     }
 
     public LogoutAction(HttpClient client, LogoutUrlBuilder urlBuilder) {
