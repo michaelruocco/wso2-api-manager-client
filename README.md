@@ -147,11 +147,29 @@ updateParams.setSwagger(swagger);
 client.updateApi(updateParams);
 ```
 
-## Missing functionality
+## Setting API Status
 
-Functionality still needs to be added to allow the following:
+In order to set the status of an API you will need to get the API details as described above,
+those API details can then be used to create an instance of DefaultSetStatusParams.
+Once you have an instance you will need to set the status using the ApiStatus enum,
+you can also set whether to publish to the gateway and whether resubscription is required,
+the default values are true and false respectively. An example is shown below:
 
-* Updating the status of an API
+```
+// first you need to get the existing API details
+SelectApiParams params = new DefaultSelectApiParams()
+params.setName("api-name");
+params.setVersion("v1");
+params.setProvider("api-provider")
+Api api = client.getApi(params);
+
+// you can use the API details and a converter to create some update parameters
+ApiToSetStatusParamsConverter converter = new ApiToSetStatusParamsConverter();
+DefaultSetStatusParams setStatusParams = converter.convert(api);
+setStatusParams.setStatus(ApiStatus.PUBLISHED);
+
+client.setStatus(setStatusParams);
+```
 
 ## Running the tests
 
