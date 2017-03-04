@@ -1,9 +1,11 @@
 package uk.co.mruoc.wso2;
 
+import org.junit.Before;
 import org.junit.Test;
 import uk.co.mruoc.http.client.FakeHttpClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class GetApiActionTest {
@@ -12,11 +14,16 @@ public class GetApiActionTest {
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
-    private final GetApiUrlBuilder urlBuilder = new StubGetApiUrlBuilder(URL);
+    private final GetApiUrlBuilder urlBuilder = mock(GetApiUrlBuilder.class);
     private final GetApiAction action = new GetApiAction(client, urlBuilder);
 
     private final SelectApiParams params = mock(SelectApiParams.class);
 
+    @Before
+    public void setUp() {
+        given(urlBuilder.build(params)).willReturn(URL);
+    }
+    
     @Test
     public void shouldCallCorrectUrl() {
         givenWillReturnSuccess();
