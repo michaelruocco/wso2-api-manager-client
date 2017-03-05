@@ -7,7 +7,7 @@
 This library provides an abstraction layer around the WSO2 API Manager Publisher
 to try and make it as easy as possible to programatically interact with the publisher
 API. It is built and tested around version 1.9.0 of the WSO2 API Manager, you can find the
-API documenation [here](https://docs.wso2.com/display/AM190/Publisher+APIs).
+API documentation [here](https://docs.wso2.com/display/AM190/Publisher+APIs).
 
 ## Usage
 
