@@ -113,7 +113,7 @@ uploadArchives {
                 description 'Library for interacting with the WSO2 API Manager Publisher API'
                 groupId 'com.github.michaelruocco'
                 artifactId 'wso2-api-publisher-client'
-                version '1.0.0'
+                version '2.0.0'
                 url 'https://github.com/michaelruocco/wso2-api-publisher-client'
 
                 developers {
