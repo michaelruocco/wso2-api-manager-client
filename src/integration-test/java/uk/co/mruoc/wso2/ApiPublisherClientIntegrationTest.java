@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2;
 
 import org.junit.*;
-import org.testcontainers.containers.Container;
 import org.testcontainers.containers.GenericContainer;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class ApiPublisherClientIntegrationTest {
 
     @Before
     public void setUp() {
-        client = new DefaultApiPublisherClient(buildBaseUrl(container));
+        client = new DefaultApiPublisherClient(buildBaseUrl());
         logConsumer.waitForStartupMessageInLog();
         client.login(credentials);
     }
@@ -122,7 +121,7 @@ public class ApiPublisherClientIntegrationTest {
         client.logout();
     }
 
-    private String buildBaseUrl(Container container) {
+    private String buildBaseUrl() {
         return String.format(URL, container.getContainerIpAddress(), container.getMappedPort(PORT));
     }
 
