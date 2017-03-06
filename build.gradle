@@ -9,6 +9,8 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -43,7 +45,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.6.2'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
-    testCompile group: 'com.github.michaelruocco', name: "wso2-test-containers", version: '1.0.0'
+    testCompile group: 'com.github.michaelruocco', name: "wso2-test-containers", version: '1.0.1'
     testCompile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.24'
 }
 
@@ -65,5 +67,77 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         html.enabled = true
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.hasTask(uploadArchives)) {
+        signing {
+            required true
+            sign configurations.archives
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                packaging 'jar'
+                name 'WSO2 API Publisher Client'
+                description 'Library for interacting with the WSO2 API Manager Publisher API'
+                groupId 'com.github.michaelruocco'
+                artifactId 'wso2-api-publisher-client'
+                version '1.0.0'
+                url 'https://github.com/michaelruocco/wso2-api-publisher-client'
+
+                developers {
+                    developer {
+                        id 'mruoc'
+                        name 'Michael Ruocco'
+                        email 'michael.ruocco@hotmail.com'
+                    }
+                }
+
+                scm {
+                    connection 'scm:git:git@github.com/michaelruocco/wso2-api-publisher-client.git'
+                    developerConnection 'scm:git:git@github.com/michaelruocco/wso2-api-publisher-client.git'
+                    url 'git@github.com/michaelruocco/wso2-api-publisher-client.git'
+                }
+
+                licenses {
+                    license {
+                        name 'BSD License'
+                        url 'http://www.opensource.org/licenses/bsd-license.php'
+                        distribution 'repo'
+                    }
+                }
+            }
+        }
     }
 }
