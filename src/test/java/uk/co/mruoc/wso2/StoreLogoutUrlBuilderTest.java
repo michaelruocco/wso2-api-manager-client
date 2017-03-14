@@ -4,14 +4,14 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LogoutUrlBuilderTest {
+public class StoreLogoutUrlBuilderTest {
 
     private static final String HOST = "https://localhost:9443";
-    private static final String RESOURCE = "/publisher/site/blocks/user/login/ajax/login.jag";
+    private static final String RESOURCE = "/store/site/blocks/user/login/ajax/login.jag";
 
     private static final String LOGOUT_QUERY_STRING = "?action=logout";
 
-    private final LogoutUrlBuilder builder = new LogoutUrlBuilder(HOST);
+    private final LogoutUrlBuilder builder = new StoreLogoutUrlBuilder(HOST);
 
     @Test
     public void shouldBuildLogoutUrl() {

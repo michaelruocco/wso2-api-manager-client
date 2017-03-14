@@ -4,14 +4,14 @@ public class LogoutUrlBuilder {
 
     private static final String LOGOUT_QUERY_STRING = "?action=logout";
 
-    private final String baseUrl;
+    private final String url;
 
-    public LogoutUrlBuilder(String hostUrl) {
-        baseUrl = hostUrl + "/publisher/site/blocks/user/login/ajax/login.jag";
+    public LogoutUrlBuilder(String url) {
+        this.url = url;
     }
 
     public String build() {
-        return baseUrl + LOGOUT_QUERY_STRING;
+        return url + LOGOUT_QUERY_STRING;
     }
 
 }
