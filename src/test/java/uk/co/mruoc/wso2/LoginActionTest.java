@@ -14,7 +14,7 @@ public class LoginActionTest {
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient httpClient = new FakeHttpClient();
-    private final LoginUrlBuilder urlBuilder = mock(LoginUrlBuilder.class);
+    private final LoginUrlBuilder urlBuilder = mock(PublisherLoginUrlBuilder.class);
     private final Credentials credentials = mock(Credentials.class);
 
     private final LoginAction action = new LoginAction(httpClient, urlBuilder);
