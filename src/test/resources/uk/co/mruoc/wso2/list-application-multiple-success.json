@@ -12,9 +12,9 @@
       "groupId": ""
     },
     {
-      "name": "TestApplication",
+      "name": "test-application",
       "tier": "Unlimited",
-      "id": 8,
+      "id": 2,
       "callbackUrl": "",
       "status": "APPROVED",
       "description": "",
