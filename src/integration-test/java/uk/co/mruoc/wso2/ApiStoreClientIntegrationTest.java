@@ -55,7 +55,6 @@ public class ApiStoreClientIntegrationTest {
     }
 
     @Test
-    @Ignore
     public void shouldRemoveApplication() {
         DefaultAddApplicationParams params = new FakeAddApplicationParams();
         client.addApplication(params);
