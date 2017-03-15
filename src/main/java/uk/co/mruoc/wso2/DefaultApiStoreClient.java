@@ -10,6 +10,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
     private final LoginAction loginAction;
     private final LogoutAction logoutAction;
     private final AddApplicationAction addApplicationAction;
+    private final ListAllApplicationsAction listAllApplicationsAction;
 
     public DefaultApiStoreClient(String hostUrl) {
         this(new SimpleHttpClient(), hostUrl);
@@ -18,13 +19,18 @@ public class DefaultApiStoreClient implements ApiStoreClient {
     public DefaultApiStoreClient(HttpClient client, String hostUrl) {
         this(new LoginAction(client, new StoreLoginUrlBuilder(hostUrl), new StoreResponseErrorChecker()),
                 new LogoutAction(client, new StoreLogoutUrlBuilder(hostUrl), new StoreResponseErrorChecker()),
-                new AddApplicationAction(client, hostUrl));
+                new AddApplicationAction(client, hostUrl),
+                new ListAllApplicationsAction(client, hostUrl));
     }
 
-    public DefaultApiStoreClient(LoginAction loginAction, LogoutAction logoutAction, AddApplicationAction addApplicationAction) {
+    public DefaultApiStoreClient(LoginAction loginAction,
+                                 LogoutAction logoutAction,
+                                 AddApplicationAction addApplicationAction,
+                                 ListAllApplicationsAction listAllApplicationsAction) {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.addApplicationAction = addApplicationAction;
+        this.listAllApplicationsAction = listAllApplicationsAction;
     }
 
     @Override
@@ -49,7 +55,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
 
     @Override
     public List<ApiApplication> listAllApplications() {
-        return null;
+        return listAllApplicationsAction.listAllApplications();
     }
 
     @Override

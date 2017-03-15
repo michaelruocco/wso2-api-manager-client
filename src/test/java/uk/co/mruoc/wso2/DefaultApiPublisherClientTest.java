@@ -15,7 +15,7 @@ public class DefaultApiPublisherClientTest {
 
     private final LoginAction loginAction = mock(LoginAction.class);
     private final LogoutAction logoutAction = mock(LogoutAction.class);
-    private final ListAllAction listAllAction = mock(ListAllAction.class);
+    private final ListAllApisAction listAllApisAction = mock(ListAllApisAction.class);
     private final GetApiAction getAction = mock(GetApiAction.class);
     private final AddApiAction addAction = mock(AddApiAction.class);
     private final ApiExistsAction existsAction = mock(ApiExistsAction.class);
@@ -33,7 +33,7 @@ public class DefaultApiPublisherClientTest {
 
     private final ApiPublisherClient client = new DefaultApiPublisherClient(loginAction,
             logoutAction,
-            listAllAction,
+            listAllApisAction,
             getAction,
             addAction,
             existsAction,
@@ -195,12 +195,12 @@ public class DefaultApiPublisherClientTest {
     }
 
     private void givenListAllWillFail() {
-        given(listAllAction.listAllApis()).willThrow(apiPublisherException);
+        given(listAllApisAction.listAllApis()).willThrow(apiPublisherException);
     }
 
     private List<ApiSummary> givenListAllWillReturnSummaries() {
         List<ApiSummary> summaries = buildSummaries();
-        given(listAllAction.listAllApis()).willReturn(summaries);
+        given(listAllApisAction.listAllApis()).willReturn(summaries);
         return summaries;
     }
 

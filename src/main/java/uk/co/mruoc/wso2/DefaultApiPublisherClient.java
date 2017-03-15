@@ -9,7 +9,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     private final LoginAction loginAction;
     private final LogoutAction logoutAction;
-    private final ListAllAction listAllAction;
+    private final ListAllApisAction listAllApisAction;
     private final GetApiAction getAction;
     private final AddApiAction addAction;
     private final ApiExistsAction existsAction;
@@ -24,7 +24,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     public DefaultApiPublisherClient(HttpClient client, String hostUrl) {
         this(new LoginAction(client, new PublisherLoginUrlBuilder(hostUrl), new PublisherResponseErrorChecker()),
                 new LogoutAction(client, new PublisherLogoutUrlBuilder(hostUrl), new PublisherResponseErrorChecker()),
-                new ListAllAction(client, hostUrl),
+                new ListAllApisAction(client, hostUrl),
                 new GetApiAction(client, hostUrl),
                 new AddApiAction(client, hostUrl),
                 new ApiExistsAction(client, hostUrl),
@@ -35,7 +35,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     public DefaultApiPublisherClient(LoginAction loginAction,
                                      LogoutAction logoutAction,
-                                     ListAllAction listAllAction,
+                                     ListAllApisAction listAllApisAction,
                                      GetApiAction getAction,
                                      AddApiAction addAction,
                                      ApiExistsAction existsAction,
@@ -44,7 +44,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
                                      SetStatusAction setStatusAction) {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
-        this.listAllAction = listAllAction;
+        this.listAllApisAction = listAllApisAction;
         this.getAction = getAction;
         this.addAction = addAction;
         this.existsAction = existsAction;
@@ -60,7 +60,7 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
 
     @Override
     public List<ApiSummary> listAllApis() {
-        return listAllAction.listAllApis();
+        return listAllApisAction.listAllApis();
     }
 
     @Override

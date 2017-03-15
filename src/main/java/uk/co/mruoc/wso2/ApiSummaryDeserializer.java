@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 public class ApiSummaryDeserializer implements JsonDeserializer<ApiSummary> {
 
     @Override
-    public ApiSummary deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public ApiSummary deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) {
         PublisherJsonParser parser = new PublisherJsonParser(element);
         DefaultApiSummary summary = new DefaultApiSummary();
         summary.setName(parser.getName());

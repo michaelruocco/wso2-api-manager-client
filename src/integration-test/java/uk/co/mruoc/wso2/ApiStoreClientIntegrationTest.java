@@ -36,7 +36,6 @@ public class ApiStoreClientIntegrationTest {
     }
 
     @Test
-    @Ignore
     public void shouldAddApplication() {
         DefaultAddApplicationParams params = new FakeAddApplicationParams();
 
@@ -44,17 +43,15 @@ public class ApiStoreClientIntegrationTest {
     }
 
     @Test
-    @Ignore
     public void listAllShouldReturnDeployedApplications() {
         DefaultAddApplicationParams params = new FakeAddApplicationParams();
         client.addApplication(params);
 
         List<ApiApplication> applications = client.listAllApplications();
 
-        ApiApplication application = applications.get(0);
-        assertThat(applications.size()).isEqualTo(1);
-        assertThat(application.getApplicationName()).isEqualTo(params.getApplicationName());
-        assertThat(application.getApplicationId()).isGreaterThan(0);
+        assertThat(applications.size()).isEqualTo(2);
+        assertThat(applications.get(0)).isEqualToComparingFieldByField(new DefaultApplication());
+        assertThat(applications.get(1)).isEqualToComparingFieldByField(new TestApplication());
     }
 
 }

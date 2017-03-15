@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class PublisherJsonParser {
+public class PublisherJsonParser extends AbstractJsonParser {
 
     private final JsonObject json;
 
@@ -120,57 +120,23 @@ public class PublisherJsonParser {
         return toList(json, "roles");
     }
 
-    private static String toString(JsonObject json, String name) {
+    @Override
+    protected ApiManagerException createException(String message) {
+        return new ApiPublisherException(message);
+    }
+
+    private ApiStatus toStatus(JsonObject json, String name) {
         JsonElement value = json.get(name);
         if (value.isJsonNull())
-            return "";
-        return value.getAsString();
-    }
-
-    private static int toInt(JsonObject json, String name) {
-        JsonElement value = json.get(name);
-        if (value.isJsonNull())
-            return 0;
-        return value.getAsInt();
-    }
-
-    private static DateTime toDateTime(JsonObject json, String name) {
-        JsonElement value = json.get(name);
-        if (value.isJsonNull())
-            throw new ApiPublisherException("could not parse date time from null json value for " + name);
-        return new DateTime(value.getAsLong());
-    }
-
-    private static boolean toBoolean(JsonObject json, String name) {
-        JsonElement value = json.get(name);
-        return !value.isJsonNull() && value.getAsBoolean();
-    }
-
-    private static ApiVisibility toVisibility(JsonObject json, String name) {
-        JsonElement value = json.get(name);
-        if (value.isJsonNull())
-            throw new ApiPublisherException(name + " cannot be null");
-        return ApiVisibility.valueOf(value.getAsString().toUpperCase());
-    }
-
-    private static List<String> toList(JsonObject json, String name) {
-        JsonElement value = json.get(name);
-        if (value.isJsonNull())
-            return Collections.emptyList();
-        return Arrays.asList(value.getAsString().split(","));
-    }
-
-    private static List<ApiTierAvailability> toTiers(List<String> values) {
-        List<ApiTierAvailability> tiers = new ArrayList<>();
-        values.forEach(v -> tiers.add(ApiTierAvailability.valueOf(v.toUpperCase())));
-        return tiers;
-    }
-
-    private static ApiStatus toStatus(JsonObject json, String name) {
-        JsonElement value = json.get(name);
-        if (value.isJsonNull())
-            throw new ApiPublisherException(name + " cannot be null");
+            throw createException(name + " cannot be null");
         return ApiStatus.valueOf(value.getAsString().toUpperCase());
+    }
+
+    private ApiVisibility toVisibility(JsonObject json, String name) {
+        JsonElement value = json.get(name);
+        if (value.isJsonNull())
+            throw createException(name + " cannot be null");
+        return ApiVisibility.valueOf(value.getAsString().toUpperCase());
     }
 
 }

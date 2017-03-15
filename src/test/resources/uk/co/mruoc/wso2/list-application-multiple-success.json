@@ -1,0 +1,25 @@
+{
+  "error": false,
+  "applications": [
+    {
+      "name": "DefaultApplication",
+      "tier": "Unlimited",
+      "id": 1,
+      "callbackUrl": null,
+      "status": "APPROVED",
+      "description": null,
+      "apiCount": 0,
+      "groupId": ""
+    },
+    {
+      "name": "TestApplication",
+      "tier": "Unlimited",
+      "id": 8,
+      "callbackUrl": "",
+      "status": "APPROVED",
+      "description": "",
+      "apiCount": 0,
+      "groupId": ""
+    }
+  ]
+}

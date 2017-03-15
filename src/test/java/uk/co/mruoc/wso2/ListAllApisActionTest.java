@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class ListAllActionTest {
+public class ListAllApisActionTest {
 
     private static final String URL = "list-all-url";
 
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
-    private final ListAllUrlBuilder urlBuilder = mock(ListAllUrlBuilder.class);
-    private final ListAllAction action = new ListAllAction(client, urlBuilder);
+    private final ListAllApisUrlBuilder urlBuilder = mock(ListAllApisUrlBuilder.class);
+    private final ListAllApisAction action = new ListAllApisAction(client, urlBuilder);
 
     @Before
     public void setUp() {

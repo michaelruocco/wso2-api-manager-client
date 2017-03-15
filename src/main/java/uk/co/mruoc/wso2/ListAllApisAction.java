@@ -8,18 +8,18 @@ import uk.co.mruoc.http.client.Response;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class ListAllAction {
+public class ListAllApisAction {
 
     private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
     private final HttpClient client;
-    private final ListAllUrlBuilder urlBuilder;
+    private final ListAllApisUrlBuilder urlBuilder;
     private final Gson gson = buildGson();
 
-    public ListAllAction(HttpClient client, String hostUrl) {
-        this(client, new ListAllUrlBuilder(hostUrl));
+    public ListAllApisAction(HttpClient client, String hostUrl) {
+        this(client, new ListAllApisUrlBuilder(hostUrl));
     }
 
-    public ListAllAction(HttpClient client, ListAllUrlBuilder urlBuilder) {
+    public ListAllApisAction(HttpClient client, ListAllApisUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;
     }

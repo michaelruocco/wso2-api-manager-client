@@ -1,10 +1,10 @@
 package uk.co.mruoc.wso2;
 
-public class ListAllUrlBuilder {
+public class ListAllApisUrlBuilder {
 
     private final String url;
 
-    public ListAllUrlBuilder(String hostUrl) {
+    public ListAllApisUrlBuilder(String hostUrl) {
         url = hostUrl + "/publisher/site/blocks/listing/ajax/item-list.jag?action=getAllAPIs";
     }
 
