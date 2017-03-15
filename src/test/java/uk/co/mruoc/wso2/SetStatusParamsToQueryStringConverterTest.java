@@ -9,9 +9,18 @@ import static uk.co.mruoc.wso2.ApiStatus.PUBLISHED;
 
 public class SetStatusParamsToQueryStringConverterTest {
 
+    private static final String PREFIX = "?action=updateStatus";
+
     private SetStatusParamsToQueryStringConverter converter = new SetStatusParamsToQueryStringConverter();
 
     private SetStatusParams params = mock(SetStatusParams.class);
+
+    @Test
+    public void shouldStartWithPrefix() {
+        String result = converter.convert(params);
+
+        assertThat(result).startsWith(PREFIX);
+    }
 
     @Test
     public void shouldConvertStatus() {
@@ -19,7 +28,7 @@ public class SetStatusParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateStatus&status=PUBLISHED");
+        assertThat(queryString).contains("&status=PUBLISHED");
     }
 
     @Test
@@ -28,7 +37,7 @@ public class SetStatusParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateStatus&publishToGateway=true");
+        assertThat(queryString).contains("&publishToGateway=true");
     }
 
     @Test
@@ -37,7 +46,7 @@ public class SetStatusParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateStatus&requireResubscription=true");
+        assertThat(queryString).contains("&requireResubscription=true");
     }
 
 }

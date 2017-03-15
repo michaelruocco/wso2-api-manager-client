@@ -14,9 +14,18 @@ import static uk.co.mruoc.wso2.ApiVisibility.*;
 
 public class AddApiParamsToQueryStringConverterTest {
 
+    private static final String PREFIX = "?action=addAPI";
+
     private AddApiParamsToQueryStringConverter converter = new AddApiParamsToQueryStringConverter();
 
     private AddApiParams params = mock(AddApiParams.class);
+
+    @Test
+    public void shouldStartWithPrefix() {
+        String result = converter.convert(params);
+
+        assertThat(result).startsWith(PREFIX);
+    }
 
     @Test
     public void shouldConvertName() {
@@ -24,7 +33,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&name=api-name");
+        assertThat(queryString).contains("&name=api-name");
     }
 
     @Test
@@ -33,7 +42,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&context=%2Fapi-context");
+        assertThat(queryString).contains("&context=%2Fapi-context");
     }
 
     @Test
@@ -42,7 +51,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&version=v1");
+        assertThat(queryString).contains("&version=v1");
     }
 
     @Test
@@ -51,7 +60,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&description=api+description");
+        assertThat(queryString).contains("&description=api+description");
     }
 
     @Test
@@ -60,7 +69,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&swagger=%7B+swagger%3A+2.0+%7D");
+        assertThat(queryString).contains("&swagger=%7B+swagger%3A+2.0+%7D");
     }
 
     @Test
@@ -69,7 +78,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&endpoint_config=endpoint+configuration");
+        assertThat(queryString).contains("&endpoint_config=endpoint+configuration");
     }
 
     @Test
@@ -78,7 +87,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&tags=tag1,tag+2");
+        assertThat(queryString).contains("&tags=tag1,tag+2");
     }
 
     @Test
@@ -87,7 +96,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&tiersCollection=Bronze,Gold");
+        assertThat(queryString).contains("&tiersCollection=Bronze,Gold");
     }
 
     @Test
@@ -97,7 +106,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&visibility=restricted&roles=role1,role+2");
+        assertThat(queryString).contains("&visibility=restricted&roles=role1,role+2");
     }
 
     @Test
@@ -108,7 +117,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&endpointType=secured&epUsername=admin&epPassword=pass");
+        assertThat(queryString).contains("&endpointType=secured&epUsername=admin&epPassword=pass");
     }
 
     @Test
@@ -118,7 +127,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&responseCache=enabled&cacheTimeout=300");
+        assertThat(queryString).contains("&responseCache=enabled&cacheTimeout=300");
     }
 
     @Test
@@ -128,7 +137,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&http_checked=http&https_checked=https");
+        assertThat(queryString).contains("&http_checked=http&https_checked=https");
     }
 
     @Test
@@ -138,7 +147,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&inSequence=in-sequence&outSequence=out-sequence");
+        assertThat(queryString).contains("&inSequence=in-sequence&outSequence=out-sequence");
     }
 
     @Test
@@ -147,7 +156,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&default_version_checked=default_version");
+        assertThat(queryString).contains("&default_version_checked=default_version");
     }
 
     @Test
@@ -157,7 +166,7 @@ public class AddApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=addAPI&subscriptions=specific_tenants&tenants=tenant1,tenant+2");
+        assertThat(queryString).contains("&subscriptions=specific_tenants&tenants=tenant1,tenant+2");
     }
 
 }

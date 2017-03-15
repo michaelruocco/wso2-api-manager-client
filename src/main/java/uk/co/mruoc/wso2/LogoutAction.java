@@ -8,10 +8,6 @@ public class LogoutAction {
     private final HttpClient client;
     private final LogoutUrlBuilder  urlBuilder;
 
-    public LogoutAction(HttpClient client, String hostUrl) {
-        this(client, new LogoutUrlBuilder(hostUrl));
-    }
-
     public LogoutAction(HttpClient client, LogoutUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;

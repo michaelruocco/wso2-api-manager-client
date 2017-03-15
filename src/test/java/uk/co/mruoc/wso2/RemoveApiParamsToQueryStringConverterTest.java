@@ -8,9 +8,18 @@ import static org.mockito.Mockito.mock;
 
 public class RemoveApiParamsToQueryStringConverterTest {
 
+    private static final String PREFIX = "?action=removeAPI";
+
     private RemoveApiParamsToQueryStringConverter converter = new RemoveApiParamsToQueryStringConverter();
 
     private SelectApiParams params = mock(SelectApiParams.class);
+
+    @Test
+    public void shouldStartWithPrefix() {
+        String result = converter.convert(params);
+
+        assertThat(result).startsWith(PREFIX);
+    }
 
     @Test
     public void shouldConvertName() {
@@ -18,7 +27,7 @@ public class RemoveApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=removeAPI&name=api-name");
+        assertThat(queryString).contains("&name=api-name");
     }
 
     @Test
@@ -27,7 +36,7 @@ public class RemoveApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=removeAPI&version=v1");
+        assertThat(queryString).contains("&version=v1");
     }
 
     @Test
@@ -36,7 +45,7 @@ public class RemoveApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=removeAPI&provider=admin");
+        assertThat(queryString).contains("&provider=admin");
     }
 
 }

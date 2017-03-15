@@ -10,10 +10,6 @@ public class LoginAction {
     private final HttpClient client;
     private final LoginUrlBuilder urlBuilder;
 
-    public LoginAction(HttpClient client, String hostUrl) {
-        this(client, new PublisherLoginUrlBuilder(hostUrl));
-    }
-
     public LoginAction(HttpClient client, LoginUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;

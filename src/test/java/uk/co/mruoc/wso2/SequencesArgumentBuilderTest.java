@@ -16,8 +16,8 @@ public class SequencesArgumentBuilderTest {
     private final SequenceParams params = mock(SequenceParams.class);
 
     @Test
-    public void shouldBuildNoSequences() {
-        assertThat(builder.build(params)).isEmpty();
+    public void shouldBuildEmptySequencesValues() {
+        assertThat(builder.build(params)).isEqualTo(IN_PREFIX + OUT_PREFIX);
     }
 
     @Test

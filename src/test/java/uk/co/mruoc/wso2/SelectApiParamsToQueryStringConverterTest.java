@@ -18,12 +18,19 @@ public class SelectApiParamsToQueryStringConverterTest {
     private final GetApiParamsToQueryStringConverter converter = new GetApiParamsToQueryStringConverter();
 
     @Test
+    public void shouldStartWithPrefix() {
+        String result = converter.convert(params);
+
+        assertThat(result).startsWith(PREFIX);
+    }
+
+    @Test
     public void shouldConvertName() {
         given(params.getApiName()).willReturn(NAME);
 
         String result = converter.convert(params);
 
-        assertThat(result).isEqualTo(PREFIX + "&name=" + NAME);
+        assertThat(result).contains("&name=" + NAME);
     }
 
     @Test
@@ -32,7 +39,7 @@ public class SelectApiParamsToQueryStringConverterTest {
 
         String result = converter.convert(params);
 
-        assertThat(result).isEqualTo(PREFIX + "&version=" + VERSION);
+        assertThat(result).contains("&version=" + VERSION);
     }
 
     @Test
@@ -41,7 +48,7 @@ public class SelectApiParamsToQueryStringConverterTest {
 
         String result = converter.convert(params);
 
-        assertThat(result).isEqualTo(PREFIX + "&provider=" + PROVIDER);
+        assertThat(result).contains("&provider=" + PROVIDER);
     }
 
 }

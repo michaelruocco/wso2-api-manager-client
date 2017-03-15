@@ -14,9 +14,18 @@ import static uk.co.mruoc.wso2.ApiVisibility.RESTRICTED;
 
 public class UpdateApiParamsToQueryStringConverterTest {
 
+    private static final String PREFIX = "?action=updateAPI";
+
     private UpdateApiParamsToQueryStringConverter converter = new UpdateApiParamsToQueryStringConverter();
 
     private UpdateApiParams params = mock(UpdateApiParams.class);
+
+    @Test
+    public void shouldStartWithPrefix() {
+        String result = converter.convert(params);
+
+        assertThat(result).startsWith(PREFIX);
+    }
 
     @Test
     public void shouldConvertName() {
@@ -24,7 +33,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&name=api-name");
+        assertThat(queryString).contains("&name=api-name");
     }
 
     @Test
@@ -33,7 +42,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&version=v1");
+        assertThat(queryString).contains("&version=v1");
     }
 
     @Test
@@ -42,7 +51,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&provider=admin");
+        assertThat(queryString).contains("&provider=admin");
     }
 
     @Test
@@ -51,7 +60,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&description=api+description");
+        assertThat(queryString).contains("&description=api+description");
     }
 
     @Test
@@ -60,7 +69,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&swagger=%7B+swagger%3A+2.0+%7D");
+        assertThat(queryString).contains("&swagger=%7B+swagger%3A+2.0+%7D");
     }
 
     @Test
@@ -69,7 +78,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&endpoint_config=endpoint+configuration");
+        assertThat(queryString).contains("&endpoint_config=endpoint+configuration");
     }
 
     @Test
@@ -78,7 +87,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&tags=tag1,tag+2");
+        assertThat(queryString).contains("&tags=tag1,tag+2");
     }
 
     @Test
@@ -87,7 +96,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&tiersCollection=Bronze,Gold");
+        assertThat(queryString).contains("&tiersCollection=Bronze,Gold");
     }
 
     @Test
@@ -97,7 +106,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&visibility=restricted&roles=role1,role+2");
+        assertThat(queryString).contains("&visibility=restricted&roles=role1,role+2");
     }
 
     @Test
@@ -108,7 +117,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&endpointType=secured&epUsername=admin&epPassword=pass");
+        assertThat(queryString).contains("&endpointType=secured&epUsername=admin&epPassword=pass");
     }
 
     @Test
@@ -118,7 +127,7 @@ public class UpdateApiParamsToQueryStringConverterTest {
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).isEqualTo("?action=updateAPI&http_checked=http&https_checked=https");
+        assertThat(queryString).contains("&http_checked=http&https_checked=https");
     }
 
 }

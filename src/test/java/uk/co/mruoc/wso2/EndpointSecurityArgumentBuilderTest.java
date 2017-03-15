@@ -27,7 +27,7 @@ public class EndpointSecurityArgumentBuilderTest {
     public void shouldBuildSecuredWithNoCredentials() {
         given(params.getEndpointType()).willReturn(SECURED);
 
-        assertThat(builder.build(params)).isEqualTo(PREFIX + "secured");
+        assertThat(builder.build(params)).isEqualTo(PREFIX + "secured&epUsername=&epPassword=");
     }
 
     @Test

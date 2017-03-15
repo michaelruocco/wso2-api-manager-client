@@ -37,7 +37,7 @@ public class SubscriptionsArgumentBuilderTest {
     public void shouldBuildSpecificTenantsWithNonSpecified() {
         given(params.getSubscriptions()).willReturn(SPECIFIC_TENANTS);
 
-        assertThat(builder.build(params)).isEqualTo(PREFIX + "specific_tenants");
+        assertThat(builder.build(params)).isEqualTo(PREFIX + "specific_tenants&tenants=");
     }
 
     @Test

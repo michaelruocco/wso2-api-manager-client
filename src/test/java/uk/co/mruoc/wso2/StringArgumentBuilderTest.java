@@ -10,15 +10,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class StringArgumentBuilderTest {
 
-    private static final String NAME = "name";
+    private static final String PREFIX = "&name=";
 
-    private final StringArgumentBuilder builder = new StringArgumentBuilder(NAME);
+    private final StringArgumentBuilder builder = new StringArgumentBuilder("name");
 
     @Test
-    public void shouldReturnEmptyStringIfNoValuePassed() {
+    public void shouldReturnEmptyValueIfNoValuePassed() {
         String result = builder.build(EMPTY);
 
-        assertThat(result).isEqualTo(EMPTY);
+        assertThat(result).isEqualTo(PREFIX + EMPTY);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class StringArgumentBuilderTest {
 
         String result = builder.build(value);
 
-        assertThat(result).isEqualTo("&" + NAME + "=" + value);
+        assertThat(result).isEqualTo(PREFIX + value);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class StringArgumentBuilderTest {
 
         String result = builder.build(values);
 
-        assertThat(result).isEqualTo("&" + NAME + "=value+1,value+2");
+        assertThat(result).isEqualTo(PREFIX + "value+1,value+2");
     }
 
     @Test
@@ -45,7 +45,7 @@ public class StringArgumentBuilderTest {
 
         String result = builder.build(value);
 
-        assertThat(result).isEqualTo("&" + NAME + "=false");
+        assertThat(result).isEqualTo(PREFIX + "false");
     }
 
 }

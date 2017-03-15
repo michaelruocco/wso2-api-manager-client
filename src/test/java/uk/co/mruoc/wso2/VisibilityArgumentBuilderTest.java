@@ -45,7 +45,7 @@ public class VisibilityArgumentBuilderTest {
     public void shouldBuildRestricted() {
         given(params.getVisibility()).willReturn(RESTRICTED);
 
-        assertThat(builder.build(params)).isEqualTo(PREFIX + "restricted");
+        assertThat(builder.build(params)).isEqualTo(PREFIX + "restricted&roles=");
     }
 
     @Test

@@ -17,8 +17,8 @@ public class StatusArgumentBuilderTest {
     private final SetStatusParams params = mock(SetStatusParams.class);
 
     @Test
-    public void shouldReturnEmptyStringIfNotSet() {
-        assertThat(builder.build(params)).isEqualTo(EMPTY);
+    public void shouldReturnEmptyStatusIfNotSet() {
+        assertThat(builder.build(params)).isEqualTo(PREFIX);
     }
 
     @Test
