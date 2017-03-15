@@ -11,6 +11,10 @@ public class RemoveApplicationAction {
     private final HttpClient client;
     private final RemoveApplicationUrlBuilder urlBuilder;
 
+    public RemoveApplicationAction(HttpClient client, String hostUrl) {
+        this(client, new RemoveApplicationUrlBuilder(hostUrl));
+    }
+
     public RemoveApplicationAction(HttpClient client, RemoveApplicationUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;

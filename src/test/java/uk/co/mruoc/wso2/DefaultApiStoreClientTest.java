@@ -11,10 +11,13 @@ import static org.mockito.Mockito.mock;
 
 public class DefaultApiStoreClientTest {
 
+    private static final String APPLICATION_NAME = "application-name";
+
     private final LoginAction loginAction = mock(LoginAction.class);
     private final LogoutAction logoutAction = mock(LogoutAction.class);
     private final AddApplicationAction addApplicationAction = mock(AddApplicationAction.class);
     private final ListAllApplicationsAction listAllApplicationsAction = mock(ListAllApplicationsAction.class);
+    private final RemoveApplicationAction removeApplicationAction = mock(RemoveApplicationAction.class);
 
     private final Credentials credentials = mock(Credentials.class);
     private final AddApplicationParams addApplicationParams = mock(AddApplicationParams.class);
@@ -24,7 +27,8 @@ public class DefaultApiStoreClientTest {
     private final ApiStoreClient client = new DefaultApiStoreClient(loginAction,
             logoutAction,
             addApplicationAction,
-            listAllApplicationsAction);
+            listAllApplicationsAction,
+            removeApplicationAction);
 
     @Test(expected = ApiStoreException.class)
     public void loginShouldThrowExceptionOnFailure() {
@@ -55,7 +59,7 @@ public class DefaultApiStoreClientTest {
     }
 
     @Test(expected = ApiStoreException.class)
-    public void addApplicationShouldThrowExceptionIfOnFailure() {
+    public void addApplicationShouldThrowExceptionOnFailure() {
         givenAddApplicationWillFail();
 
         client.addApplication(addApplicationParams);
@@ -82,6 +86,20 @@ public class DefaultApiStoreClientTest {
         List<ApiApplication> result = client.listAllApplications();
 
         assertThat(result).isEqualTo(expectedApplications);
+    }
+
+    @Test(expected = ApiStoreException.class)
+    public void removeApplicationShouldThrowExceptionOnFailure() {
+        givenRemoveApplicationWillFail();
+
+        client.removeApplication(APPLICATION_NAME);
+    }
+
+    @Test
+    public void removeApplicationShouldReturnTrueOnSuccess() {
+        givenRemoveApplicationWillSucceed();
+
+        assertThat(client.removeApplication(APPLICATION_NAME)).isTrue();
     }
 
     private void givenLoginWillFail() {
@@ -123,6 +141,14 @@ public class DefaultApiStoreClientTest {
         applications.add(new DefaultApiApplication());
         applications.add(new DefaultApiApplication());
         return applications;
+    }
+
+    private void givenRemoveApplicationWillFail() {
+        given(removeApplicationAction.removeApplication(APPLICATION_NAME)).willThrow(apiStoreException);
+    }
+
+    private void givenRemoveApplicationWillSucceed() {
+        given(removeApplicationAction.removeApplication(APPLICATION_NAME)).willReturn(true);
     }
 
 }
