@@ -16,7 +16,7 @@ public class UrlEncoder {
                 return "";
             return URLEncoder.encode(value, DEFAULT_ENCODING);
         } catch (UnsupportedEncodingException e) {
-            throw new ApiPublisherException("error url encoding value " + value, e);
+            throw new ApiManagerException("error url encoding value " + value, e);
         }
     }
 

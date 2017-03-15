@@ -31,7 +31,7 @@ public class DefaultApiPublisherClientTest {
     private final SetStatusParams setStatusParams = mock(SetStatusParams.class);
     private final Throwable apiPublisherException = mock(ApiPublisherException.class);
 
-    private final DefaultApiPublisherClient client = new DefaultApiPublisherClient(loginAction,
+    private final ApiPublisherClient client = new DefaultApiPublisherClient(loginAction,
             logoutAction,
             listAllAction,
             getAction,
