@@ -8,8 +8,8 @@ public interface ApplicationKey {
 
     String getConsumerKey();
 
-    String getAccessToken();
-
     String getConsumerSecret();
+
+    String getAccessToken();
 
 }
