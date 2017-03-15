@@ -7,6 +7,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class RemoveApiAction {
 
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
     private final HttpClient client;
     private final RemoveApiUrlBuilder urlBuilder;
 
@@ -22,7 +23,7 @@ public class RemoveApiAction {
     public boolean removeApi(SelectApiParams params) {
         String url = urlBuilder.build(params);
         Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return true;
     }
 

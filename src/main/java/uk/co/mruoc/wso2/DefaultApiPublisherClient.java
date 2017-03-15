@@ -22,8 +22,8 @@ public class DefaultApiPublisherClient implements ApiPublisherClient {
     }
 
     public DefaultApiPublisherClient(HttpClient client, String hostUrl) {
-        this(new LoginAction(client, new PublisherLoginUrlBuilder(hostUrl)),
-                new LogoutAction(client, new PublisherLogoutUrlBuilder(hostUrl)),
+        this(new LoginAction(client, new PublisherLoginUrlBuilder(hostUrl), new PublisherResponseErrorChecker()),
+                new LogoutAction(client, new PublisherLogoutUrlBuilder(hostUrl), new PublisherResponseErrorChecker()),
                 new ListAllAction(client, hostUrl),
                 new GetApiAction(client, hostUrl),
                 new AddApiAction(client, hostUrl),

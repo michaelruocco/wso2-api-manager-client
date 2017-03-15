@@ -15,8 +15,8 @@ public class DefaultApiStoreClient implements ApiStoreClient {
     }
 
     public DefaultApiStoreClient(HttpClient client, String hostUrl) {
-        this(new LoginAction(client, new StoreLoginUrlBuilder(hostUrl)),
-                new LogoutAction(client, new StoreLogoutUrlBuilder(hostUrl)));
+        this(new LoginAction(client, new StoreLoginUrlBuilder(hostUrl), new StoreResponseErrorChecker()),
+                new LogoutAction(client, new StoreLogoutUrlBuilder(hostUrl), new StoreResponseErrorChecker()));
     }
     public DefaultApiStoreClient(LoginAction loginAction, LogoutAction logoutAction) {
         this.loginAction = loginAction;

@@ -6,6 +6,7 @@ import uk.co.mruoc.http.client.Response;
 
 public class GetApiAction {
 
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
     private final HttpClient client;
     private final GetApiUrlBuilder urlBuilder;
     private final Gson gson = buildGson();
@@ -22,7 +23,7 @@ public class GetApiAction {
     public Api getApi(SelectApiParams params) {
         String url = urlBuilder.build(params);
         Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return toApi(response);
     }
 

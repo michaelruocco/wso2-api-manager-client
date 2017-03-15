@@ -16,8 +16,9 @@ public class LoginActionTest {
     private final FakeHttpClient httpClient = new FakeHttpClient();
     private final LoginUrlBuilder urlBuilder = mock(PublisherLoginUrlBuilder.class);
     private final Credentials credentials = mock(Credentials.class);
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
 
-    private final LoginAction action = new LoginAction(httpClient, urlBuilder);
+    private final LoginAction action = new LoginAction(httpClient, urlBuilder, errorChecker);
 
     @Before
     public void setUp() {
@@ -34,8 +35,8 @@ public class LoginActionTest {
     }
 
     @Test(expected = ApiPublisherException.class)
-    public void shouldThrowExceptionIfNon200Response() {
-        givenWillReturnNon200();
+    public void shouldThrowExceptionIfError() {
+        givenWillReturnError();
 
         action.login(credentials);
     }
@@ -54,7 +55,7 @@ public class LoginActionTest {
         assertThat(action.login(credentials)).isTrue();
     }
 
-    private void givenWillReturnNon200() {
+    private void givenWillReturnError() {
         httpClient.cannedResponse(500, "");
     }
 

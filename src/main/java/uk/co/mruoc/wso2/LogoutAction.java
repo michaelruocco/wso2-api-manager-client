@@ -7,16 +7,18 @@ public class LogoutAction {
 
     private final HttpClient client;
     private final LogoutUrlBuilder  urlBuilder;
+    private final ResponseErrorChecker errorChecker;
 
-    public LogoutAction(HttpClient client, LogoutUrlBuilder urlBuilder) {
+    public LogoutAction(HttpClient client, LogoutUrlBuilder urlBuilder, ResponseErrorChecker errorChecker) {
         this.client = client;
         this.urlBuilder = urlBuilder;
+        this.errorChecker = errorChecker;
     }
 
     public boolean logout() {
         String url = urlBuilder.build();
         Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return true;
     }
 

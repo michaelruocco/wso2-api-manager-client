@@ -10,9 +10,10 @@ import java.util.List;
 
 public class ListAllAction {
 
-    private HttpClient client;
-    private ListAllUrlBuilder urlBuilder;
-    private Gson gson = buildGson();
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
+    private final HttpClient client;
+    private final ListAllUrlBuilder urlBuilder;
+    private final Gson gson = buildGson();
 
     public ListAllAction(HttpClient client, String hostUrl) {
         this(client, new ListAllUrlBuilder(hostUrl));
@@ -26,7 +27,7 @@ public class ListAllAction {
     public List<ApiSummary> listAllApis() {
         String url = urlBuilder.build();
         Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return toApiSummaries(response);
     }
 

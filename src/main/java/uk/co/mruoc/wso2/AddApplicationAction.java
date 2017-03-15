@@ -5,22 +5,22 @@ import uk.co.mruoc.http.client.Response;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
-public class AddApiAction {
+public class AddApplicationAction {
 
-    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
+    private ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
     private HttpClient client;
-    private AddApiUrlBuilder urlBuilder;
+    private AddApplicationUrlBuilder urlBuilder;
 
-    public AddApiAction(HttpClient client, String hostUrl) {
-        this(client, new AddApiUrlBuilder(hostUrl));
+    public AddApplicationAction(HttpClient client, String hostUrl) {
+        this(client, new AddApplicationUrlBuilder(hostUrl));
     }
 
-    public AddApiAction(HttpClient client, AddApiUrlBuilder urlBuilder) {
+    public AddApplicationAction(HttpClient client, AddApplicationUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;
     }
 
-    public boolean addApi(AddApiParams params) {
+    public boolean addApplication(AddApplicationParams params) {
         String url = urlBuilder.build(params);
         Response response = client.post(url, EMPTY);
         errorChecker.checkForError(response);

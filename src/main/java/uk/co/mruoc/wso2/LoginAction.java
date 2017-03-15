@@ -9,16 +9,18 @@ public class LoginAction {
 
     private final HttpClient client;
     private final LoginUrlBuilder urlBuilder;
+    private final ResponseErrorChecker errorChecker;
 
-    public LoginAction(HttpClient client, LoginUrlBuilder urlBuilder) {
+    public LoginAction(HttpClient client, LoginUrlBuilder urlBuilder, ResponseErrorChecker errorChecker) {
         this.client = client;
         this.urlBuilder = urlBuilder;
+        this.errorChecker = errorChecker;
     }
 
     public boolean login(Credentials credentials) {
         String url = urlBuilder.build(credentials);
         Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return true;
     }
 

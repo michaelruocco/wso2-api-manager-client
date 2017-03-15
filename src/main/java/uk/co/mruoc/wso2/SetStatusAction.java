@@ -7,8 +7,9 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class SetStatusAction {
 
-    private HttpClient client;
-    private SetStatusUrlBuilder urlBuilder;
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
+    private final HttpClient client;
+    private final SetStatusUrlBuilder urlBuilder;
 
     public SetStatusAction(HttpClient client, String hostUrl) {
         this(client, new SetStatusUrlBuilder(hostUrl));
@@ -22,7 +23,7 @@ public class SetStatusAction {
     public boolean setStatus(SetStatusParams params) {
         String url = urlBuilder.build(params);
         Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return true;
     }
 

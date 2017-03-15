@@ -7,6 +7,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class UpdateApiAction {
 
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
     private final HttpClient client;
     private final UpdateApiUrlBuilder urlBuilder;
 
@@ -22,7 +23,7 @@ public class UpdateApiAction {
     public boolean updateApi(UpdateApiParams params) {
         String url = urlBuilder.build(params);
         Response response = client.post(url, EMPTY);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return true;
     }
 

@@ -5,6 +5,7 @@ import uk.co.mruoc.http.client.Response;
 
 public class ApiExistsAction {
 
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
     private final HttpClient client;
     private final ApiExistsUrlBuilder urlBuilder;
 
@@ -20,7 +21,7 @@ public class ApiExistsAction {
     public boolean apiExists(String name) {
         String url = urlBuilder.build(name);
         Response response = client.get(url);
-        ResponseErrorChecker.checkForError(response);
+        errorChecker.checkForError(response);
         return exists(response);
     }
 

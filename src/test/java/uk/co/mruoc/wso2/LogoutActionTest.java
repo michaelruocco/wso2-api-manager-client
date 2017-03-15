@@ -15,8 +15,9 @@ public class LogoutActionTest {
     private final ResponseLoader responseLoader = new ResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final LogoutUrlBuilder urlBuilder = mock(LogoutUrlBuilder.class);
+    private final ResponseErrorChecker errorChecker = new PublisherResponseErrorChecker();
 
-    private final LogoutAction action = new LogoutAction(client, urlBuilder);
+    private final LogoutAction action = new LogoutAction(client, urlBuilder, errorChecker);
 
     @Before
     public void setUp() {
