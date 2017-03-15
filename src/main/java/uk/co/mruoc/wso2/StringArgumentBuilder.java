@@ -30,8 +30,6 @@ public class StringArgumentBuilder {
     }
 
     private String buildArgument(String encodedValue) {
-        //if (StringUtils.isEmpty(encodedValue))
-        //    return EMPTY;
         return prefixAmpersand(toNameValuePair(encodedValue));
     }
 
