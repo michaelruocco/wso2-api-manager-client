@@ -54,4 +54,13 @@ public class ApiStoreClientIntegrationTest {
         assertThat(applications.get(1)).isEqualToComparingFieldByField(new TestApplication());
     }
 
+    @Test
+    @Ignore
+    public void shouldRemoveApplication() {
+        DefaultAddApplicationParams params = new FakeAddApplicationParams();
+        client.addApplication(params);
+
+        assertThat(client.removeApplication(params.getApplicationName())).isTrue();
+    }
+
 }
