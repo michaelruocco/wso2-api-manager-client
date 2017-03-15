@@ -9,6 +9,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
 
     private final LoginAction loginAction;
     private final LogoutAction logoutAction;
+    private final AddApplicationAction addApplicationAction;
 
     public DefaultApiStoreClient(String hostUrl) {
         this(new SimpleHttpClient(), hostUrl);
@@ -16,11 +17,14 @@ public class DefaultApiStoreClient implements ApiStoreClient {
 
     public DefaultApiStoreClient(HttpClient client, String hostUrl) {
         this(new LoginAction(client, new StoreLoginUrlBuilder(hostUrl), new StoreResponseErrorChecker()),
-                new LogoutAction(client, new StoreLogoutUrlBuilder(hostUrl), new StoreResponseErrorChecker()));
+                new LogoutAction(client, new StoreLogoutUrlBuilder(hostUrl), new StoreResponseErrorChecker()),
+                new AddApplicationAction(client, hostUrl));
     }
-    public DefaultApiStoreClient(LoginAction loginAction, LogoutAction logoutAction) {
+
+    public DefaultApiStoreClient(LoginAction loginAction, LogoutAction logoutAction, AddApplicationAction addApplicationAction) {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
+        this.addApplicationAction = addApplicationAction;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
 
     @Override
     public boolean addApplication(AddApplicationParams params) {
-        return false;
+        return addApplicationAction.addApplication(params);
     }
 
     @Override
