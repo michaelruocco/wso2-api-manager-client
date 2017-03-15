@@ -10,11 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ApiPublisherClientIntegrationTest {
 
     private static final String DOCKER_IMAGE = "michaelruocco/wso2am:1.9.1";
-    private static final String URL = "https://%s:%d";
     private static final int PORT = 9443;
 
     private final StartupCheckLogConsumer logConsumer = new Wso2StartupCheckLogConsumer();
     private final Credentials credentials = new TestCredentials();
+    private final TestUrlBuilder urlBuilder = new TestUrlBuilder();
 
     @Rule
     public final GenericContainer container = new GenericContainer(DOCKER_IMAGE)
@@ -25,16 +25,14 @@ public class ApiPublisherClientIntegrationTest {
 
     @Before
     public void setUp() {
-        client = new DefaultApiPublisherClient(buildBaseUrl());
+        client = new DefaultApiPublisherClient(urlBuilder.build(container, PORT));
         logConsumer.waitForStartupMessageInLog();
         client.login(credentials);
     }
 
-    @Test
-    public void listAllShouldReturnNoSummariesIfNoApisDeployed() {
-        List<ApiSummary> summaries = client.listAllApis();
-
-        assertThat(summaries).isEmpty();
+    @After
+    public void tearDown() {
+        client.logout();
     }
 
     @Test
@@ -114,15 +112,6 @@ public class ApiPublisherClientIntegrationTest {
         Api updatedApi = client.getApi(selectApiParams);
 
         assertThat(updatedApi.getStatus()).isEqualTo(updatedStatus);
-    }
-
-    @After
-    public void tearDown() {
-        client.logout();
-    }
-
-    private String buildBaseUrl() {
-        return String.format(URL, container.getContainerIpAddress(), container.getMappedPort(PORT));
     }
 
     private SelectApiParams toSelectParams(AddApiParams addParams) {
