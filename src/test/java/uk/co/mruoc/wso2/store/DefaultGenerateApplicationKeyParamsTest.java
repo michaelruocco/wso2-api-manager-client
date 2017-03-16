@@ -1,11 +1,10 @@
 package uk.co.mruoc.wso2.store;
 
 import org.junit.Test;
-import uk.co.mruoc.wso2.publisher.ApiKeyType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.mruoc.wso2.publisher.ApiKeyType.PRODUCTION;
-import static uk.co.mruoc.wso2.publisher.ApiKeyType.SANDBOX;
+import static uk.co.mruoc.wso2.store.ApiKeyType.PRODUCTION;
+import static uk.co.mruoc.wso2.store.ApiKeyType.SANDBOX;
 
 public class DefaultGenerateApplicationKeyParamsTest {
 

@@ -1,7 +1,5 @@
 package uk.co.mruoc.wso2.store;
 
-import uk.co.mruoc.wso2.publisher.ApiKeyType;
-
 import java.util.List;
 
 public interface GenerateApplicationKeyParams {

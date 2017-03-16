@@ -1,4 +1,4 @@
-package uk.co.mruoc.wso2.publisher;
+package uk.co.mruoc.wso2.store;
 
 import java.util.ArrayList;
 import java.util.List;
