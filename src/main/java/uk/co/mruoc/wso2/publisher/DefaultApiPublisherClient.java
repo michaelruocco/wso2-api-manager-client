@@ -6,9 +6,6 @@ import uk.co.mruoc.wso2.Credentials;
 import uk.co.mruoc.wso2.LoginAction;
 import uk.co.mruoc.wso2.LogoutAction;
 import uk.co.mruoc.wso2.SelectApiParams;
-import uk.co.mruoc.wso2.store.StoreLoginUrlBuilder;
-import uk.co.mruoc.wso2.store.StoreLogoutUrlBuilder;
-import uk.co.mruoc.wso2.store.StoreResponseErrorChecker;
 
 import java.util.List;
 

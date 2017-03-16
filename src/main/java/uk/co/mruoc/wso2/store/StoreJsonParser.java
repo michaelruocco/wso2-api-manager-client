@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import uk.co.mruoc.wso2.AbstractJsonParser;
 import uk.co.mruoc.wso2.ApiManagerException;
-import uk.co.mruoc.wso2.ApiTierAvailability;
 
 public class StoreJsonParser extends AbstractJsonParser {
 
