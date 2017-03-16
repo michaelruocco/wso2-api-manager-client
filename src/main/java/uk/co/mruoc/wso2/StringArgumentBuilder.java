@@ -1,10 +1,6 @@
 package uk.co.mruoc.wso2;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.List;
-
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class StringArgumentBuilder {
 

@@ -9,7 +9,7 @@ public abstract class ResponseErrorChecker {
     protected boolean hasError(Response response) {
         if (response.getStatusCode() != 200)
             return true;
-        PublisherJsonParser parser = new PublisherJsonParser(response.getBody());
+        ErrorJsonParser parser = new ErrorJsonParser(response.getBody());
         return parser.getError();
     }
 
