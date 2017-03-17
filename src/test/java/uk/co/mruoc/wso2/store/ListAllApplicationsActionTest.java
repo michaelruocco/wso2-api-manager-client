@@ -15,7 +15,7 @@ public class ListAllApplicationsActionTest {
 
     private static final String URL = "list-all-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new StoreResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final ListAllApplicationsUrlBuilder urlBuilder = mock(ListAllApplicationsUrlBuilder.class);
     private final ListAllApplicationsAction action = new ListAllApplicationsAction(client, urlBuilder);

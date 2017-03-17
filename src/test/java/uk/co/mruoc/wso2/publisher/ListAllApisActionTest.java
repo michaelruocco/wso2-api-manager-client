@@ -15,7 +15,7 @@ public class ListAllApisActionTest {
 
     private static final String URL = "list-all-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new PublisherResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final ListAllApisUrlBuilder urlBuilder = mock(ListAllApisUrlBuilder.class);
     private final ListAllApisAction action = new ListAllApisAction(client, urlBuilder);

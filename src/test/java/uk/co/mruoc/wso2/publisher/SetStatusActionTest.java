@@ -13,7 +13,7 @@ public class SetStatusActionTest {
 
     private static final String URL = "set-status-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new PublisherResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final SetStatusUrlBuilder urlBuilder = mock(SetStatusUrlBuilder.class);
     private final SetStatusAction action = new SetStatusAction(client, urlBuilder);

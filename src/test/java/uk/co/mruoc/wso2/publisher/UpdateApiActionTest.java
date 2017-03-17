@@ -13,7 +13,7 @@ public class UpdateApiActionTest {
 
     private static final String URL = "update-api-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new PublisherResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final UpdateApiUrlBuilder urlBuilder = mock(UpdateApiUrlBuilder.class);
     private final UpdateApiParams params = mock(UpdateApiParams.class);

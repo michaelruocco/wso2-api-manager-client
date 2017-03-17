@@ -2,33 +2,22 @@ package uk.co.mruoc.wso2.store;
 
 import com.google.gson.JsonElement;
 import org.junit.Test;
-import uk.co.mruoc.wso2.JsonLoader;
+import uk.co.mruoc.wso2.ResponseLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiApplicationDeserializerTest {
 
-    private static final String RESPONSE_FILE_PATH = "/uk/co/mruoc/wso2/";
-
-    private final JsonLoader jsonLoader = new JsonLoader();
+    private final ResponseLoader responseLoader = new StoreResponseLoader();
     private final ApiApplicationDeserializer deserializer = new ApiApplicationDeserializer();
 
     @Test
     public void shouldDeserializeJson() {
-        JsonElement element = loadJson("test-application.json");
+        JsonElement element = responseLoader.loadJson("test-application.json");
 
         ApiApplication application = deserializer.deserialize(element, null, null);
 
         assertThat(application).isEqualToComparingFieldByField(new TestApplication());
-    }
-
-    private JsonElement loadJson(String filename) {
-        String path = buildPath(filename);
-        return jsonLoader.load(path);
-    }
-
-    private String buildPath(String filename) {
-        return RESPONSE_FILE_PATH + filename;
     }
 
 }

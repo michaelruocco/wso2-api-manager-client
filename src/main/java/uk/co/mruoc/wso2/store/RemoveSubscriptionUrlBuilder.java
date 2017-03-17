@@ -10,7 +10,7 @@ public class RemoveSubscriptionUrlBuilder {
     public RemoveSubscriptionUrlBuilder(String hostUrl) {
         this(hostUrl, new RemoveSubscriptionParamsToQueryStringConverter());
     }
-    
+
     public RemoveSubscriptionUrlBuilder(String hostUrl, RemoveSubscriptionParamsToQueryStringConverter queryStringConverter) {
         this.url = hostUrl + RESOURCE_URL;
         this.queryStringConverter = queryStringConverter;

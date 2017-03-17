@@ -14,7 +14,7 @@ public class AddSubscriptionActionTest {
 
     private static final String URL = "add-subscription-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new StoreResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final AddSubscriptionUrlBuilder urlBuilder = mock(AddSubscriptionUrlBuilder.class);
     private final AddSubscriptionParams params = mock(AddSubscriptionParams.class);

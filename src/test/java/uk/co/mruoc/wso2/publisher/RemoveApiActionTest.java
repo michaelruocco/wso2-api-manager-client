@@ -14,7 +14,7 @@ public class RemoveApiActionTest {
 
     private static final String URL = "remove-api-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new PublisherResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final RemoveApiUrlBuilder urlBuilder = mock(RemoveApiUrlBuilder.class);
     private final SelectApiParams params = mock(SelectApiParams.class);

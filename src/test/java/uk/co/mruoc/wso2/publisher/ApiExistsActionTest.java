@@ -14,7 +14,7 @@ public class ApiExistsActionTest {
     private static final String URL = "api-exists-url";
     private static final String NAME = "name";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new PublisherResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final ApiExistsUrlBuilder urlBuilder = mock(ApiExistsUrlBuilder.class);
 

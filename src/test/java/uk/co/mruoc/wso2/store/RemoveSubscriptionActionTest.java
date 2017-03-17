@@ -10,16 +10,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class AddApplicationActionTest {
+public class RemoveSubscriptionActionTest {
 
-    private static final String URL = "add-application-url";
+    private static final String URL = "remove-subscription-url";
 
     private final ResponseLoader responseLoader = new StoreResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
-    private final AddApplicationUrlBuilder urlBuilder = mock(AddApplicationUrlBuilder.class);
-    private final AddApplicationParams params = mock(AddApplicationParams.class);
+    private final RemoveSubscriptionUrlBuilder urlBuilder = mock(RemoveSubscriptionUrlBuilder.class);
+    private final RemoveSubscriptionParams params = mock(RemoveSubscriptionParams.class);
 
-    private final AddApplicationAction action = new AddApplicationAction(client, urlBuilder);
+    private final RemoveSubscriptionAction action = new RemoveSubscriptionAction(client, urlBuilder);
 
     @Before
     public void setUp() {
@@ -30,7 +30,7 @@ public class AddApplicationActionTest {
     public void shouldCallCorrectUrl() {
         givenWillReturnSuccess();
 
-        action.addApplication(params);
+        action.removeSubscription(params);
 
         assertThat(client.lastRequestUri()).isEqualTo(URL);
     }
@@ -39,21 +39,21 @@ public class AddApplicationActionTest {
     public void shouldThrowExceptionIfNon200Response() {
         givenWillReturnNon200();
 
-        action.addApplication(params);
+        action.removeSubscription(params);
     }
 
     @Test(expected = ApiManagerException.class)
     public void shouldThrowExceptionOnAddApiFailure() {
         givenWillReturnFailure();
 
-        action.addApplication(params);
+        action.removeSubscription(params);
     }
 
     @Test
     public void shouldReturnTrueOnAddApiSuccess() {
         givenWillReturnSuccess();
 
-        assertThat(action.addApplication(params)).isTrue();
+        assertThat(action.removeSubscription(params)).isTrue();
     }
 
     private void givenWillReturnNon200() {
@@ -61,12 +61,12 @@ public class AddApplicationActionTest {
     }
 
     private void givenWillReturnFailure() {
-        String body = responseLoader.load("add-application-failure.json");
+        String body = responseLoader.load("remove-application-failure.json");
         client.cannedResponse(200, body);
     }
 
     private void givenWillReturnSuccess() {
-        String body = responseLoader.load("add-application-success.json");
+        String body = responseLoader.load("remove-application-success.json");
         client.cannedResponse(200, body);
     }
 

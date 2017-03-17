@@ -14,7 +14,7 @@ public class GetApiActionTest {
 
     private static final String URL = "get-api-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new PublisherResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final GetApiUrlBuilder urlBuilder = mock(GetApiUrlBuilder.class);
     private final SelectApiParams params = mock(SelectApiParams.class);

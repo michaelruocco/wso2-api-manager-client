@@ -13,7 +13,7 @@ public class AddApiActionTest {
 
     private static final String URL = "add-api-url";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new PublisherResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final AddApiUrlBuilder urlBuilder = mock(AddApiUrlBuilder.class);
     private final AddApiParams params = mock(AddApiParams.class);

@@ -14,7 +14,7 @@ public class RemoveApplicationActionTest {
     private static final String URL = "remove-application-url";
     private static final String NAME = "application-name";
 
-    private final ResponseLoader responseLoader = new ResponseLoader();
+    private final ResponseLoader responseLoader = new StoreResponseLoader();
     private final FakeHttpClient client = new FakeHttpClient();
     private final RemoveApplicationUrlBuilder urlBuilder = mock(RemoveApplicationUrlBuilder.class);
 
