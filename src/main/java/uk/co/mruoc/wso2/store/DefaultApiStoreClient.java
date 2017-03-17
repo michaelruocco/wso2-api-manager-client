@@ -13,6 +13,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
     private final AddApplicationAction addApplicationAction;
     private final ListAllApplicationsAction listAllApplicationsAction;
     private final RemoveApplicationAction removeApplicationAction;
+    private final AddSubscriptionAction addSubscriptionAction;
 
     public DefaultApiStoreClient(String hostUrl) {
         this(new SimpleHttpClient(), hostUrl);
@@ -23,19 +24,22 @@ public class DefaultApiStoreClient implements ApiStoreClient {
                 new LogoutAction(client, new StoreLogoutUrlBuilder(hostUrl), new StoreResponseErrorChecker()),
                 new AddApplicationAction(client, hostUrl),
                 new ListAllApplicationsAction(client, hostUrl),
-                new RemoveApplicationAction(client, hostUrl));
+                new RemoveApplicationAction(client, hostUrl),
+                new AddSubscriptionAction(client, hostUrl));
     }
 
     public DefaultApiStoreClient(LoginAction loginAction,
                                  LogoutAction logoutAction,
                                  AddApplicationAction addApplicationAction,
                                  ListAllApplicationsAction listAllApplicationsAction,
-                                 RemoveApplicationAction removeApplicationAction) {
+                                 RemoveApplicationAction removeApplicationAction,
+                                 AddSubscriptionAction addSubscriptionAction) {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.addApplicationAction = addApplicationAction;
         this.listAllApplicationsAction = listAllApplicationsAction;
         this.removeApplicationAction = removeApplicationAction;
+        this.addSubscriptionAction = addSubscriptionAction;
     }
 
     @Override
@@ -65,7 +69,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
 
     @Override
     public boolean addSubscription(AddSubscriptionParams params) {
-        return false;
+        return addSubscriptionAction.addSubscription(params);
     }
 
     @Override

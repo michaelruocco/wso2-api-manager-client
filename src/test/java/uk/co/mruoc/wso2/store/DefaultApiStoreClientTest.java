@@ -21,9 +21,11 @@ public class DefaultApiStoreClientTest {
     private final AddApplicationAction addApplicationAction = mock(AddApplicationAction.class);
     private final ListAllApplicationsAction listAllApplicationsAction = mock(ListAllApplicationsAction.class);
     private final RemoveApplicationAction removeApplicationAction = mock(RemoveApplicationAction.class);
+    private final AddSubscriptionAction addSubscriptionAction = mock(AddSubscriptionAction.class);
 
     private final Credentials credentials = mock(Credentials.class);
     private final AddApplicationParams addApplicationParams = mock(AddApplicationParams.class);
+    private final AddSubscriptionParams addSubscriptionParams = mock(AddSubscriptionParams.class);
 
     private final Throwable apiStoreException = mock(ApiStoreException.class);
 
@@ -31,7 +33,8 @@ public class DefaultApiStoreClientTest {
             logoutAction,
             addApplicationAction,
             listAllApplicationsAction,
-            removeApplicationAction);
+            removeApplicationAction,
+            addSubscriptionAction);
 
     @Test(expected = ApiStoreException.class)
     public void loginShouldThrowExceptionOnFailure() {
@@ -105,6 +108,20 @@ public class DefaultApiStoreClientTest {
         assertThat(client.removeApplication(APPLICATION_NAME)).isTrue();
     }
 
+    @Test(expected = ApiStoreException.class)
+    public void addSubscriptionShouldThrowExceptionOnFailure() {
+        givenAddSubscriptionWillFail();
+
+        client.addSubscription(addSubscriptionParams);
+    }
+
+    @Test
+    public void addSubscriptionShouldReturnTrueOnSuccess() {
+        givenAddSubscriptionWillSucceed();
+
+        assertThat(client.addSubscription(addSubscriptionParams)).isTrue();
+    }
+
     private void givenLoginWillFail() {
         given(loginAction.login(credentials)).willThrow(apiStoreException);
     }
@@ -152,6 +169,14 @@ public class DefaultApiStoreClientTest {
 
     private void givenRemoveApplicationWillSucceed() {
         given(removeApplicationAction.removeApplication(APPLICATION_NAME)).willReturn(true);
+    }
+
+    private void givenAddSubscriptionWillFail() {
+        given(addSubscriptionAction.addSubscription(addSubscriptionParams)).willThrow(apiStoreException);
+    }
+
+    private void givenAddSubscriptionWillSucceed() {
+        given(addSubscriptionAction.addSubscription(addSubscriptionParams)).willReturn(true);
     }
 
 }

@@ -23,12 +23,12 @@ public class AddSubscriptionParamsToQueryStringConverterTest {
     }
 
     @Test
-    public void shouldConvertName() {
+    public void shouldConvertApplicationName() {
         given(params.getApplicationName()).willReturn("application-name");
 
         String queryString = converter.convert(params);
 
-        assertThat(queryString).contains("&application=application-name");
+        assertThat(queryString).contains("&applicationName=application-name");
     }
 
     @Test
@@ -38,6 +38,33 @@ public class AddSubscriptionParamsToQueryStringConverterTest {
         String queryString = converter.convert(params);
 
         assertThat(queryString).contains("&tier=Gold");
+    }
+
+    @Test
+    public void shouldConvertApiName() {
+        given(params.getApiName()).willReturn("api-name");
+
+        String queryString = converter.convert(params);
+
+        assertThat(queryString).contains("&name=api-name");
+    }
+
+    @Test
+    public void shouldConvertApiVersion() {
+        given(params.getApiVersion()).willReturn("v1");
+
+        String queryString = converter.convert(params);
+
+        assertThat(queryString).contains("&version=v1");
+    }
+
+    @Test
+    public void shouldConvertApiProvider() {
+        given(params.getProvider()).willReturn("admin");
+
+        String queryString = converter.convert(params);
+
+        assertThat(queryString).contains("&provider=admin");
     }
 
 }

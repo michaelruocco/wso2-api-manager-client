@@ -12,6 +12,10 @@ public class AddSubscriptionAction {
     private HttpClient client;
     private AddSubscriptionUrlBuilder urlBuilder;
 
+    public AddSubscriptionAction(HttpClient client, String hostUrl) {
+        this(client, new AddSubscriptionUrlBuilder(hostUrl));
+    }
+
     public AddSubscriptionAction(HttpClient client, AddSubscriptionUrlBuilder urlBuilder) {
         this.client = client;
         this.urlBuilder = urlBuilder;
