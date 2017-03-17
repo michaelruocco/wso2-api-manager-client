@@ -14,6 +14,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
     private final ListAllApplicationsAction listAllApplicationsAction;
     private final RemoveApplicationAction removeApplicationAction;
     private final AddSubscriptionAction addSubscriptionAction;
+    private final RemoveSubscriptionAction removeSubscriptionAction;
 
     public DefaultApiStoreClient(String hostUrl) {
         this(new SimpleHttpClient(), hostUrl);
@@ -25,7 +26,8 @@ public class DefaultApiStoreClient implements ApiStoreClient {
                 new AddApplicationAction(client, hostUrl),
                 new ListAllApplicationsAction(client, hostUrl),
                 new RemoveApplicationAction(client, hostUrl),
-                new AddSubscriptionAction(client, hostUrl));
+                new AddSubscriptionAction(client, hostUrl),
+                new RemoveSubscriptionAction(client, hostUrl));
     }
 
     public DefaultApiStoreClient(LoginAction loginAction,
@@ -33,13 +35,15 @@ public class DefaultApiStoreClient implements ApiStoreClient {
                                  AddApplicationAction addApplicationAction,
                                  ListAllApplicationsAction listAllApplicationsAction,
                                  RemoveApplicationAction removeApplicationAction,
-                                 AddSubscriptionAction addSubscriptionAction) {
+                                 AddSubscriptionAction addSubscriptionAction,
+                                 RemoveSubscriptionAction removeSubscriptionAction) {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.addApplicationAction = addApplicationAction;
         this.listAllApplicationsAction = listAllApplicationsAction;
         this.removeApplicationAction = removeApplicationAction;
         this.addSubscriptionAction = addSubscriptionAction;
+        this.removeSubscriptionAction = removeSubscriptionAction;
     }
 
     @Override
@@ -74,7 +78,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
 
     @Override
     public boolean removeSubscription(RemoveSubscriptionParams params) {
-        return false;
+        return removeSubscriptionAction.removeSubscription(params);
     }
 
     @Override

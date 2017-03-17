@@ -22,10 +22,12 @@ public class DefaultApiStoreClientTest {
     private final ListAllApplicationsAction listAllApplicationsAction = mock(ListAllApplicationsAction.class);
     private final RemoveApplicationAction removeApplicationAction = mock(RemoveApplicationAction.class);
     private final AddSubscriptionAction addSubscriptionAction = mock(AddSubscriptionAction.class);
+    private final RemoveSubscriptionAction removeSubscriptionAction = mock(RemoveSubscriptionAction.class);
 
     private final Credentials credentials = mock(Credentials.class);
     private final AddApplicationParams addApplicationParams = mock(AddApplicationParams.class);
     private final AddSubscriptionParams addSubscriptionParams = mock(AddSubscriptionParams.class);
+    private final RemoveSubscriptionParams removeSubscriptionParams = mock(RemoveSubscriptionParams.class);
 
     private final Throwable apiStoreException = mock(ApiStoreException.class);
 
@@ -34,7 +36,8 @@ public class DefaultApiStoreClientTest {
             addApplicationAction,
             listAllApplicationsAction,
             removeApplicationAction,
-            addSubscriptionAction);
+            addSubscriptionAction,
+            removeSubscriptionAction);
 
     @Test(expected = ApiStoreException.class)
     public void loginShouldThrowExceptionOnFailure() {
@@ -122,6 +125,20 @@ public class DefaultApiStoreClientTest {
         assertThat(client.addSubscription(addSubscriptionParams)).isTrue();
     }
 
+    @Test(expected = ApiStoreException.class)
+    public void removeSubscriptionShouldThrowExceptionOnFailure() {
+        givenRemoveSubscriptionWillFail();
+
+        client.removeSubscription(removeSubscriptionParams);
+    }
+
+    @Test
+    public void removeSubscriptionShouldReturnTrueOnSuccess() {
+        givenRemoveSubscriptionWillSucceed();
+
+        assertThat(client.removeSubscription(removeSubscriptionParams)).isTrue();
+    }
+
     private void givenLoginWillFail() {
         given(loginAction.login(credentials)).willThrow(apiStoreException);
     }
@@ -177,6 +194,14 @@ public class DefaultApiStoreClientTest {
 
     private void givenAddSubscriptionWillSucceed() {
         given(addSubscriptionAction.addSubscription(addSubscriptionParams)).willReturn(true);
+    }
+
+    private void givenRemoveSubscriptionWillFail() {
+        given(removeSubscriptionAction.removeSubscription(removeSubscriptionParams)).willThrow(apiStoreException);
+    }
+
+    private void givenRemoveSubscriptionWillSucceed() {
+        given(removeSubscriptionAction.removeSubscription(removeSubscriptionParams)).willReturn(true);
     }
 
 }
