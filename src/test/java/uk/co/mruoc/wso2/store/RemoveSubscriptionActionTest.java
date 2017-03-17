@@ -61,12 +61,12 @@ public class RemoveSubscriptionActionTest {
     }
 
     private void givenWillReturnFailure() {
-        String body = responseLoader.load("remove-application-failure.json");
+        String body = responseLoader.load("remove-subscription-failure.json");
         client.cannedResponse(200, body);
     }
 
     private void givenWillReturnSuccess() {
-        String body = responseLoader.load("remove-application-success.json");
+        String body = responseLoader.load("remove-subscription-success.json");
         client.cannedResponse(200, body);
     }
 
