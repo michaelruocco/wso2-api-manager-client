@@ -8,6 +8,7 @@ import uk.co.mruoc.wso2.store.*;
 import uk.co.mruoc.wso2.store.addapplication.AddApplicationParams;
 import uk.co.mruoc.wso2.store.addapplication.DefaultAddApplicationParams;
 import uk.co.mruoc.wso2.store.addsubscription.DefaultAddSubscriptionParams;
+import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
 import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.DefaultApplication;
 import uk.co.mruoc.wso2.store.listallapplications.TestApplication;
@@ -97,6 +98,32 @@ public class ApiStoreClientIntegrationTest {
         addSubscriptionParams.setProvider(addApiParams.getProvider());
 
         assertThat(storeClient.addSubscription(addSubscriptionParams)).isTrue();
+    }
+
+    @Test
+    public void shouldListSubscriptions() {
+        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
+        publisherClient.addApi(addApiParams);
+
+        DefaultSetStatusParams setStatusParams = buildSetStatusParams(addApiParams);
+        setStatusParams.setStatus(PUBLISHED);
+        publisherClient.setStatus(setStatusParams);
+
+        AddApplicationParams addApplicationParams = new FakeAddApplicationParams();
+        storeClient.addApplication(addApplicationParams);
+
+        DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
+        addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
+        addSubscriptionParams.setName(addApiParams.getApiName());
+        addSubscriptionParams.setVersion(addApiParams.getApiVersion());
+        addSubscriptionParams.setProvider(addApiParams.getProvider());
+
+        storeClient.addSubscription(addSubscriptionParams);
+
+        List<ApiSubscription> subscriptions = storeClient.getSubscriptionsByApi(addApiParams);
+
+        assertThat(subscriptions.size()).isEqualTo(1);
+        assertThat(subscriptions.get(0).getApplicationName()).isEqualTo(addApplicationParams.getApplicationName());
     }
 
     private DefaultSetStatusParams buildSetStatusParams(AddApiParams addApiParams) {

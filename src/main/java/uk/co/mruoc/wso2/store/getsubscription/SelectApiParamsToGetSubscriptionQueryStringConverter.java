@@ -6,7 +6,9 @@ import uk.co.mruoc.wso2.StringArgumentBuilder;
 public class SelectApiParamsToGetSubscriptionQueryStringConverter extends SelectApiParamsToQueryStringConverter {
 
     public SelectApiParamsToGetSubscriptionQueryStringConverter() {
-        super("getSubscriptionByAPI", new StringArgumentBuilder("apiName"));
+        super("getSubscriptionByAPI",
+                new StringArgumentBuilder("apiName"),
+                new StringArgumentBuilder("apiVersion"));
     }
 
 }

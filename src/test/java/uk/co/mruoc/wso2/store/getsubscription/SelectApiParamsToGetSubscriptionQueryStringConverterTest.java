@@ -40,7 +40,7 @@ public class SelectApiParamsToGetSubscriptionQueryStringConverterTest {
 
         String result = converter.convert(params);
 
-        assertThat(result).contains("&version=" + VERSION);
+        assertThat(result).contains("&apiVersion=" + VERSION);
     }
 
     @Test
