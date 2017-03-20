@@ -3,7 +3,14 @@ package uk.co.mruoc.wso2;
 import org.junit.*;
 import org.testcontainers.containers.GenericContainer;
 import uk.co.mruoc.wso2.publisher.*;
+import uk.co.mruoc.wso2.publisher.addapi.AddApiParams;
 import uk.co.mruoc.wso2.store.*;
+import uk.co.mruoc.wso2.store.addapplication.AddApplicationParams;
+import uk.co.mruoc.wso2.store.addapplication.DefaultAddApplicationParams;
+import uk.co.mruoc.wso2.store.addsubscription.DefaultAddSubscriptionParams;
+import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
+import uk.co.mruoc.wso2.store.listallapplications.DefaultApplication;
+import uk.co.mruoc.wso2.store.listallapplications.TestApplication;
 
 import java.util.List;
 

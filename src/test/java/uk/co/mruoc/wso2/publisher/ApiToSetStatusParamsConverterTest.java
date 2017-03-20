@@ -1,6 +1,8 @@
 package uk.co.mruoc.wso2.publisher;
 
 import org.junit.Test;
+import uk.co.mruoc.wso2.publisher.getapi.Api;
+import uk.co.mruoc.wso2.publisher.setstatus.SetStatusParams;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

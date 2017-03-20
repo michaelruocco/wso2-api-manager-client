@@ -1,6 +1,7 @@
 package uk.co.mruoc.wso2.publisher;
 
 import uk.co.mruoc.wso2.DefaultSelectApiParams;
+import uk.co.mruoc.wso2.publisher.setstatus.SetStatusParams;
 
 public class DefaultSetStatusParams extends DefaultSelectApiParams implements SetStatusParams {
 

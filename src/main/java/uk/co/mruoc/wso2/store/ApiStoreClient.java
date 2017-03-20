@@ -2,6 +2,13 @@ package uk.co.mruoc.wso2.store;
 
 import uk.co.mruoc.wso2.Credentials;
 import uk.co.mruoc.wso2.SelectApiParams;
+import uk.co.mruoc.wso2.store.addapplication.AddApplicationParams;
+import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionParams;
+import uk.co.mruoc.wso2.store.generateapplicationkey.ApplicationKey;
+import uk.co.mruoc.wso2.store.generateapplicationkey.GenerateApplicationKeyParams;
+import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
+import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
+import uk.co.mruoc.wso2.store.removesubscription.RemoveSubscriptionParams;
 
 import java.util.List;
 

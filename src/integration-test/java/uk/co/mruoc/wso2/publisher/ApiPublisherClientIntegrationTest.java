@@ -3,6 +3,10 @@ package uk.co.mruoc.wso2.publisher;
 import org.junit.*;
 import org.testcontainers.containers.GenericContainer;
 import uk.co.mruoc.wso2.*;
+import uk.co.mruoc.wso2.publisher.addapi.AddApiParams;
+import uk.co.mruoc.wso2.publisher.getapi.Api;
+import uk.co.mruoc.wso2.publisher.listallapis.ApiSummary;
+import uk.co.mruoc.wso2.publisher.updateapi.DefaultUpdateApiParams;
 
 import java.util.List;
 

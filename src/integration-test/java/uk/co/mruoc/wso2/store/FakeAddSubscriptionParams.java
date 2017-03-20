@@ -1,5 +1,7 @@
 package uk.co.mruoc.wso2.store;
 
+import uk.co.mruoc.wso2.store.addsubscription.DefaultAddSubscriptionParams;
+
 public class FakeAddSubscriptionParams extends DefaultAddSubscriptionParams {
 
     public FakeAddSubscriptionParams() {

@@ -2,6 +2,8 @@ package uk.co.mruoc.wso2.publisher;
 
 import org.junit.Test;
 import uk.co.mruoc.wso2.ApiTierAvailability;
+import uk.co.mruoc.wso2.publisher.getapi.Api;
+import uk.co.mruoc.wso2.publisher.updateapi.UpdateApiParams;
 
 import java.util.Arrays;
 import java.util.List;

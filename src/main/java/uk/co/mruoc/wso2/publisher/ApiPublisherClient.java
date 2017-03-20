@@ -2,6 +2,11 @@ package uk.co.mruoc.wso2.publisher;
 
 import uk.co.mruoc.wso2.Credentials;
 import uk.co.mruoc.wso2.SelectApiParams;
+import uk.co.mruoc.wso2.publisher.addapi.AddApiParams;
+import uk.co.mruoc.wso2.publisher.getapi.Api;
+import uk.co.mruoc.wso2.publisher.listallapis.ApiSummary;
+import uk.co.mruoc.wso2.publisher.setstatus.SetStatusParams;
+import uk.co.mruoc.wso2.publisher.updateapi.UpdateApiParams;
 
 import java.util.List;
 

@@ -1,5 +1,8 @@
 package uk.co.mruoc.wso2.publisher;
 
+import uk.co.mruoc.wso2.publisher.addapi.AddApiParams;
+import uk.co.mruoc.wso2.publisher.addapi.DefaultAddApiParams;
+
 public class StubAddApiParamsBuilder {
 
     public static AddApiParams build() {

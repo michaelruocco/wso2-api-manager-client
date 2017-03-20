@@ -1,5 +1,8 @@
 package uk.co.mruoc.wso2.publisher;
 
+import uk.co.mruoc.wso2.publisher.getapi.Api;
+import uk.co.mruoc.wso2.publisher.updateapi.DefaultUpdateApiParams;
+
 public class ApiToUpdateApiParamsConverter {
 
     public DefaultUpdateApiParams convert(Api api) {
