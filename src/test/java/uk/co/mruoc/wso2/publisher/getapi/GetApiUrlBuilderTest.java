@@ -1,10 +1,7 @@
 package uk.co.mruoc.wso2.publisher.getapi;
 
 import org.junit.Test;
-import uk.co.mruoc.wso2.DefaultSelectApiParams;
 import uk.co.mruoc.wso2.SelectApiParams;
-import uk.co.mruoc.wso2.publisher.getapi.GetApiUrlBuilder;
-import uk.co.mruoc.wso2.store.getsubscription.SelectApiParamsToGetSubscriptionQueryStringConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
