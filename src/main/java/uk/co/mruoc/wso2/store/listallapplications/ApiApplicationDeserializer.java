@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 public class ApiApplicationDeserializer implements JsonDeserializer<ApiApplication> {
 
     @Override
-    public ApiApplication deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) {
+    public ApiApplication deserialize(JsonElement element, Type typeOf, JsonDeserializationContext context) {
         StoreJsonParser parser = new StoreJsonParser(element);
         DefaultApiApplication application = new DefaultApiApplication();
         application.setApplicationName(parser.getName());

@@ -22,12 +22,20 @@ public class StoreJsonParser extends AbstractJsonParser {
         this.json = json;
     }
 
+    public String getApplication() {
+        return toString(json, "application");
+    }
+
     public String getName() {
         return toString(json, "name");
     }
 
     public int getId() {
         return toInt(json, "id");
+    }
+
+    public int getApplicationId() {
+        return toInt(json, "applicationId");
     }
 
     @Override

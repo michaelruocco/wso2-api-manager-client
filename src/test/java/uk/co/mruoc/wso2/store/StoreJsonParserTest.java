@@ -14,10 +14,24 @@ public class StoreJsonParserTest {
     }
 
     @Test
+    public void shouldParseApplication() {
+        StoreJsonParser parser = new StoreJsonParser("{ \"application\": \"application-name\"}");
+
+        assertThat(parser.getApplication()).isEqualTo("application-name");
+    }
+
+    @Test
     public void shouldParseId() {
         StoreJsonParser parser = new StoreJsonParser("{ \"id\": 7}");
 
         assertThat(parser.getId()).isEqualTo(7);
+    }
+
+    @Test
+    public void shouldParseApplicationId() {
+        StoreJsonParser parser = new StoreJsonParser("{ \"applicationId\": 7}");
+
+        assertThat(parser.getApplicationId()).isEqualTo(7);
     }
 
     @Test
