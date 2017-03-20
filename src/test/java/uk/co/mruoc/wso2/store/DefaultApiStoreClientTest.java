@@ -4,10 +4,14 @@ import org.junit.Test;
 import uk.co.mruoc.wso2.Credentials;
 import uk.co.mruoc.wso2.LoginAction;
 import uk.co.mruoc.wso2.LogoutAction;
+import uk.co.mruoc.wso2.SelectApiParams;
 import uk.co.mruoc.wso2.store.addapplication.AddApplicationAction;
 import uk.co.mruoc.wso2.store.addapplication.AddApplicationParams;
 import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionAction;
 import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionParams;
+import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
+import uk.co.mruoc.wso2.store.getsubscription.GetSubscriptionsAction;
+import uk.co.mruoc.wso2.store.getsubscription.TestApiSubscription;
 import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.DefaultApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.ListAllApplicationsAction;
@@ -16,6 +20,7 @@ import uk.co.mruoc.wso2.store.removesubscription.RemoveSubscriptionAction;
 import uk.co.mruoc.wso2.store.removesubscription.RemoveSubscriptionParams;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,11 +38,15 @@ public class DefaultApiStoreClientTest {
     private final RemoveApplicationAction removeApplicationAction = mock(RemoveApplicationAction.class);
     private final AddSubscriptionAction addSubscriptionAction = mock(AddSubscriptionAction.class);
     private final RemoveSubscriptionAction removeSubscriptionAction = mock(RemoveSubscriptionAction.class);
+    private final GetSubscriptionsAction getSubscriptionsAction = mock(GetSubscriptionsAction.class);
 
     private final Credentials credentials = mock(Credentials.class);
     private final AddApplicationParams addApplicationParams = mock(AddApplicationParams.class);
     private final AddSubscriptionParams addSubscriptionParams = mock(AddSubscriptionParams.class);
     private final RemoveSubscriptionParams removeSubscriptionParams = mock(RemoveSubscriptionParams.class);
+    private final SelectApiParams getSubscriptionsParams = mock(SelectApiParams.class);
+
+    private final List<ApiSubscription> subscriptions = Collections.singletonList(new TestApiSubscription());
 
     private final Throwable apiStoreException = mock(ApiStoreException.class);
 
@@ -47,7 +56,8 @@ public class DefaultApiStoreClientTest {
             listAllApplicationsAction,
             removeApplicationAction,
             addSubscriptionAction,
-            removeSubscriptionAction);
+            removeSubscriptionAction,
+            getSubscriptionsAction);
 
     @Test(expected = ApiStoreException.class)
     public void loginShouldThrowExceptionOnFailure() {
@@ -149,6 +159,20 @@ public class DefaultApiStoreClientTest {
         assertThat(client.removeSubscription(removeSubscriptionParams)).isTrue();
     }
 
+    @Test(expected = ApiStoreException.class)
+    public void getSubscriptionsShouldThrowExceptionOnFailure() {
+        givenGetSubscriptionsWillFail();
+
+        client.getSubscriptionsByApi(getSubscriptionsParams);
+    }
+
+    @Test
+    public void getSubscriptionsShouldReturnSubscriptionsOnSuccess() {
+        givenGetSubscriptionsWillSucceed();
+
+        assertThat(client.getSubscriptionsByApi(getSubscriptionsParams)).isEqualTo(subscriptions);
+    }
+
     private void givenLoginWillFail() {
         given(loginAction.login(credentials)).willThrow(apiStoreException);
     }
@@ -212,6 +236,14 @@ public class DefaultApiStoreClientTest {
 
     private void givenRemoveSubscriptionWillSucceed() {
         given(removeSubscriptionAction.removeSubscription(removeSubscriptionParams)).willReturn(true);
+    }
+
+    private void givenGetSubscriptionsWillFail() {
+        given(getSubscriptionsAction.getSubscriptions(getSubscriptionsParams)).willThrow(apiStoreException);
+    }
+
+    private void givenGetSubscriptionsWillSucceed() {
+        given(getSubscriptionsAction.getSubscriptions(getSubscriptionsParams)).willReturn(subscriptions);
     }
 
 }

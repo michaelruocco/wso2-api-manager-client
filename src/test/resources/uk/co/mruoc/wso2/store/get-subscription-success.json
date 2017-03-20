@@ -1,0 +1,11 @@
+{
+  "error": false,
+  "applications": [
+    {
+      "application": "test-subscription",
+      "applicationId": 1,
+      "prodKey": null,
+      "sandboxKey": null
+    }
+  ]
+}
