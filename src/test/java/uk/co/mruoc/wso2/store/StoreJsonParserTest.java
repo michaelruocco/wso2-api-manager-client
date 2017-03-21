@@ -1,5 +1,6 @@
 package uk.co.mruoc.wso2.store;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +33,34 @@ public class StoreJsonParserTest {
         StoreJsonParser parser = new StoreJsonParser("{ \"applicationId\": 7}");
 
         assertThat(parser.getApplicationId()).isEqualTo(7);
+    }
+
+    @Test
+    public void shouldParseValidityTime() {
+        StoreJsonParser parser = new StoreJsonParser("{ \"validityTime\": 7}");
+
+        assertThat(parser.getValidityTime()).isEqualTo(new DateTime(7L));
+    }
+
+    @Test
+    public void shouldParseConsumerKey() {
+        StoreJsonParser parser = new StoreJsonParser("{ \"consumerKey\": Consumer_Key}");
+
+        assertThat(parser.getConsumerKey()).isEqualTo("Consumer_Key");
+    }
+
+    @Test
+    public void shouldParseConsumerSecret() {
+        StoreJsonParser parser = new StoreJsonParser("{ \"consumerSecret\": Consumer_Secret}");
+
+        assertThat(parser.getConsumerSecret()).isEqualTo("Consumer_Secret");
+    }
+
+    @Test
+    public void shouldParseAccessToken() {
+        StoreJsonParser parser = new StoreJsonParser("{ \"accessToken\": Access_Token}");
+
+        assertThat(parser.getAccessToken()).isEqualTo("Access_Token");
     }
 
     @Test
