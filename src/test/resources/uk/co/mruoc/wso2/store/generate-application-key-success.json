@@ -1,0 +1,20 @@
+{
+  "error": false,
+  "data": {
+    "key": {
+      "validityTime": 9223372036854775807,
+      "consumerKey": "d5Noh1gRT4GSlyBFkfhLyZKSWqEa",
+      "tokenDetails": "{\"scopes\":\"[am_application_scope, default]\",\"tokenState\":null}",
+      "accessToken": "ca9e489c1fca6c68f31f324433866f6c",
+      "appDetails": "{\"username\":\"admin\",\"redirect_uris\":\"\",\"validityPeriod\":\"-1\",\"tokenScope\":\"[default]\",\"client_name\":\"admin_MyNewApp_PRODUCTION\",\"grant_types\":\"password refresh_token iwa:ntlm urn:ietf:params:oauth:grant-type:saml2-bearer application_token client_credentials\"}",
+      "tokenScope": [
+        "am_application_scope",
+        "default"
+      ],
+      "keyState": "APPROVED",
+      "consumerSecret": "UOEa2jy3KVasfQ_BWMg_O_26ywIa",
+      "enableRegenarate": true,
+      "accessallowdomains": "ALL"
+    }
+  }
+}
