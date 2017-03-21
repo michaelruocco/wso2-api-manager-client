@@ -18,7 +18,7 @@ public class ApiApplicationDeserializerTest {
 
         ApiApplication application = deserializer.deserialize(element, null, null);
 
-        assertThat(application).isEqualToComparingFieldByField(new FakeApiApplication());
+        assertThat(application).isEqualToComparingFieldByField(new TestApplication());
     }
 
 }

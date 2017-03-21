@@ -60,7 +60,7 @@ public class ListAllApplicationsActionTest {
 
         assertThat(applications.size()).isEqualTo(2);
         assertThat(applications.get(0)).isEqualToComparingFieldByField(new DefaultApplication());
-        assertThat(applications.get(1)).isEqualToComparingFieldByField(new FakeApiApplication());
+        assertThat(applications.get(1)).isEqualToComparingFieldByField(new TestApplication());
     }
 
     private void givenWillReturnNon200() {
