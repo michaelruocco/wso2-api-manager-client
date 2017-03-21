@@ -2,7 +2,6 @@ package uk.co.mruoc.wso2.store.generateapplicationkey;
 
 import org.junit.Test;
 
-import java.net.URLEncoder;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
