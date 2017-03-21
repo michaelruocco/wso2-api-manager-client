@@ -9,6 +9,10 @@ import uk.co.mruoc.wso2.store.addapplication.AddApplicationAction;
 import uk.co.mruoc.wso2.store.addapplication.AddApplicationParams;
 import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionAction;
 import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionParams;
+import uk.co.mruoc.wso2.store.generateapplicationkey.ApplicationKey;
+import uk.co.mruoc.wso2.store.generateapplicationkey.FakeApplicationKey;
+import uk.co.mruoc.wso2.store.generateapplicationkey.GenerateApplicationKeyAction;
+import uk.co.mruoc.wso2.store.generateapplicationkey.GenerateApplicationKeyParams;
 import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
 import uk.co.mruoc.wso2.store.getsubscription.GetSubscriptionsAction;
 import uk.co.mruoc.wso2.store.getsubscription.FakeApiSubscription;
@@ -39,14 +43,17 @@ public class DefaultApiStoreClientTest {
     private final AddSubscriptionAction addSubscriptionAction = mock(AddSubscriptionAction.class);
     private final RemoveSubscriptionAction removeSubscriptionAction = mock(RemoveSubscriptionAction.class);
     private final GetSubscriptionsAction getSubscriptionsAction = mock(GetSubscriptionsAction.class);
+    private final GenerateApplicationKeyAction generateApplicationKeyAction = mock(GenerateApplicationKeyAction.class);
 
     private final Credentials credentials = mock(Credentials.class);
     private final AddApplicationParams addApplicationParams = mock(AddApplicationParams.class);
     private final AddSubscriptionParams addSubscriptionParams = mock(AddSubscriptionParams.class);
     private final RemoveSubscriptionParams removeSubscriptionParams = mock(RemoveSubscriptionParams.class);
     private final SelectApiParams getSubscriptionsParams = mock(SelectApiParams.class);
+    private final GenerateApplicationKeyParams generateApplicationKeyParams = mock(GenerateApplicationKeyParams.class);
 
     private final List<ApiSubscription> subscriptions = Collections.singletonList(new FakeApiSubscription());
+    private final ApplicationKey key = new FakeApplicationKey();
 
     private final Throwable apiStoreException = mock(ApiStoreException.class);
 
@@ -57,7 +64,8 @@ public class DefaultApiStoreClientTest {
             removeApplicationAction,
             addSubscriptionAction,
             removeSubscriptionAction,
-            getSubscriptionsAction);
+            getSubscriptionsAction,
+            generateApplicationKeyAction);
 
     @Test(expected = ApiStoreException.class)
     public void loginShouldThrowExceptionOnFailure() {
@@ -173,6 +181,20 @@ public class DefaultApiStoreClientTest {
         assertThat(client.getSubscriptionsByApi(getSubscriptionsParams)).isEqualTo(subscriptions);
     }
 
+    @Test(expected = ApiStoreException.class)
+    public void generateKeyShouldThrowExceptionOnFailure() {
+        givenGenerateApplicationKeyWillFail();
+
+        client.generateApplicationKey(generateApplicationKeyParams);
+    }
+
+    @Test
+    public void generateKeyShouldReturnKeyOnSuccess() {
+        givenGenerateApplicationKeyWillSucceed();
+
+        assertThat(client.generateApplicationKey(generateApplicationKeyParams)).isEqualTo(key);
+    }
+
     private void givenLoginWillFail() {
         given(loginAction.login(credentials)).willThrow(apiStoreException);
     }
@@ -244,6 +266,14 @@ public class DefaultApiStoreClientTest {
 
     private void givenGetSubscriptionsWillSucceed() {
         given(getSubscriptionsAction.getSubscriptions(getSubscriptionsParams)).willReturn(subscriptions);
+    }
+
+    private void givenGenerateApplicationKeyWillFail() {
+        given(generateApplicationKeyAction.generateKey(generateApplicationKeyParams)).willThrow(apiStoreException);
+    }
+
+    private void givenGenerateApplicationKeyWillSucceed() {
+        given(generateApplicationKeyAction.generateKey(generateApplicationKeyParams)).willReturn(key);
     }
 
 }

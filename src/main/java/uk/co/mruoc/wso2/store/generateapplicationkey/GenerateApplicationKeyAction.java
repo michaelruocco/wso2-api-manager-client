@@ -6,6 +6,8 @@ import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.wso2.ResponseErrorChecker;
 import uk.co.mruoc.wso2.store.StoreResponseErrorChecker;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 public class GenerateApplicationKeyAction {
 
     private final ResponseErrorChecker errorChecker = new StoreResponseErrorChecker();
@@ -24,7 +26,7 @@ public class GenerateApplicationKeyAction {
 
     public ApplicationKey generateKey(GenerateApplicationKeyParams params) {
         String url = urlBuilder.build(params);
-        Response response = client.get(url);
+        Response response = client.post(url, EMPTY);
         errorChecker.checkForError(response);
         return toApplicationKey(response);
     }

@@ -8,6 +8,8 @@ import uk.co.mruoc.wso2.store.*;
 import uk.co.mruoc.wso2.store.addapplication.AddApplicationParams;
 import uk.co.mruoc.wso2.store.addapplication.DefaultAddApplicationParams;
 import uk.co.mruoc.wso2.store.addsubscription.DefaultAddSubscriptionParams;
+import uk.co.mruoc.wso2.store.generateapplicationkey.ApplicationKey;
+import uk.co.mruoc.wso2.store.generateapplicationkey.DefaultGenerateApplicationKeyParams;
 import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
 import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.DefaultApplication;
@@ -124,6 +126,37 @@ public class ApiStoreClientIntegrationTest {
 
         assertThat(subscriptions.size()).isEqualTo(1);
         assertThat(subscriptions.get(0).getApplicationName()).isEqualTo(addApplicationParams.getApplicationName());
+    }
+
+    @Test
+    public void shouldGenerateApplicationKey() {
+        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
+        publisherClient.addApi(addApiParams);
+
+        DefaultSetStatusParams setStatusParams = buildSetStatusParams(addApiParams);
+        setStatusParams.setStatus(PUBLISHED);
+        publisherClient.setStatus(setStatusParams);
+
+        AddApplicationParams addApplicationParams = new FakeAddApplicationParams();
+        storeClient.addApplication(addApplicationParams);
+
+        DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
+        addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
+        addSubscriptionParams.setName(addApiParams.getApiName());
+        addSubscriptionParams.setVersion(addApiParams.getApiVersion());
+        addSubscriptionParams.setProvider(addApiParams.getProvider());
+
+        storeClient.addSubscription(addSubscriptionParams);
+
+        DefaultGenerateApplicationKeyParams generateApplicationKeyParams = new DefaultGenerateApplicationKeyParams();
+        generateApplicationKeyParams.setApplicationName(addApplicationParams.getApplicationName());
+
+        ApplicationKey key = storeClient.generateApplicationKey(generateApplicationKeyParams);
+
+        assertThat(key.getConsumerKey()).isNotBlank();
+        assertThat(key.getConsumerSecret()).isNotBlank();
+        assertThat(key.getAccessToken()).isNotBlank();
+        assertThat(key.getValidityTime().getMillis()).isPositive();
     }
 
     private DefaultSetStatusParams buildSetStatusParams(AddApiParams addApiParams) {

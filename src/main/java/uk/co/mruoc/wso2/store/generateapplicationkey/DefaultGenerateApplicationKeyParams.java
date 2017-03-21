@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2.store.generateapplicationkey;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -11,7 +10,7 @@ public class DefaultGenerateApplicationKeyParams implements GenerateApplicationK
     private String applicationName = EMPTY;
     private ApiKeyType keyType = ApiKeyType.PRODUCTION;
     private String callbackUrl = EMPTY;
-    private List<String> authorizedDomains = Collections.singletonList("ALL");
+    private List<String> authorizedDomains = Arrays.asList("ALL");
     private int validityTimeInSeconds = -1;
 
     @Override

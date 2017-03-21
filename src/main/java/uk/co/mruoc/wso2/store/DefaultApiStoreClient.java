@@ -8,6 +8,7 @@ import uk.co.mruoc.wso2.store.addapplication.AddApplicationParams;
 import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionAction;
 import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionParams;
 import uk.co.mruoc.wso2.store.generateapplicationkey.ApplicationKey;
+import uk.co.mruoc.wso2.store.generateapplicationkey.GenerateApplicationKeyAction;
 import uk.co.mruoc.wso2.store.generateapplicationkey.GenerateApplicationKeyParams;
 import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
 import uk.co.mruoc.wso2.store.getsubscription.GetSubscriptionsAction;
@@ -29,6 +30,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
     private final AddSubscriptionAction addSubscriptionAction;
     private final RemoveSubscriptionAction removeSubscriptionAction;
     private final GetSubscriptionsAction getSubscriptionsAction;
+    private final GenerateApplicationKeyAction generateApplicationKeyAction;
 
     public DefaultApiStoreClient(String hostUrl) {
         this(new SimpleHttpClient(), hostUrl);
@@ -42,7 +44,8 @@ public class DefaultApiStoreClient implements ApiStoreClient {
                 new RemoveApplicationAction(client, hostUrl),
                 new AddSubscriptionAction(client, hostUrl),
                 new RemoveSubscriptionAction(client, hostUrl),
-                new GetSubscriptionsAction(client, hostUrl));
+                new GetSubscriptionsAction(client, hostUrl),
+                new GenerateApplicationKeyAction(client, hostUrl));
     }
 
     public DefaultApiStoreClient(LoginAction loginAction,
@@ -52,7 +55,8 @@ public class DefaultApiStoreClient implements ApiStoreClient {
                                  RemoveApplicationAction removeApplicationAction,
                                  AddSubscriptionAction addSubscriptionAction,
                                  RemoveSubscriptionAction removeSubscriptionAction,
-                                 GetSubscriptionsAction getSubscriptionsAction) {
+                                 GetSubscriptionsAction getSubscriptionsAction,
+                                 GenerateApplicationKeyAction generateApplicationKeyAction) {
         this.loginAction = loginAction;
         this.logoutAction = logoutAction;
         this.addApplicationAction = addApplicationAction;
@@ -61,6 +65,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
         this.addSubscriptionAction = addSubscriptionAction;
         this.removeSubscriptionAction = removeSubscriptionAction;
         this.getSubscriptionsAction = getSubscriptionsAction;
+        this.generateApplicationKeyAction = generateApplicationKeyAction;
     }
 
     @Override
@@ -105,7 +110,7 @@ public class DefaultApiStoreClient implements ApiStoreClient {
 
     @Override
     public ApplicationKey generateApplicationKey(GenerateApplicationKeyParams params) {
-        return null;
+        return generateApplicationKeyAction.generateKey(params);
     }
 
 }
