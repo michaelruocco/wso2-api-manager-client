@@ -60,7 +60,7 @@ public class GetSubscriptionsActionTest {
         List<ApiSubscription> subscriptions = action.getSubscriptions(params);
 
         assertThat(subscriptions.size()).isEqualTo(1);
-        assertThat(subscriptions.get(0)).isEqualToComparingFieldByField(new TestApiSubscription());
+        assertThat(subscriptions.get(0)).isEqualToComparingFieldByField(new FakeApiSubscription());
     }
 
     private void givenWillReturnNon200() {

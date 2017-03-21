@@ -1,8 +1,8 @@
 package uk.co.mruoc.wso2.store.getsubscription;
 
-public class TestApiSubscription extends DefaultApiSubscription {
+public class FakeApiSubscription extends DefaultApiSubscription {
 
-    public TestApiSubscription() {
+    public FakeApiSubscription() {
         setApplicationName("test-subscription");
         setApplicationId(1);
     }

@@ -18,7 +18,7 @@ public class ApiSubscriptionDeserializerTest {
 
         ApiSubscription subscription = deserializer.deserialize(element, null, null);
 
-        assertThat(subscription).isEqualToComparingFieldByField(new TestApiSubscription());
+        assertThat(subscription).isEqualToComparingFieldByField(new FakeApiSubscription());
     }
 
 }

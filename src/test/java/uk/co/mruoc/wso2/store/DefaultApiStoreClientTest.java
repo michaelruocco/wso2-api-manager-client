@@ -11,7 +11,7 @@ import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionAction;
 import uk.co.mruoc.wso2.store.addsubscription.AddSubscriptionParams;
 import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
 import uk.co.mruoc.wso2.store.getsubscription.GetSubscriptionsAction;
-import uk.co.mruoc.wso2.store.getsubscription.TestApiSubscription;
+import uk.co.mruoc.wso2.store.getsubscription.FakeApiSubscription;
 import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.DefaultApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.ListAllApplicationsAction;
@@ -46,7 +46,7 @@ public class DefaultApiStoreClientTest {
     private final RemoveSubscriptionParams removeSubscriptionParams = mock(RemoveSubscriptionParams.class);
     private final SelectApiParams getSubscriptionsParams = mock(SelectApiParams.class);
 
-    private final List<ApiSubscription> subscriptions = Collections.singletonList(new TestApiSubscription());
+    private final List<ApiSubscription> subscriptions = Collections.singletonList(new FakeApiSubscription());
 
     private final Throwable apiStoreException = mock(ApiStoreException.class);
 
