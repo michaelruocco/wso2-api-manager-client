@@ -21,6 +21,7 @@ public class UrlEncoder {
     }
 
     public static String encodeToCommaSeparatedList(List<String> values) {
+        values.replaceAll(String::trim);
         values.replaceAll(UrlEncoder::encode);
         return CommaSeparatedStringConverter.toString(values);
     }
