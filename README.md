@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/michaelruocco/wso2-api-manager-client.svg?branch=master)](https://travis-ci.org/michaelruocco/wso2-api-manager-client)
 [![Coverage Status](https://coveralls.io/repos/github/michaelruocco/wso2-api-manager-client/badge.svg?branch=master)](https://coveralls.io/github/michaelruocco/wso2-api-manager-client?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ac2f41affcb8428eab0958bbfff36d9f)](https://www.codacy.com/app/michaelruocco/wso2-api-manager-client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/wso2-api-manager-client&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c5037d406264280a4eb2cc76d115199)](https://www.codacy.com/app/michaelruocco/wso2-api-manager-client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/wso2-api-manager-client&amp;utm_campaign=Badge_Grade)
 
 This library provides an abstraction layer around the WSO2 API Manager Publisher and Store
 APIs to try and make it as easy as possible to programatically interact with them. It is built

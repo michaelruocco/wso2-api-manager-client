@@ -32,9 +32,11 @@ public class KeyGeneratorTest {
     public void cleanUpShouldRemoveSubscriptionAndApplication() {
         String applicationName = "application-name";
         given(keyGeneratorParams.getApplicationName()).willReturn(applicationName);
+        given(storeClient.removeApplication(applicationName)).willReturn(true);
 
-        keyGenerator.cleanUp(keyGeneratorParams);
+        boolean result = keyGenerator.cleanUp(keyGeneratorParams);
 
+        assertThat(result).isTrue();
         verify(storeClient).removeSubscription(keyGeneratorParams);
         verify(storeClient).removeApplication(applicationName);
     }
