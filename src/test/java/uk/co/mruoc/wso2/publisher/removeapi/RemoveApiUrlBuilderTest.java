@@ -2,8 +2,6 @@ package uk.co.mruoc.wso2.publisher.removeapi;
 
 import org.junit.Test;
 import uk.co.mruoc.wso2.SelectApiParams;
-import uk.co.mruoc.wso2.publisher.removeapi.RemoveApiParamsToQueryStringConverter;
-import uk.co.mruoc.wso2.publisher.removeapi.RemoveApiUrlBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

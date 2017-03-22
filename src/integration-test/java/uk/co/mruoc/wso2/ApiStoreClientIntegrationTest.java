@@ -64,8 +64,7 @@ public class ApiStoreClientIntegrationTest {
 
     @Test
     public void listAllShouldReturnDeployedApplications() {
-        DefaultAddApplicationParams params = new FakeAddApplicationParams();
-        storeClient.addApplication(params);
+        givenApplicationHasBeenAdded();
 
         List<ApiApplication> applications = storeClient.listAllApplications();
 
@@ -76,103 +75,54 @@ public class ApiStoreClientIntegrationTest {
 
     @Test
     public void shouldRemoveApplication() {
-        AddApplicationParams params = new FakeAddApplicationParams();
-        storeClient.addApplication(params);
+        AddApplicationParams params = givenApplicationHasBeenAdded();
 
         assertThat(storeClient.removeApplication(params.getApplicationName())).isTrue();
     }
 
     @Test
     public void shouldAddSubscription() {
-        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
-        publisherClient.addApi(addApiParams);
-
-        DefaultSetStatusParams setStatusParams = buildSetStatusParams(addApiParams);
-        setStatusParams.setStatus(PUBLISHED);
-        publisherClient.setStatus(setStatusParams);
-
-        AddApplicationParams addApplicationParams = new FakeAddApplicationParams();
-        storeClient.addApplication(addApplicationParams);
-
-        DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
-        addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
-        addSubscriptionParams.setApiName(addApiParams.getApiName());
-        addSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
-        addSubscriptionParams.setProvider(addApiParams.getProvider());
+        AddApiParams addApiParams = givenApiHasBeenAdded();
+        givenApiHasBeenPublished(addApiParams);
+        AddApplicationParams addApplicationParams = givenApplicationHasBeenAdded();
+        DefaultAddSubscriptionParams addSubscriptionParams = toAddSubscriptionParams(addApiParams, addApplicationParams);
 
         assertThat(storeClient.addSubscription(addSubscriptionParams)).isTrue();
     }
 
     @Test
     public void shouldRemoveSubscription() {
-        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
-        publisherClient.addApi(addApiParams);
-
-        DefaultSetStatusParams setStatusParams = buildSetStatusParams(addApiParams);
-        setStatusParams.setStatus(PUBLISHED);
-        publisherClient.setStatus(setStatusParams);
-
-        AddApplicationParams addApplicationParams = new FakeAddApplicationParams();
-        storeClient.addApplication(addApplicationParams);
-
-        DefaultRemoveSubscriptionParams removeSubscriptionParams = new DefaultRemoveSubscriptionParams();
-        removeSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
-        removeSubscriptionParams.setApiName(addApiParams.getApiName());
-        removeSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
-        removeSubscriptionParams.setProvider(addApiParams.getProvider());
+        AddApiParams addApiParams = givenApiHasBeenAdded();
+        givenApiHasBeenPublished(addApiParams);
+        AddApplicationParams addApplicationParams = givenApplicationHasBeenAdded();
+        DefaultRemoveSubscriptionParams removeSubscriptionParams = toRemoveSubscriptionParams(addApiParams, addApplicationParams);
 
         assertThat(storeClient.removeSubscription(removeSubscriptionParams)).isTrue();
     }
 
     @Test
     public void shouldListSubscriptions() {
-        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
-        publisherClient.addApi(addApiParams);
-
-        DefaultSetStatusParams setStatusParams = buildSetStatusParams(addApiParams);
-        setStatusParams.setStatus(PUBLISHED);
-        publisherClient.setStatus(setStatusParams);
-
-        AddApplicationParams addApplicationParams = new FakeAddApplicationParams();
-        storeClient.addApplication(addApplicationParams);
-
-        DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
-        addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
-        addSubscriptionParams.setApiName(addApiParams.getApiName());
-        addSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
-        addSubscriptionParams.setProvider(addApiParams.getProvider());
+        AddApiParams addApiParams = givenApiHasBeenAdded();
+        givenApiHasBeenPublished(addApiParams);
+        AddApplicationParams addApplicationParams = givenApplicationHasBeenAdded();
+        DefaultAddSubscriptionParams addSubscriptionParams = toAddSubscriptionParams(addApiParams, addApplicationParams);
 
         storeClient.addSubscription(addSubscriptionParams);
 
         List<ApiSubscription> subscriptions = storeClient.getSubscriptionsByApi(addApiParams);
-
         assertThat(subscriptions.size()).isEqualTo(1);
         assertThat(subscriptions.get(0).getApplicationName()).isEqualTo(addApplicationParams.getApplicationName());
     }
 
     @Test
     public void shouldGenerateApplicationKey() {
-        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
-        publisherClient.addApi(addApiParams);
+        AddApiParams addApiParams = givenApiHasBeenAdded();
+        givenApiHasBeenPublished(addApiParams);
+        AddApplicationParams addApplicationParams = givenApplicationHasBeenAdded();
+        DefaultAddSubscriptionParams addSubscriptionParams = toAddSubscriptionParams(addApiParams, addApplicationParams);
+        givenApplicationHasBeenSubscribedToApi(addSubscriptionParams);
 
-        DefaultSetStatusParams setStatusParams = buildSetStatusParams(addApiParams);
-        setStatusParams.setStatus(PUBLISHED);
-        publisherClient.setStatus(setStatusParams);
-
-        AddApplicationParams addApplicationParams = new FakeAddApplicationParams();
-        storeClient.addApplication(addApplicationParams);
-
-        DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
-        addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
-        addSubscriptionParams.setApiName(addApiParams.getApiName());
-        addSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
-        addSubscriptionParams.setProvider(addApiParams.getProvider());
-
-        storeClient.addSubscription(addSubscriptionParams);
-
-        DefaultGenerateApplicationKeyParams generateApplicationKeyParams = new DefaultGenerateApplicationKeyParams();
-        generateApplicationKeyParams.setApplicationName(addApplicationParams.getApplicationName());
-
+        DefaultGenerateApplicationKeyParams generateApplicationKeyParams = toGenerateApplicationKeyParams(addApplicationParams);
         ApplicationKey key = storeClient.generateApplicationKey(generateApplicationKeyParams);
 
         assertThat(key.getConsumerKey()).isNotBlank();
@@ -181,12 +131,58 @@ public class ApiStoreClientIntegrationTest {
         assertThat(key.getValidityTime().getMillis()).isPositive();
     }
 
-    private DefaultSetStatusParams buildSetStatusParams(AddApiParams addApiParams) {
+    private void givenApplicationHasBeenSubscribedToApi(DefaultAddSubscriptionParams addSubscriptionParams) {
+        storeClient.addSubscription(addSubscriptionParams);
+    }
+
+    private AddApplicationParams givenApplicationHasBeenAdded() {
+        AddApplicationParams params = new FakeAddApplicationParams();
+        storeClient.addApplication(params);
+        return params;
+    }
+
+    private AddApiParams givenApiHasBeenAdded() {
+        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
+        publisherClient.addApi(addApiParams);
+        return addApiParams;
+    }
+
+    private void givenApiHasBeenPublished(AddApiParams addApiParams) {
+        DefaultSetStatusParams setStatusParams = toSetStatusParams(addApiParams);
+        setStatusParams.setStatus(PUBLISHED);
+        publisherClient.setStatus(setStatusParams);
+    }
+
+    private DefaultSetStatusParams toSetStatusParams(AddApiParams addApiParams) {
         DefaultSetStatusParams setStatusParams = new DefaultSetStatusParams();
         setStatusParams.setApiName(addApiParams.getApiName());
         setStatusParams.setApiVersion(addApiParams.getApiVersion());
         setStatusParams.setProvider(addApiParams.getProvider());
         return setStatusParams;
+    }
+
+    private DefaultAddSubscriptionParams toAddSubscriptionParams(AddApiParams addApiParams, AddApplicationParams addApplicationParams) {
+        DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
+        addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
+        addSubscriptionParams.setApiName(addApiParams.getApiName());
+        addSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
+        addSubscriptionParams.setProvider(addApiParams.getProvider());
+        return addSubscriptionParams;
+    }
+
+    private DefaultRemoveSubscriptionParams toRemoveSubscriptionParams(AddApiParams addApiParams, AddApplicationParams addApplicationParams) {
+        DefaultRemoveSubscriptionParams removeSubscriptionParams = new DefaultRemoveSubscriptionParams();
+        removeSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
+        removeSubscriptionParams.setApiName(addApiParams.getApiName());
+        removeSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
+        removeSubscriptionParams.setProvider(addApiParams.getProvider());
+        return removeSubscriptionParams;
+    }
+
+    private DefaultGenerateApplicationKeyParams toGenerateApplicationKeyParams(AddApplicationParams addApplicationParams) {
+        DefaultGenerateApplicationKeyParams generateApplicationKeyParams = new DefaultGenerateApplicationKeyParams();
+        generateApplicationKeyParams.setApplicationName(addApplicationParams.getApplicationName());
+        return generateApplicationKeyParams;
     }
 
 }

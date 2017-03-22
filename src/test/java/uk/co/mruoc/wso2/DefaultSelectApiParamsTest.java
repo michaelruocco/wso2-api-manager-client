@@ -9,12 +9,12 @@ public class DefaultSelectApiParamsTest {
     private final DefaultSelectApiParams params = new DefaultSelectApiParams();
 
     @Test
-    public void nameShouldDefaultToEmptyString() {
+    public void apiNameShouldDefaultToEmptyString() {
         assertThat(params.getApiName()).isEmpty();
     }
 
     @Test
-    public void versionShouldDefaultToEmptyString() {
+    public void apiVersionShouldDefaultToEmptyString() {
         assertThat(params.getApiVersion()).isEmpty();
     }
 
@@ -24,7 +24,7 @@ public class DefaultSelectApiParamsTest {
     }
 
     @Test
-    public void shouldSetName() {
+    public void shouldSetApiName() {
         String name = "api-name";
 
         params.setApiName(name);
@@ -33,7 +33,7 @@ public class DefaultSelectApiParamsTest {
     }
 
     @Test
-    public void shouldSetVersion() {
+    public void shouldSetApiVersion() {
         String version = "v1";
 
         params.setApiVersion(version);

@@ -7,8 +7,6 @@ import uk.co.mruoc.wso2.ResponseLoader;
 import uk.co.mruoc.wso2.SelectApiParams;
 import uk.co.mruoc.wso2.publisher.ApiPublisherException;
 import uk.co.mruoc.wso2.publisher.PublisherResponseLoader;
-import uk.co.mruoc.wso2.publisher.removeapi.RemoveApiAction;
-import uk.co.mruoc.wso2.publisher.removeapi.RemoveApiUrlBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
