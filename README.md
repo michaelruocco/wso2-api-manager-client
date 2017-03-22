@@ -17,7 +17,7 @@ gradle you would do this by adding the following to your build.gradle file:
 
 ```
 dependencies {
-    compile group: 'com.github.michaelruocco', name: 'wso2-api-manager-client', version: '1.0.0'
+    compile group: 'com.github.michaelruocco', name: 'wso2-api-manager-client', version: '3.0.0'
 }
 ```
 
