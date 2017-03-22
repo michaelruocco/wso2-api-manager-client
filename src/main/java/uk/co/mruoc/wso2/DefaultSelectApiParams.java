@@ -23,11 +23,11 @@ public class DefaultSelectApiParams implements SelectApiParams {
         return provider;
     }
 
-    public void setName(String name) {
+    public void setApiName(String name) {
         this.name = name;
     }
 
-    public void setVersion(String version) {
+    public void setApiVersion(String version) {
         this.version = version;
     }
 

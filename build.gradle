@@ -109,12 +109,12 @@ uploadArchives {
 
             pom.project {
                 packaging 'jar'
-                name 'WSO2 API Publisher Client'
-                description 'Library for interacting with the WSO2 API Manager Publisher API'
+                name 'WSO2 API Manager Client'
+                description 'Library for interacting with the WSO2 API Manager Publisher and Store APIs'
                 groupId 'com.github.michaelruocco'
-                artifactId 'wso2-api-publisher-client'
-                version '2.0.0'
-                url 'https://github.com/michaelruocco/wso2-api-publisher-client'
+                artifactId 'wso2-api-manager-client'
+                version '1.0.0'
+                url 'https://github.com/michaelruocco/wso2-api-manager-client'
 
                 developers {
                     developer {
@@ -125,9 +125,9 @@ uploadArchives {
                 }
 
                 scm {
-                    connection 'scm:git:git@github.com/michaelruocco/wso2-api-publisher-client.git'
-                    developerConnection 'scm:git:git@github.com/michaelruocco/wso2-api-publisher-client.git'
-                    url 'git@github.com/michaelruocco/wso2-api-publisher-client.git'
+                    connection 'scm:git:git@github.com/michaelruocco/wso2-api-manager-client.git'
+                    developerConnection 'scm:git:git@github.com/michaelruocco/wso2-api-manager-client.git'
+                    url 'git@github.com/michaelruocco/wso2-api-manager-client.git'
                 }
 
                 licenses {

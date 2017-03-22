@@ -6,8 +6,8 @@ public class FakeAddSubscriptionParams extends DefaultAddSubscriptionParams {
 
     public FakeAddSubscriptionParams() {
         setApplicationName("test-application");
-        setName("rest-product");
-        setVersion("v1");
+        setApiName("rest-product");
+        setApiVersion("v1");
         setProvider("admin");
     }
 

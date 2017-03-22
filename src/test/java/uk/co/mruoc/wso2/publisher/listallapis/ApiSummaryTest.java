@@ -13,7 +13,7 @@ public class ApiSummaryTest {
     public void shouldReturnName() {
         String name = "api-name";
 
-        summary.setName(name);
+        summary.setApiName(name);
 
         assertThat(summary.getApiName()).isEqualTo(name);
     }
@@ -22,7 +22,7 @@ public class ApiSummaryTest {
     public void shouldReturnVersion() {
         String version = "v1";
 
-        summary.setVersion(version);
+        summary.setApiVersion(version);
 
         assertThat(summary.getApiVersion()).isEqualTo(version);
     }

@@ -27,7 +27,7 @@ public class DefaultSelectApiParamsTest {
     public void shouldSetName() {
         String name = "api-name";
 
-        params.setName(name);
+        params.setApiName(name);
 
         assertThat(params.getApiName()).isEqualTo(name);
     }
@@ -36,7 +36,7 @@ public class DefaultSelectApiParamsTest {
     public void shouldSetVersion() {
         String version = "v1";
 
-        params.setVersion(version);
+        params.setApiVersion(version);
 
         assertThat(params.getApiVersion()).isEqualTo(version);
     }

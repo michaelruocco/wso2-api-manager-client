@@ -5,8 +5,8 @@ import uk.co.mruoc.wso2.publisher.listallapis.DefaultApiSummary;
 public class RestProductApiSummary extends DefaultApiSummary {
 
     public RestProductApiSummary() {
-        setName("rest-product");
-        setVersion("v1");
+        setApiName("rest-product");
+        setApiVersion("v1");
         setProvider("admin");
         setStatus(ApiStatus.CREATED);
         setThumbnailImageUrl("");

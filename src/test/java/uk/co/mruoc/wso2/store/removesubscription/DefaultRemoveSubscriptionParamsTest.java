@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2.store.removesubscription;
 
 import org.junit.Test;
-import uk.co.mruoc.wso2.store.removeapplication.DefaultRemoveSubscriptionParams;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

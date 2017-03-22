@@ -7,9 +7,9 @@ public class StubAddApiParamsBuilder {
 
     public static AddApiParams build() {
         DefaultAddApiParams params = new DefaultAddApiParams();
-        params.setName("rest-product");
+        params.setApiName("rest-product");
         params.setContext("/product");
-        params.setVersion("v1");
+        params.setApiVersion("v1");
         params.setProvider("admin");
         params.setDescription("Rest Product API");
         params.setTags("prod", "rest-product", "product");

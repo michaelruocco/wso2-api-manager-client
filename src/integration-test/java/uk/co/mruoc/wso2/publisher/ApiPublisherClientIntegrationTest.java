@@ -121,8 +121,8 @@ public class ApiPublisherClientIntegrationTest {
 
     private SelectApiParams toSelectParams(AddApiParams addParams) {
         DefaultSelectApiParams selectParams = new DefaultSelectApiParams();
-        selectParams.setName(addParams.getApiName());
-        selectParams.setVersion(addParams.getApiVersion());
+        selectParams.setApiName(addParams.getApiName());
+        selectParams.setApiVersion(addParams.getApiVersion());
         selectParams.setProvider(addParams.getProvider());
         return selectParams;
     }

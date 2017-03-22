@@ -14,6 +14,7 @@ import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
 import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.DefaultApplication;
 import uk.co.mruoc.wso2.store.listallapplications.TestApplication;
+import uk.co.mruoc.wso2.store.removesubscription.DefaultRemoveSubscriptionParams;
 
 import java.util.List;
 
@@ -95,11 +96,32 @@ public class ApiStoreClientIntegrationTest {
 
         DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
         addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
-        addSubscriptionParams.setName(addApiParams.getApiName());
-        addSubscriptionParams.setVersion(addApiParams.getApiVersion());
+        addSubscriptionParams.setApiName(addApiParams.getApiName());
+        addSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
         addSubscriptionParams.setProvider(addApiParams.getProvider());
 
         assertThat(storeClient.addSubscription(addSubscriptionParams)).isTrue();
+    }
+
+    @Test
+    public void shouldRemoveSubscription() {
+        AddApiParams addApiParams = StubAddApiParamsBuilder.build();
+        publisherClient.addApi(addApiParams);
+
+        DefaultSetStatusParams setStatusParams = buildSetStatusParams(addApiParams);
+        setStatusParams.setStatus(PUBLISHED);
+        publisherClient.setStatus(setStatusParams);
+
+        AddApplicationParams addApplicationParams = new FakeAddApplicationParams();
+        storeClient.addApplication(addApplicationParams);
+
+        DefaultRemoveSubscriptionParams removeSubscriptionParams = new DefaultRemoveSubscriptionParams();
+        removeSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
+        removeSubscriptionParams.setApiName(addApiParams.getApiName());
+        removeSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
+        removeSubscriptionParams.setProvider(addApiParams.getProvider());
+
+        assertThat(storeClient.removeSubscription(removeSubscriptionParams)).isTrue();
     }
 
     @Test
@@ -116,8 +138,8 @@ public class ApiStoreClientIntegrationTest {
 
         DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
         addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
-        addSubscriptionParams.setName(addApiParams.getApiName());
-        addSubscriptionParams.setVersion(addApiParams.getApiVersion());
+        addSubscriptionParams.setApiName(addApiParams.getApiName());
+        addSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
         addSubscriptionParams.setProvider(addApiParams.getProvider());
 
         storeClient.addSubscription(addSubscriptionParams);
@@ -142,8 +164,8 @@ public class ApiStoreClientIntegrationTest {
 
         DefaultAddSubscriptionParams addSubscriptionParams = new DefaultAddSubscriptionParams();
         addSubscriptionParams.setApplicationName(addApplicationParams.getApplicationName());
-        addSubscriptionParams.setName(addApiParams.getApiName());
-        addSubscriptionParams.setVersion(addApiParams.getApiVersion());
+        addSubscriptionParams.setApiName(addApiParams.getApiName());
+        addSubscriptionParams.setApiVersion(addApiParams.getApiVersion());
         addSubscriptionParams.setProvider(addApiParams.getProvider());
 
         storeClient.addSubscription(addSubscriptionParams);
@@ -161,8 +183,8 @@ public class ApiStoreClientIntegrationTest {
 
     private DefaultSetStatusParams buildSetStatusParams(AddApiParams addApiParams) {
         DefaultSetStatusParams setStatusParams = new DefaultSetStatusParams();
-        setStatusParams.setName(addApiParams.getApiName());
-        setStatusParams.setVersion(addApiParams.getApiVersion());
+        setStatusParams.setApiName(addApiParams.getApiName());
+        setStatusParams.setApiVersion(addApiParams.getApiVersion());
         setStatusParams.setProvider(addApiParams.getProvider());
         return setStatusParams;
     }

@@ -7,8 +7,8 @@ public class ApiToUpdateApiParamsConverter {
 
     public DefaultUpdateApiParams convert(Api api) {
         DefaultUpdateApiParams params = new DefaultUpdateApiParams();
-        params.setName(api.getName());
-        params.setVersion(api.getVersion());
+        params.setApiName(api.getName());
+        params.setApiVersion(api.getVersion());
         params.setContext(api.getContext());
         params.setProvider(api.getProvider());
         params.setRoles(api.getRoles());

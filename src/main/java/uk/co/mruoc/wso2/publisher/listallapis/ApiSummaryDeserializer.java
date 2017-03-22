@@ -11,8 +11,8 @@ public class ApiSummaryDeserializer implements JsonDeserializer<ApiSummary> {
     public ApiSummary deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context) {
         PublisherJsonParser parser = new PublisherJsonParser(element);
         DefaultApiSummary summary = new DefaultApiSummary();
-        summary.setName(parser.getName());
-        summary.setVersion(parser.getVersion());
+        summary.setApiName(parser.getName());
+        summary.setApiVersion(parser.getVersion());
         summary.setProvider(parser.getProvider());
         summary.setStatus(parser.getStatus());
         summary.setThumbnailImageUrl(parser.getThumbnailImagePath());

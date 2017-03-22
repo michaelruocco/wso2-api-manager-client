@@ -1,4 +1,4 @@
-package uk.co.mruoc.wso2.store.removeapplication;
+package uk.co.mruoc.wso2.store.removesubscription;
 
 import uk.co.mruoc.wso2.DefaultSelectApiParams;
 import uk.co.mruoc.wso2.store.removesubscription.RemoveSubscriptionParams;
