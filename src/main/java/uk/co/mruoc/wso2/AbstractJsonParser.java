@@ -48,8 +48,7 @@ public abstract class AbstractJsonParser {
 
     protected List<ApiTierAvailability> toTiers(List<String> values) {
         List<ApiTierAvailability> tiers = new ArrayList<>();
-        for (String value : values)
-            tiers.add(ApiTierAvailability.valueOf(value.toUpperCase()));
+        values.forEach(v -> tiers.add(ApiTierAvailability.valueOf(v.toUpperCase())));
         return tiers;
     }
 

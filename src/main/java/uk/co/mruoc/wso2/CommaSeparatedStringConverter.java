@@ -20,10 +20,9 @@ public class CommaSeparatedStringConverter {
     }
 
     private static List<String> trimAllElements(List<String> inputs) {
-        List<String> results = new ArrayList<>();
-        for (String input : inputs)
-            results.add(input.trim());
-        return results;
+        List<String> result = new ArrayList<>();
+        inputs.forEach(i -> result.add(i.trim()));
+        return result;
     }
 
 }

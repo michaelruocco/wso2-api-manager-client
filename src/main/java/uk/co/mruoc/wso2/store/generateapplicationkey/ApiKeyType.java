@@ -10,8 +10,7 @@ public enum ApiKeyType {
 
     public static List<ApiKeyType> toKeyTypeList(List<String> names) {
         List<ApiKeyType> keyTypes = new ArrayList<>();
-        for (String name : names)
-            keyTypes.add(parse(name));
+        names.forEach(n -> keyTypes.add(parse(n)));
         return keyTypes;
     }
 

@@ -15,6 +15,7 @@ import uk.co.mruoc.wso2.store.generateapplicationkey.GenerateApplicationKeyActio
 import uk.co.mruoc.wso2.store.generateapplicationkey.GenerateApplicationKeyParams;
 import uk.co.mruoc.wso2.store.getsubscription.ApiSubscription;
 import uk.co.mruoc.wso2.store.getsubscription.GetSubscriptionsAction;
+import uk.co.mruoc.wso2.store.getsubscription.FakeApiSubscription;
 import uk.co.mruoc.wso2.store.listallapplications.ApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.DefaultApiApplication;
 import uk.co.mruoc.wso2.store.listallapplications.ListAllApplicationsAction;
@@ -23,6 +24,7 @@ import uk.co.mruoc.wso2.store.removesubscription.RemoveSubscriptionAction;
 import uk.co.mruoc.wso2.store.removesubscription.RemoveSubscriptionParams;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +52,7 @@ public class DefaultApiStoreClientTest {
     private final SelectApiParams getSubscriptionsParams = mock(SelectApiParams.class);
     private final GenerateApplicationKeyParams generateApplicationKeyParams = mock(GenerateApplicationKeyParams.class);
 
-    private final List<ApiSubscription> subscriptions = new ArrayList<>();
+    private final List<ApiSubscription> subscriptions = Collections.singletonList(new FakeApiSubscription());
     private final ApplicationKey key = new FakeApplicationKey();
 
     private final Throwable apiStoreException = mock(ApiStoreException.class);

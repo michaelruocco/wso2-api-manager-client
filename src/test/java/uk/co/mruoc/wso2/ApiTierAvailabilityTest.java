@@ -19,13 +19,4 @@ public class ApiTierAvailabilityTest {
         assertThat(result).containsExactly(GOLD, SILVER);
     }
 
-    @Test
-    public void shouldConvertListOfTiersToListOfCapitalizedNames() {
-        List<ApiTierAvailability> inputs = Arrays.asList(GOLD, SILVER);
-
-        List<String> result = toNames(inputs);
-
-        assertThat(result).containsExactly("Gold", "Silver");
-    }
-
 }
