@@ -1,15 +1,10 @@
 package uk.co.mruoc.wso2.publisher.updateapi;
 
-import org.apache.commons.lang3.text.WordUtils;
 import uk.co.mruoc.wso2.ApiTierAvailability;
 import uk.co.mruoc.wso2.StringArgumentBuilder;
-import uk.co.mruoc.wso2.UrlEncoder;
 import uk.co.mruoc.wso2.publisher.EndpointSecurityArgumentBuilder;
 import uk.co.mruoc.wso2.publisher.TransportsArgumentBuilder;
 import uk.co.mruoc.wso2.publisher.VisibilityArgumentBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UpdateApiParamsToQueryStringConverter {
 
@@ -39,16 +34,10 @@ public class UpdateApiParamsToQueryStringConverter {
                 descriptionArgumentBuilder.build(params.getApiDescription()) +
                 tagsArgumentBuilder.build(params.getTags()) +
                 endpointSecurityArgumentBuilder.build(params) +
-                tiersCollectionArgumentBuilder.build(toNames(params.getTiers())) +
+                tiersCollectionArgumentBuilder.build(ApiTierAvailability.toNames(params.getTiers())) +
                 transportsArgumentBuilder.build(params) +
                 swaggerArgumentBuilder.build(params.getSwagger()) +
                 endpointConfigArgumentBuilder.build(params.getEndpointConfig());
-    }
-
-    private static List<String> toNames(List<ApiTierAvailability> values) {
-        List<String> names = new ArrayList<>();
-        values.forEach(v -> names.add(UrlEncoder.encode(WordUtils.capitalize(v.name().toLowerCase()))));
-        return names;
     }
 
 }
