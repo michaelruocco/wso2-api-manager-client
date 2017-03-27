@@ -113,7 +113,7 @@ uploadArchives {
                 description 'Library for interacting with the WSO2 API Manager Publisher and Store APIs'
                 groupId 'com.github.michaelruocco'
                 artifactId 'wso2-api-manager-client'
-                version '3.0.0'
+                version '4.0.0'
                 url 'https://github.com/michaelruocco/wso2-api-manager-client'
 
                 developers {
