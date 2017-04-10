@@ -8,6 +8,7 @@ public class PropertiesKeyGeneratorParams extends DefaultKeyGeneratorParams {
         setApiName(properties.getProperty("api.name"));
         setApiVersion(properties.getProperty("api.version"));
         setProvider(properties.getProperty("api.provider"));
+        setApplicationName(properties.getProperty("api.application.name"));
     }
     
 }

@@ -40,4 +40,14 @@ public class PropertiesKeyGeneratorParamsTest {
         assertThat(params.getProvider()).isEqualTo(provider);
     }
 
+    @Test
+    public void shouldSetApplicationNameFromProperties() {
+        String applicationName = "application-name";
+        properties.setProperty("api.application.name", applicationName);
+
+        KeyGeneratorParams params = new PropertiesKeyGeneratorParams(properties);
+
+        assertThat(params.getApplicationName()).isEqualTo(applicationName);
+    }
+
 }
