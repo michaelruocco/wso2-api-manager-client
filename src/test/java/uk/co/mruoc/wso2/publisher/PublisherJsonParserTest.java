@@ -1,9 +1,11 @@
 package uk.co.mruoc.wso2.publisher;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.joda.time.DateTimeZone.UTC;
 import static uk.co.mruoc.wso2.publisher.ApiEndpointType.SECURED;
 import static uk.co.mruoc.wso2.publisher.ApiEndpointType.UNSECURED;
 
@@ -62,7 +64,7 @@ public class PublisherJsonParserTest {
     public void shouldParseLastUpdated() {
         PublisherJsonParser parser = new PublisherJsonParser("{ \"lastUpdated\": \"1486464366000\"}");
 
-        assertThat(parser.getLastUpdated()).isEqualTo(new DateTime(1486464366000l));
+        assertThat(parser.getLastUpdated()).isEqualTo(new DateTime(1486464366000l, UTC));
     }
 
     @Test

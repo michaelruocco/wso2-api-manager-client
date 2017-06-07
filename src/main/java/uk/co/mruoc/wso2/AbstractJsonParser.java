@@ -3,6 +3,7 @@ package uk.co.mruoc.wso2;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public abstract class AbstractJsonParser {
         JsonElement value = json.get(name);
         if (value.isJsonNull())
             throw createException("could not parse date time from null json value for " + name);
-        return new DateTime(value.getAsLong());
+        return new DateTime(value.getAsLong(), DateTimeZone.UTC);
     }
 
     protected boolean toBoolean(JsonObject json, String name) {

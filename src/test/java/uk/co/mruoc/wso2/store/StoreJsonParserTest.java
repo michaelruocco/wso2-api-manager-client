@@ -1,9 +1,11 @@
 package uk.co.mruoc.wso2.store;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.joda.time.DateTimeZone.UTC;
 
 public class StoreJsonParserTest {
 
@@ -39,7 +41,7 @@ public class StoreJsonParserTest {
     public void shouldParseValidityTime() {
         StoreJsonParser parser = new StoreJsonParser("{ \"validityTime\": 7}");
 
-        assertThat(parser.getValidityTime()).isEqualTo(new DateTime(7L));
+        assertThat(parser.getValidityTime()).isEqualTo(new DateTime(7L, UTC));
     }
 
     @Test

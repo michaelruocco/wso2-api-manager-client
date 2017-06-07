@@ -97,6 +97,7 @@ public class ApiPublisherClientIntegrationTest {
         Api updatedApi = client.getApi(selectApiParams);
 
         assertThat(updatedApi.getDescription()).isEqualTo(updatedDescription);
+        assertThat(updatedApi.getLastUpdated()).isGreaterThanOrEqualTo(api.getLastUpdated());
     }
 
     @Test

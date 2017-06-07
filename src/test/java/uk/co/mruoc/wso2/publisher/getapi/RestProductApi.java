@@ -1,11 +1,14 @@
 package uk.co.mruoc.wso2.publisher.getapi;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import uk.co.mruoc.wso2.ApiTierAvailability;
 import uk.co.mruoc.wso2.publisher.ApiEndpointType;
 import uk.co.mruoc.wso2.publisher.ApiStatus;
 import uk.co.mruoc.wso2.publisher.ApiVisibility;
 import uk.co.mruoc.wso2.publisher.getapi.DefaultApi;
+
+import static org.joda.time.DateTimeZone.UTC;
 
 public class RestProductApi extends DefaultApi {
 
@@ -14,7 +17,7 @@ public class RestProductApi extends DefaultApi {
         setVersion("v1");
         setDescription("Product REST API");
         setContext("/products/v1");
-        setLastUpdated(new DateTime(1486464366000l));
+        setLastUpdated(new DateTime(1486464366000l, UTC));
         setSubscriberCount(1);
         setProvider("admin");
         setVisibility(ApiVisibility.PUBLIC);
