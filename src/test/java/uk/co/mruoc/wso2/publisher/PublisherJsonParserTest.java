@@ -1,7 +1,6 @@
 package uk.co.mruoc.wso2.publisher;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
